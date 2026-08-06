@@ -1,0 +1,14 @@
+<main class="shopify-basic-page">
+  <div class="collection-heading">
+    <h1>Search</h1>
+    <form action="{{ routes.search_url }}" method="get" class="newsletter-field">
+      <label class="sr-only" for="Search-In-Template">Search</label>
+      <input id="Search-In-Template" type="search" name="q" value="{{ search.terms | escape }}" placeholder="Search">
+      <button type="submit" aria-label="Search">→</button>
+    </form>
+  </div>
+</main>
+
+{% schema %}
+{"name":"Search","settings":[]}
+{% endschema %}

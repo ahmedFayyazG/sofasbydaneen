@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://sofas-by-daneen-fashion-recreation.ahmedfayyaz47.chatgpt.site/sitemap.xml
+Host: https://sofas-by-daneen-fashion-recreation.ahmedfayyaz47.chatgpt.site

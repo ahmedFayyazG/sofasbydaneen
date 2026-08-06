@@ -1,0 +1,21 @@
+<main class="shopify-basic-page">
+  <div class="collection-heading">
+    <h1>Your cart</h1>
+    {% if cart.item_count == 0 %}
+      <p>Your cart is currently empty.</p>
+      <a class="pill" href="{{ routes.all_products_collection_url }}">Continue shopping</a>
+    {% else %}
+      <form action="{{ routes.cart_url }}" method="post">
+        {% for item in cart.items %}
+          <p><strong>{{ item.product.title }}</strong> × {{ item.quantity }} — {{ item.final_line_price | money }}</p>
+        {% endfor %}
+        <p><strong>Total: {{ cart.total_price | money }}</strong></p>
+        <button class="pill filled" type="submit" name="checkout">Checkout</button>
+      </form>
+    {% endif %}
+  </div>
+</main>
+
+{% schema %}
+{"name":"Cart","settings":[]}
+{% endschema %}

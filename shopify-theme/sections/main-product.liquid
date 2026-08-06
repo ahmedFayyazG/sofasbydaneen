@@ -1,0 +1,22 @@
+<main class="shopify-basic-page">
+  <section class="featured-product">
+    <div class="featured-room">
+      {% if product.featured_image %}
+        <img src="{{ product.featured_image | image_url: width: 1080 }}" alt="{{ product.featured_image.alt | default: product.title | escape }}" width="1080" height="1080">
+      {% endif %}
+    </div>
+    <div class="featured-card">
+      <h1>{{ product.title }}</h1>
+      <p>{{ product.price | money }}</p>
+      <div class="soft-copy">{{ product.description }}</div>
+      {% form 'product', product %}
+        <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
+        <button class="pill filled" type="submit">Add to cart</button>
+      {% endform %}
+    </div>
+  </section>
+</main>
+
+{% schema %}
+{"name":"Product","settings":[]}
+{% endschema %}

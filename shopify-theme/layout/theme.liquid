@@ -1,0 +1,19 @@
+<!doctype html>
+<html lang="{{ request.locale.iso_code | default: 'en' }}">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#6b1438">
+    <title>{{ page_title | default: shop.name }}</title>
+    {% if page_description %}
+      <meta name="description" content="{{ page_description | escape }}">
+    {% endif %}
+    <link rel="icon" href="{{ 'favicon.svg' | asset_url }}" type="image/svg+xml">
+    {{ 'theme.css' | asset_url | stylesheet_tag }}
+    {{ content_for_header }}
+  </head>
+  <body>
+    {{ content_for_layout }}
+    {{ 'theme.js' | asset_url | script_tag }}
+  </body>
+</html>

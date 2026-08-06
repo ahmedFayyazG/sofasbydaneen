@@ -1,0 +1,16 @@
+{
+  "name": "Sofas By Daneen",
+  "short_name": "Sofas By Daneen",
+  "description": "Handcrafted bespoke furniture and couture upholstery made in France.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#fffefb",
+  "theme_color": "#6b1438",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ]
+}
