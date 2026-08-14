@@ -22,7 +22,7 @@ export default function SiteHeader() {
       >
         {menuOpen ? "CLOSE" : "MENU"}
       </button>
-      <a className="brand" href="#top" aria-label="Sofas By Daneen home">
+      <a className="brand" href="/" aria-label="Sofas By Daneen home">
         <span>Sofas By Daneen</span>
       </a>
       <nav
@@ -30,11 +30,11 @@ export default function SiteHeader() {
         className={menuOpen ? "main-nav open" : "main-nav"}
         aria-label="Primary navigation"
       >
-        <a href="#collection" onClick={closeMenu}>Our Creations <small aria-hidden="true">⌄</small></a>
-        <a href="#sur-mesure" onClick={closeMenu}>Bespoke by Sofas By Daneen</a>
-        <a href="#professionals" onClick={closeMenu}>Professionals</a>
-        <a href="#showrooms" onClick={closeMenu}>Showrooms</a>
-        <a href="#atelier" onClick={closeMenu}>Craftsmanship</a>
+        <a href="/collections" onClick={closeMenu}>Our Collections <small aria-hidden="true">⌄</small></a>
+        <a href="/#sur-mesure" onClick={closeMenu}>Bespoke by Sofas By Daneen</a>
+        <a href="/#professionals" onClick={closeMenu}>Professionals</a>
+        <a href="/#showrooms" onClick={closeMenu}>Showrooms</a>
+        <a href="/#atelier" onClick={closeMenu}>Craftsmanship</a>
       </nav>
       <div className="header-tools" aria-label="Customer tools">
         <button type="button" aria-label="Search"><Icon>⌕</Icon></button>

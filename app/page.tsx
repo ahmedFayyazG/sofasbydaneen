@@ -1,39 +1,19 @@
+import Link from "next/link";
 import LazyVideo from "./components/LazyVideo";
 import SiteHeader from "./components/SiteHeader";
+import { products as catalog } from "./lib/products";
 
 const CDN = "https://www.clovi-paris.com/cdn/shop/files/";
 const SITE_URL = "https://sofas-by-daneen-fashion-recreation.ahmedfayyaz47.chatgpt.site";
 
-const products = [
-  {
-    name: "The Colette - Bespoke Armchair",
-    price: "€2.590,00",
-    priceValue: "2590.00",
-    image: `${CDN}Design_sans_titre_-_2026-06-09T223919.772.png?v=1781037584`,
-    colors: ["#b55273"],
-  },
-  {
-    name: "The Claudel - Designer Ottoman",
-    price: "€790,00",
-    priceValue: "790.00",
-    image: `${CDN}CLAUDEL_VELOURSMILLERAIESNUAGE_f5af7109-ad68-4f70-ad2d-4496385a0ec5.jpg?v=1769592818`,
-    colors: ["#d9e2df", "#e9dfd1", "#a87955", "#caa179", "#7b3b34", "#9b5e3d", "#efe5cf"],
-  },
-  {
-    name: "The Gainsbourg - Nobilis Fawn",
-    price: "€2.580,00",
-    priceValue: "2580.00",
-    image: `${CDN}Design_sans_titre_45.jpg?v=1776282343`,
-    colors: ["#a8784f"],
-  },
-  {
-    name: "The Pompidou - Vegan Leather",
-    price: "€1.780,00",
-    priceValue: "1780.00",
-    image: `${CDN}Cuir_graine_modele_8.png?v=1781259329`,
-    colors: ["#2c2928"],
-  },
-];
+const products = catalog.map((product) => ({
+  slug: product.slug,
+  name: product.name,
+  price: product.priceFrom,
+  priceValue: product.priceFrom.replace(/[^\d,]/g, "").replace(",", "."),
+  image: product.heroImage,
+  colors: product.fabrics.slice(0, 6).map((f) => f.hex),
+}));
 
 const structuredData = {
   "@context": "https://schema.org",
@@ -65,14 +45,14 @@ const structuredData = {
         item: {
           "@type": "Product",
           name: product.name,
-          image: `${product.image}&width=750`,
+          image: `${SITE_URL}${product.image}`,
           brand: { "@type": "Brand", name: "Sofas By Daneen" },
           offers: {
             "@type": "Offer",
             priceCurrency: "EUR",
             price: product.priceValue,
             availability: "https://schema.org/InStock",
-            url: `${SITE_URL}/#collection`,
+            url: `${SITE_URL}/products/${product.slug}`,
           },
         },
       })),
@@ -154,25 +134,23 @@ export default function Home() {
 
           <section className="products-clone deferred-section" aria-label="Featured furniture">
             {products.map((product) => (
-              <article key={product.name}>
-                <a href="#collection" className="product-image" aria-label={`View ${product.name}`}>
+              <article key={product.slug}>
+                <Link href={`/products/${product.slug}`} className="product-image" aria-label={`View ${product.name}`}>
                   <img
-                    src={`${product.image}&width=750`}
-                    srcSet={`${product.image}&width=375 375w, ${product.image}&width=550 550w, ${product.image}&width=750 750w`}
-                    sizes="(max-width: 540px) 100vw, (max-width: 900px) 50vw, 25vw"
+                    src={product.image}
                     alt={product.name}
                     width="750"
                     height="750"
                     loading="lazy"
                     decoding="async"
                   />
-                </a>
+                </Link>
                 <div className="swatch-row" aria-label={`${product.colors.length} available colour${product.colors.length === 1 ? "" : "s"}`}>{product.colors.map((color, index) => <span style={{ background: color }} key={`${color}-${index}`} aria-hidden="true"></span>)}</div>
-                <h3>{product.name}</h3><p>{product.price}</p>
+                <h3><Link href={`/products/${product.slug}`}>{product.name}</Link></h3><p>{product.price}</p>
               </article>
             ))}
           </section>
-          <div className="pagination" aria-hidden="true"><b></b><span></span></div>
+          <div className="products-clone-cta"><Link className="pill filled" href="/collections">VIEW ALL COLLECTIONS →</Link></div>
 
           <section className="couture-video deferred-section" aria-label="The soul of Sofas By Daneen">
             <LazyVideo
@@ -236,7 +214,7 @@ export default function Home() {
         <footer id="showrooms" className="deferred-section">
           <a className="footer-logo" href="#top" aria-label="Sofas By Daneen home">Sofas By Daneen</a>
           <div className="footer-news"><h2>Join our newsletter and receive a €15 gift voucher</h2><p>Your weekly dose of inspiration.<br />Discover our creations first and receive a €15 voucher for your next order over €150.</p><div className="newsletter-field"><label className="sr-only" htmlFor="newsletter-email">Email address</label><input id="newsletter-email" name="email" type="email" autoComplete="email" inputMode="email" placeholder="Your email *" /><button type="button" aria-label="Subscribe to the newsletter">→</button></div></div>
-          <div className="footer-columns"><div><h4>The House of Sofas By Daneen</h4><a href="#sur-mesure">The House</a><a href="#collection">Lookbook</a><a href="#collection">Fabrics</a><a href="#showrooms">Showrooms</a><a href="#atelier">The Sofas By Daneen Workshop</a><a href="#atelier">Reupholstery - Artisan Upholsterers</a></div><div><h4>Information &amp; Contact</h4><a href="#top">Search</a><a href="#showrooms">Find a showroom</a><a href="#showrooms">Catalogue</a><a href="#collection">Leopard Ottoman</a><a href="#collection">Designer Benches</a><a href="#collection">Editorials</a></div><div id="professionals"><h4>Legal Information</h4><a href="#showrooms">Legal notice</a><a href="#showrooms">Privacy policy</a><a href="#showrooms">Terms and conditions</a><a href="#showrooms">FAQ</a><a href="#showrooms">Make a return</a><a href="#showrooms">Contact us</a></div><div><h4>Follow Us</h4><a href="#showrooms">YouTube</a><a href="#showrooms">Pinterest</a><a href="#showrooms">Instagram</a><a href="#showrooms">LinkedIn</a><a href="#showrooms">Email</a></div></div>
+          <div className="footer-columns"><div><h4>The House of Sofas By Daneen</h4><a href="#sur-mesure">The House</a><a href="/collections">Lookbook</a><a href="/collections">Fabrics</a><a href="#showrooms">Showrooms</a><a href="#atelier">The Sofas By Daneen Workshop</a><a href="#atelier">Reupholstery - Artisan Upholsterers</a></div><div><h4>Information &amp; Contact</h4><a href="#top">Search</a><a href="#showrooms">Find a showroom</a><a href="#showrooms">Catalogue</a><a href="/collections">Leopard Ottoman</a><a href="/collections">Designer Benches</a><a href="/collections">Editorials</a></div><div id="professionals"><h4>Legal Information</h4><a href="#showrooms">Legal notice</a><a href="#showrooms">Privacy policy</a><a href="#showrooms">Terms and conditions</a><a href="#showrooms">FAQ</a><a href="#showrooms">Make a return</a><a href="#showrooms">Contact us</a></div><div><h4>Follow Us</h4><a href="#showrooms">YouTube</a><a href="#showrooms">Pinterest</a><a href="#showrooms">Instagram</a><a href="#showrooms">LinkedIn</a><a href="#showrooms">Email</a></div></div>
           <div className="copyright"><span>LANGUAGE &nbsp; English</span><span>Copyright © 2026 Sofas By Daneen. Designed by BureauBarbara</span></div>
         </footer>
       </div>
