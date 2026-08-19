@@ -81,18 +81,18 @@ export default function ProductGallery({ product, initialFabricCode }: { product
           <p>{product.tagline}. {product.intro[0]}</p>
         </div>
 
-        <div className="daneen-feature-icons">
-          <div><span>♢</span><p><b>10 Year Frame</b><small>Guarantee</small></p></div>
-          <div><span>✦</span><p><b>Handcrafted</b><small>Made to order</small></p></div>
-          <div><span>◉</span><p><b>Premium Quality</b><small>Materials</small></p></div>
-          <div><span>£</span><p><b>Flexible Finance</b><small>Available</small></p></div>
+        <div className="daneen-product-notes" aria-label="Product highlights">
+          <div><small>FRAME</small><strong>10 year guarantee</strong></div>
+          <div><small>MADE</small><strong>Handcrafted to order</strong></div>
+          <div><small>MATERIALS</small><strong>Premium upholstery</strong></div>
+          <div><small>PAYMENT</small><strong>Flexible finance</strong></div>
         </div>
 
         <div className="daneen-left-accordions">
-          <details><summary>Dimensions <span>+</span></summary><div>{product.sizes?.map((item) => <p key={item.seats}><b>{item.label}</b><span>{item.seats} seat configuration</span></p>) ?? <p>Made to order configuration</p>}</div></details>
-          <details><summary>Product Details <span>+</span></summary><div>{product.details.map((detail) => <p key={detail.label}><b>{detail.label}</b><span>{detail.value}</span></p>)}</div></details>
-          <details><summary>Delivery &amp; Returns <span>+</span></summary><div><p>Your sofa is made to order. Delivery details and access will be confirmed before dispatch.</p></div></details>
-          <details><summary>Care Guide <span>+</span></summary><div><p>Vacuum gently, rotate loose cushions regularly and keep upholstery away from prolonged direct sunlight.</p></div></details>
+          <details><summary><span>Dimensions</span><b>+</b></summary><div>{product.sizes?.map((item) => <p key={item.seats}><b>{item.label}</b><span>{item.seats} seat configuration</span></p>) ?? <p>Made to order configuration</p>}</div></details>
+          <details><summary><span>Product details</span><b>+</b></summary><div>{product.details.map((detail) => <p key={detail.label}><b>{detail.label}</b><span>{detail.value}</span></p>)}</div></details>
+          <details><summary><span>Delivery &amp; returns</span><b>+</b></summary><div><p>Your sofa is made to order. Delivery details and access will be confirmed before dispatch.</p></div></details>
+          <details><summary><span>Care guide</span><b>+</b></summary><div><p>Vacuum gently, rotate loose cushions regularly and keep upholstery away from prolonged direct sunlight.</p></div></details>
         </div>
       </div>
 
@@ -113,7 +113,7 @@ export default function ProductGallery({ product, initialFabricCode }: { product
                 </button>
               ))}
             </div>
-            <button className="daneen-text-button" type="button">▣ &nbsp; View dimensions</button>
+            <button className="daneen-text-button" type="button">View dimensions</button>
           </div>
         )}
 
@@ -147,17 +147,17 @@ export default function ProductGallery({ product, initialFabricCode }: { product
         <div className="daneen-price-box">
           <small>From</small><strong>{product.priceFrom}</strong><p>or spread the cost with flexible finance</p>
           <a href="#showrooms" className="daneen-main-cta">REQUEST A QUOTE <span>›</span></a>
-          <button type="button" className="daneen-sample-cta">▱ &nbsp; Request a free fabric sample</button>
+          <button type="button" className="daneen-sample-cta">Request a free fabric sample</button>
         </div>
 
-        <div className="daneen-benefits">
-          <p><span>▱</span>International delivery available</p>
-          <p><span>◷</span>Made to order</p>
-          <p><span>♢</span>Quality frame guarantee</p>
-          <p><span>✦</span>Handcrafted finish</p>
+        <div className="daneen-service-list">
+          <div><span>Delivery</span><b>International delivery available</b></div>
+          <div><span>Production</span><b>Made to order</b></div>
+          <div><span>Guarantee</span><b>10 year frame guarantee</b></div>
+          <div><span>Finish</span><b>Handcrafted upholstery</b></div>
         </div>
 
-        <div className="daneen-support-actions"><a href="#showrooms">▣ &nbsp; Book a design appointment</a><a href="#showrooms">◌ &nbsp; Chat with our team</a></div>
+        <div className="daneen-support-links"><a href="#showrooms">Book a design appointment</a><a href="#showrooms">Chat with our team</a></div>
       </aside>
     </section>
   );
