@@ -49,7 +49,7 @@ export default async function ProductPage({
     offers: {
       "@type": "AggregateOffer",
       priceCurrency: "EUR",
-      lowPrice: product.priceFrom.replace(/[^\d.,]/g, "").replace(",", "."),
+      lowPrice: product.priceFromValue,
       availability: "https://schema.org/InStock",
       url: `${SITE_URL}/products/${product.slug}`,
     },
@@ -140,7 +140,7 @@ export default async function ProductPage({
         </main>
 
         <footer id="showrooms" className="deferred-section">
-          <a className="footer-logo" href="/#top" aria-label="Sofas By Daneen home">Sofas By Daneen</a>
+          <Link className="footer-logo" href="/#top" aria-label="Sofas By Daneen home">Sofas By Daneen</Link>
           <div className="copyright"><span>LANGUAGE &nbsp; English</span><span>Copyright © 2026 Sofas By Daneen. Designed by BureauBarbara</span></div>
         </footer>
       </div>

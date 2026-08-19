@@ -21,28 +21,84 @@ export type LifestyleSet = {
   images: string[];
 };
 
+export type ProductType = "corner" | "chaise" | "u-shape" | "modular" | "chesterfield" | "recliner" | "sofa-bed" | "cinema";
+export type ColorFamily = "grey" | "blue" | "beige" | "green" | "red" | "brown" | "black" | "ivory";
+
 export type Product = {
   slug: string;
   name: string;
+  type: ProductType;
   category: string;
   tagline: string;
   heroImage: string;
   priceFrom: string;
+  priceFromValue: number;
   intro: string[];
   silhouette: string;
   details: { label: string; value: string }[];
   fabrics: Fabric[];
   sizes?: SizeVariant[];
+  colorFamilies: ColorFamily[];
+  seatOptions: number[];
   lifestyle: LifestyleSet[];
   defaultFabricCode: string;
 };
 
 const P = (slug: string, path: string) => `/products/${slug}/${path}`;
 
-export const products: Product[] = [
+type AuthoredProduct = Omit<Product, "colorFamilies" | "seatOptions" | "priceFromValue">;
+
+function parsePriceValue(price: string): number {
+  return Number(price.replace(/[^\d,]/g, "").replace(",", "."));
+}
+
+function uniqueSorted<T extends string | number>(values: T[]): T[] {
+  return Array.from(new Set(values)).sort((a, b) => String(a).localeCompare(String(b), undefined, { numeric: true })) as T[];
+}
+
+export function colorFamilyFromFabric(fabric: Fabric): ColorFamily {
+  const name = fabric.name.toLowerCase();
+
+  if (/\b(white|ivory|boucl|cream)\b/.test(name)) return "ivory";
+  if (/\b(beige|oatmeal|stone|linen)\b/.test(name)) return "beige";
+  if (/\b(grey|gray|slate)\b/.test(name)) return "grey";
+  if (/\b(blue|navy|midnight)\b/.test(name)) return "blue";
+  if (/\b(teal|green)\b/.test(name)) return "green";
+  if (/\b(red|crimson|burgundy)\b/.test(name)) return "red";
+  if (/\b(brown|chocolate|rust|orange)\b/.test(name)) return "brown";
+  if (/\b(black|charcoal)\b/.test(name)) return "black";
+
+  const hex = fabric.hex.replace("#", "");
+  const red = parseInt(hex.slice(0, 2), 16);
+  const green = parseInt(hex.slice(2, 4), 16);
+  const blue = parseInt(hex.slice(4, 6), 16);
+  const max = Math.max(red, green, blue);
+  const min = Math.min(red, green, blue);
+  const brightness = (red * 299 + green * 587 + blue * 114) / 1000;
+
+  if (brightness > 220) return "ivory";
+  if (brightness < 55) return "black";
+  if (max - min < 28) return "grey";
+  if (red > green + 30 && red > blue + 30) return green > blue ? "brown" : "red";
+  if (blue > red + 25 && blue > green + 15) return "blue";
+  if (green >= red && green >= blue) return "green";
+  return "beige";
+}
+
+function enrichProduct(product: AuthoredProduct): Product {
+  return {
+    ...product,
+    priceFromValue: parsePriceValue(product.priceFrom),
+    colorFamilies: uniqueSorted(product.fabrics.map(colorFamilyFromFabric)),
+    seatOptions: product.sizes?.map((size) => size.seats) ?? [3],
+  };
+}
+
+const productCatalog: AuthoredProduct[] = [
   {
     slug: "corner-sofa",
     name: "The Loire Corner Sofa",
+    type: "corner",
     category: "Corner Sofas",
     tagline: "A generous L-shaped silhouette for grand living rooms",
     heroImage: P("corner-sofa", "01-slate-grey-velvet/white-bg/daneen-corner-sofa-slate-grey-velvet-white-front.jpg"),
@@ -135,6 +191,7 @@ export const products: Product[] = [
   {
     slug: "chaise-sofa",
     name: "The Vosges Chaise Sofa",
+    type: "chaise",
     category: "Chaise Sofas",
     tagline: "A relaxed silhouette with a sweeping chaise return",
     heroImage: P("chaise-sofa", "01-slate-grey-velvet/studio/daneen-chaise-sofa-slate-grey-velvet-studio-01.jpg"),
@@ -227,6 +284,7 @@ export const products: Product[] = [
   {
     slug: "u-shape-sofa",
     name: "The Camargue U-Shape Sofa",
+    type: "u-shape",
     category: "U-Shape Sofas",
     tagline: "Our largest silhouette, built for gathering",
     heroImage: P("u-shape-sofa", "01-slate-grey-velvet/studio/daneen-u-shape-sofa-slate-grey-velvet-studio-01.jpg"),
@@ -319,6 +377,7 @@ export const products: Product[] = [
   {
     slug: "modular-corner-sofa",
     name: "The Marais Modular Corner Sofa",
+    type: "modular",
     category: "Modular Sofas",
     tagline: "Configurable seating that grows with your room",
     heroImage: P("modular-corner-sofa", "by-size/03-3-seat/daneen-modular-corner-sofa-3-seat-beige-studio-front.jpg"),
@@ -364,6 +423,7 @@ export const products: Product[] = [
   {
     slug: "chesterfield-sofa",
     name: "The Chesterfield",
+    type: "chesterfield",
     category: "Chesterfield Sofas",
     tagline: "The classic tufted silhouette, remade in couture fabrics",
     heroImage: P("chesterfield-sofa", "by-size/03-3-seat/daneen-chesterfield-sofa-3-seat-beige-studio-front.jpg"),
@@ -406,6 +466,8 @@ export const products: Product[] = [
     ],
   },
 ];
+
+export const products: Product[] = productCatalog.map(enrichProduct);
 
 export function getProduct(slug: string): Product | undefined {
   return products.find((p) => p.slug === slug);

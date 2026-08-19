@@ -39,7 +39,7 @@ export default function CollectionsPage() {
         </main>
 
         <footer id="showrooms" className="deferred-section">
-          <a className="footer-logo" href="/#top" aria-label="Sofas By Daneen home">Sofas By Daneen</a>
+          <Link className="footer-logo" href="/#top" aria-label="Sofas By Daneen home">Sofas By Daneen</Link>
           <div className="copyright"><span>LANGUAGE &nbsp; English</span><span>Copyright © 2026 Sofas By Daneen. Designed by BureauBarbara</span></div>
         </footer>
       </div>

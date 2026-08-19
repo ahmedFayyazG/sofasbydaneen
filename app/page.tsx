@@ -1,4 +1,5 @@
 import Link from "next/link";
+import HomeProductGrid from "./components/HomeProductGrid";
 import LazyVideo from "./components/LazyVideo";
 import SiteHeader from "./components/SiteHeader";
 import { products as catalog } from "./lib/products";
@@ -9,11 +10,77 @@ const SITE_URL = "https://sofas-by-daneen-fashion-recreation.ahmedfayyaz47.chatg
 const products = catalog.map((product) => ({
   slug: product.slug,
   name: product.name,
+  category: product.category,
+  tagline: product.tagline,
   price: product.priceFrom,
-  priceValue: product.priceFrom.replace(/[^\d,]/g, "").replace(",", "."),
+  priceValue: product.priceFromValue.toString(),
   image: product.heroImage,
-  colors: product.fabrics.slice(0, 6).map((f) => f.hex),
+  fabrics: product.fabrics.slice(0, 6).map((fabric) => ({
+    code: fabric.code,
+    name: fabric.name,
+    hex: fabric.hex,
+    image: fabric.studioFront,
+  })),
 }));
+
+const SOFOLOGY_IMG = "https://images.sofology.co.uk/q_auto,f_auto,fl_lossy,dpr_1.0/Bloomreach/HOMEPAGE";
+const sofaTypes = [
+  ["Corner sofas", `${SOFOLOGY_IMG}/2025/sept/homepage-type-corner2-010925-desktop-min`],
+  ["Fabric sofas", `${SOFOLOGY_IMG}/2025/sept/homepage-type-fabric-010925-desktop-min`],
+  ["Leather sofas", `${SOFOLOGY_IMG}/2025/sept/homepage-type-leather-010925-desktop-min`],
+  ["Recliner sofas", `${SOFOLOGY_IMG}/2025/sept/homepage-type-recliners-010925-desktop-min`],
+  ["Sofa beds", `${SOFOLOGY_IMG}/2025/sept/homepage-type-sofabeds-010925-desktop-min`],
+  ["Cinema sofas", `${SOFOLOGY_IMG}/2025/sept/homepage-type-cinema-010925-desktop-min`],
+] as const;
+const colourFamilies = ["white", "grey", "beige", "yellow", "teal", "rust", "green", "burgundy", "brown", "blue", "charcoal", "black"] as const;
+const colourShopFilters: Record<(typeof colourFamilies)[number], string> = {
+  white: "ivory",
+  grey: "grey",
+  beige: "beige",
+  yellow: "brown",
+  teal: "green",
+  rust: "brown",
+  green: "green",
+  burgundy: "red",
+  brown: "brown",
+  blue: "blue",
+  charcoal: "black",
+  black: "black",
+};
+const sofaSizes = ["2seater", "3seater", "4seater", "chaise", "modular", "chairs"] as const;
+const sizeLabels: Record<(typeof sofaSizes)[number], string> = {
+  "2seater": "2 seater sofas",
+  "3seater": "3 seater sofas",
+  "4seater": "4 seater sofas",
+  chaise: "Chaise",
+  modular: "Modular",
+  chairs: "Armchairs",
+};
+const sizeShopFilters: Record<(typeof sofaSizes)[number], string> = {
+  "2seater": "2",
+  "3seater": "3",
+  "4seater": "4",
+  chaise: "chaise",
+  modular: "modular",
+  chairs: "1",
+};
+const instagramReels = [
+  {
+    title: "Crafting Custom Comfort",
+    embedUrl: "https://www.instagram.com/reel/DBG9yawIyWj/embed?utm_source=ig_embed&autoplay=1&mute=1",
+    href: "https://www.instagram.com/reel/DBG9yawIyWj/",
+  },
+  {
+    title: "Thank you for choosing us mate",
+    embedUrl: "https://www.instagram.com/reel/DAx9FBwIp5q/embed?utm_source=ig_embed&autoplay=1&mute=1",
+    href: "https://www.instagram.com/reel/DAx9FBwIp5q/",
+  },
+  {
+    title: "Thank you @chris_noddy_connor",
+    embedUrl: "https://www.instagram.com/reel/C_soONsosRW/embed?utm_source=ig_embed&autoplay=1&mute=1",
+    href: "https://www.instagram.com/reel/C_soONsosRW/",
+  },
+] as const;
 
 const structuredData = {
   "@context": "https://schema.org",
@@ -65,8 +132,21 @@ export default function Home() {
     <>
       <a className="skip-link" href="#main-content">Skip to content</a>
       <div id="top">
-        <div className="announce"><span aria-hidden="true">‹</span><p>International delivery.</p><span aria-hidden="true">›</span></div>
+        <div className="announce"><span aria-hidden="true">‹</span><p>Autumn promotional events and mid-season clearance sales across UK</p><span aria-hidden="true">›</span></div>
         <SiteHeader />
+        <div className="promo-marquee" aria-label="Current offers">
+          <div className="promo-marquee-track">
+            {[0, 1].map((loop) => (
+              <div className="promo-marquee-group" aria-hidden={loop === 1 ? "true" : undefined} key={loop}>
+                <span>Free Delivery Across England &amp; Wales.</span>
+                <a href="https://www.thehouseofbrands.co.uk/pages/contact-us">Summer Sale Is Live</a>
+                <span>Spread the Cost with Flexible Finance Options</span>
+                <span>25% Off Already Applied</span>
+                <span>Showroom open 7 days a week</span>
+              </div>
+            ))}
+          </div>
+        </div>
 
         <main id="main-content">
           <section className="hero-clone" aria-label="Sofas By Daneen summer sale">
@@ -91,114 +171,133 @@ export default function Home() {
           </section>
 
           <section className="bespoke-heading" id="sur-mesure" aria-labelledby="bespoke-title">
-            <p className="kicker">COUTURE FURNITURE HOUSE</p>
             <h2 id="bespoke-title">YOUR INTERIOR DESERVES A<br />BESPOKE PIECE</h2>
-            <p className="soft-copy"><em>Choose your model, choose your fabric.<br />We craft the rest by hand in our workshops in France.</em></p>
-            <i className="tiny-rule" aria-hidden="true"></i>
           </section>
 
-          <section className="process-grid" aria-label="How bespoke furniture is made">
-            <article>
-              <div className="process-image-space">
-                <img className="model-step-image" src="/choose-model-sofa.png" alt="" width="1536" height="1024" loading="lazy" decoding="async" />
-              </div>
-              <h3>1 · I CHOOSE MY MODEL</h3>
-              <p>Armchair, bench or ottoman—each silhouette is designed to bring character to your space.</p>
-            </article>
-            <article>
-              <div className="process-image-space">
-                <img className="fabric-step-image" src="/choose-fabric-sofa.png" alt="" width="256" height="256" loading="lazy" decoding="async" />
-              </div>
-              <h3>2 · I CHOOSE MY FABRIC</h3>
-              <p>Our couture collection or the designer of your choice: Lelièvre, Pierre Frey… Complimentary sample.</p>
-            </article>
-            <article>
-              <div className="process-image-space">
-                <img className="delivery-step-image" src="/delivery-worldwide-truck.png" alt="" width="1536" height="1024" loading="lazy" decoding="async" />
-              </div>
-              <h3>3 · DELIVERED WITH CARE WORLDWIDE</h3>
-              <p>Handcrafted in France and delivered with all the care your piece deserves. International delivery.</p>
-            </article>
+          <section className="bespoke-band" aria-label="How bespoke furniture is made">
+            <div className="process-grid" aria-label="How bespoke furniture is made">
+              <article>
+                <div className="process-image-space">
+                  <img className="model-step-image" src="/choose-model-sofa.png" alt="" width="1536" height="1024" loading="lazy" decoding="async" />
+                </div>
+                <h3>1 · I CHOOSE MY MODEL</h3>
+                <p>Choose the silhouette that fits your space.</p>
+              </article>
+              <article>
+                <div className="process-image-space">
+                  <img className="fabric-step-image" src="/choose-fabric-sofa.png" alt="" width="256" height="256" loading="lazy" decoding="async" />
+                </div>
+                <h3>2 · I CHOOSE MY FABRIC</h3>
+                <p>Select a couture fabric or request a sample.</p>
+              </article>
+              <article>
+                <div className="process-image-space">
+                  <img className="delivery-step-image" src="/delivery-worldwide-truck.png" alt="" width="1536" height="1024" loading="lazy" decoding="async" />
+                </div>
+                <h3>3 · DELIVERED WITH CARE WORLDWIDE</h3>
+                <p>Handcrafted in France and delivered worldwide.</p>
+              </article>
+            </div>
           </section>
 
-          <section className="appointment-clone" aria-label="Bespoke consultation">
-            <p><em>15 minutes to imagine your piece together</em></p>
-            <div><a className="pill filled" href="#showrooms">BOOK AN APPOINTMENT →</a><a className="pill" href="#showrooms">COMPLIMENTARY SAMPLE →</a></div>
-            <div className="promises"><span>• &nbsp; MADE IN FRANCE</span><span>• &nbsp; ARTISANAL BESPOKE</span><span>• &nbsp; INTERNATIONAL DELIVERY</span></div>
+          <section className="sofa-finder deferred-section" aria-labelledby="shop-sofas-title">
+            <h2 id="shop-sofas-title">Shop sofas</h2>
+            <div className="sofa-type-grid">
+              {sofaTypes.map(([name, image]) => (
+                <Link className="sofa-type-card" href="/collections" key={name}>
+                  <img src={image} alt={name} width="900" height="600" loading="lazy" decoding="async" />
+                </Link>
+              ))}
+            </div>
+          </section>
+
+          <section className="colour-finder deferred-section" aria-labelledby="colour-title">
+            <h2 id="colour-title">Got a colour in mind</h2>
+            <div className="colour-grid">
+              {colourFamilies.map((colour) => (
+                <Link href={`/shop?color=${colourShopFilters[colour]}`} key={colour} aria-label={`Shop ${colour} sofas`}>
+                  <img src={`${SOFOLOGY_IMG}/colorpicker/homepage-colour-${colour}-010925-desktop-min`} alt="" width="160" height="160" loading="lazy" decoding="async" />
+                </Link>
+              ))}
+            </div>
+          </section>
+
+          <section className="size-finder deferred-section" aria-labelledby="size-title">
+            <h2 id="size-title">Got a size in mind</h2>
+            <div className="size-grid">
+              {sofaSizes.map((size) => (
+                <Link href={`/shop?seats=${sizeShopFilters[size]}`} key={size}>
+                  <img src={`${SOFOLOGY_IMG}/2025/sept/homepage-size-${size}-010925-desktop-min`} alt="" width="400" height="180" loading="lazy" decoding="async" />
+                  <h3>{sizeLabels[size]}</h3>
+                </Link>
+              ))}
+            </div>
           </section>
 
           <section className="collection-heading deferred-section" id="collection" aria-labelledby="collection-title">
             <i aria-hidden="true"></i><h2 id="collection-title">OUR COLLECTIONS</h2>
-            <p>Handcrafted by our French carpenters and upholsterers.<br /><strong>Each piece begins with a pencil sketch.</strong><br />We unite <strong>design</strong> and <strong>couture</strong> to create collections that are<br /><strong>distinctive</strong>, elegant and free—like poetry.</p>
           </section>
 
-          <section className="products-clone deferred-section" aria-label="Featured furniture">
-            {products.map((product) => (
-              <article key={product.slug}>
-                <Link href={`/products/${product.slug}`} className="product-image" aria-label={`View ${product.name}`}>
-                  <img
-                    src={product.image}
-                    alt={product.name}
-                    width="750"
-                    height="750"
-                    loading="lazy"
-                    decoding="async"
-                  />
-                </Link>
-                <div className="swatch-row" aria-label={`${product.colors.length} available colour${product.colors.length === 1 ? "" : "s"}`}>{product.colors.map((color, index) => <span style={{ background: color }} key={`${color}-${index}`} aria-hidden="true"></span>)}</div>
-                <h3><Link href={`/products/${product.slug}`}>{product.name}</Link></h3><p>{product.price}</p>
-              </article>
-            ))}
-          </section>
+          <HomeProductGrid products={products} />
           <div className="products-clone-cta"><Link className="pill filled" href="/collections">VIEW ALL COLLECTIONS →</Link></div>
 
           <section className="couture-video deferred-section" aria-label="The soul of Sofas By Daneen">
             <LazyVideo
-              src="https://www.clovi-paris.com/cdn/shop/videos/c/vp/25be61db40a84accb971898ec2e650de/25be61db40a84accb971898ec2e650de.HD-1080p-7.2Mbps-44808719.mp4?v=0"
+              src="/design-meets-couture.mp4"
               type="video/mp4"
-              poster="https://www.clovi-paris.com/cdn/shop/files/preview_images/0eccb956855e4d8980e92c8b40dbb930.thumbnail.0000000000_1080x.jpg?v=1774014735"
               label="Sofas By Daneen couture furniture film"
             />
             <a href="#collection" className="video-button">DISCOVER THE SOUL OF SOFAS BY DANEEN &nbsp; →</a>
           </section>
 
-          <section className="couture-copy deferred-section" aria-labelledby="couture-title">
-            <h2 id="couture-title">DESIGN MEETS COUTURE</h2>
-            <p>The art of upholstery lies in a delicate balance<br />between artisanal excellence and the poetry of gesture.<br /><strong>Velvets, jacquards and natural linens…<br />fabrics that bring an extra soul to your interior.</strong><br />Sourced from the finest mills with artisanal expertise,<br />our fabrics celebrate material and texture.</p>
-            <p>A deep desire to bring <strong>beautiful fabrics of the past</strong> back into the light<br />and warm interiors with a soul that is both <strong>poetic and sensual.</strong></p>
-            <a className="pill" href="#showrooms">COMPLIMENTARY SAMPLES</a>
-          </section>
-
-          <section className="atelier-clone deferred-section" id="atelier" aria-labelledby="atelier-title">
-            <div className="atelier-photo">
-              <LazyVideo src="https://cdn.shopify.com/videos/c/o/v/3bfbf39d29994058b6e380aed8530e61.mov" label="Upholsterer working in the Sofas By Daneen workshop" />
+          <section className="cushions-promo deferred-section" aria-labelledby="cushions-promo-title">
+            <div className="cushions-promo-copy">
+              <div>
+                <h2 id="cushions-promo-title">Decorative Cushions</h2>
+                <p>The perfect finishing touch for your sofa. Discover our collection of unique textures and shapes to complete your living room look.</p>
+              </div>
+              <Link className="cushions-promo-button" href="/shop">SHOP NOW</Link>
             </div>
-            <div className="atelier-content">
-              <span className="atelier-tag">LILLE WORKSHOP · CONTEMPORARY ARTISAN</span>
-              <h2 id="atelier-title">HANDMADE<br />IN LILLE</h2><i aria-hidden="true"></i>
-              <p>Every Sofas By Daneen piece is born in our northern French workshop. Our upholsterers craft each one by hand, with the same care for a unique commission as for a professional series.</p>
-              <div className="atelier-points"><div><b aria-hidden="true">✂</b><p><strong>ARTISANAL BESPOKE</strong><span>Every dimension, fabric and finish is tailored to your space and your wishes.</span></p></div><div><b aria-hidden="true">🏅</b><p><strong>QUALITY &amp; DURABILITY</strong><span>Materials selected to last. Certified fabrics, robust structures and refined finishes.</span></p></div><div><b aria-hidden="true">📍</b><p><strong>LOCAL CRAFT &amp; GUARANTEE</strong><span>Made in France and guaranteed by our artisans. One contact from design to delivery.</span></p></div></div>
-              <a className="pill" href="#atelier">DISCOVER OUR WORKSHOP →</a>
+            <div className="cushions-promo-image">
+              <img src="/blue-chesterfield-sofa-room.jpg" alt="Blue Chesterfield sofa in a paneled room" width="1400" height="1000" loading="lazy" decoding="async" />
             </div>
           </section>
 
-          <section className="featured-product deferred-section" aria-label="Featured Pompidou bench">
-            <div className="featured-room"><img src={`${CDN}Design_sans_titre_36.jpg?v=1762263387&width=1080`} alt="Bespoke Sofas By Daneen bench in a contemporary room" width="1080" height="1350" loading="lazy" decoding="async" /></div>
-            <a className="featured-card" href="#collection">
-              <img src={`${CDN}POMPIDOU_VELOURSCHENILLECOGNAC_89f7c88a-8a16-4ab9-a378-4d7d7385c999.jpg?v=1769592861&width=750`} alt="The Pompidou in cognac striped chenille" width="750" height="750" loading="lazy" decoding="async" />
-              <small>Cognac striped chenille</small>
-              <h3>The Pompidou - Designer Bench - Cognac Striped Chenille</h3>
-              <p>€1.480,00</p>
-            </a>
-          </section>
+          <div className="cushions-trust-row" aria-label="Customer rating">
+            <span>Our customers say</span>
+            <strong>Excellent</strong>
+            <span className="trust-stars" aria-label="5 out of 5 stars">★★★★★</span>
+            <span>4.8 out of 5 based on <a href="#reviews-title">648 reviews</a></span>
+            <strong className="trustpilot">★ Trustpilot</strong>
+          </div>
 
           <section className="reviews-clone deferred-section" aria-labelledby="reviews-title">
             <h2 id="reviews-title">Let our clients speak for us</h2>
-            <div className="review-score"><span role="img" aria-label="5 out of 5 stars">★★★★★</span><small>from 12 reviews &nbsp; ✅</small></div>
+            <div className="review-score"><span role="img" aria-label="5 out of 5 stars">★★★★★</span><small>from 12 reviews</small></div>
             <div className="review-grid">
               <article><b role="img" aria-label="5 out of 5 stars">★★★★★</b><h3>I love it</h3><p>A superb, beautiful bench!<br />Excellent quality!<br />It transforms my entrance.</p><small>Anne Castel</small></article>
               <article><b role="img" aria-label="5 out of 5 stars">★★★★★</b><h3>Magnificent!</h3><p>The seat is beautiful and fits my interior perfectly. The fabric is genuinely exceptional quality 😍</p><small>Sarah</small></article>
               <article><b role="img" aria-label="5 out of 5 stars">★★★★★</b><h3>Original and so beautiful</h3><p>The fabric is simply gorgeous!<br />The autumnal colours work perfectly with the furniture.</p><small>Amandine Roquette</small></article>
+            </div>
+          </section>
+
+          <section className="instagram-reels deferred-section" aria-labelledby="instagram-reels-title">
+            <h2 id="instagram-reels-title">Watch our pieces come to life</h2>
+            <div className="reel-carousel" aria-label="Instagram reels carousel">
+              {instagramReels.map((reel, index) => (
+                <article className="reel-card" key={reel.title}>
+                  <div className="reel-embed-frame">
+                    <iframe
+                      src={reel.embedUrl}
+                      title={`${reel.title} Instagram reel`}
+                      loading="lazy"
+                      allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
+                      allowFullScreen
+                    />
+                  </div>
+                  <a className="reel-caption" href={reel.href} target="_blank" rel="noreferrer">{reel.title}</a>
+                </article>
+              ))}
             </div>
           </section>
 
@@ -214,7 +313,7 @@ export default function Home() {
         <footer id="showrooms" className="deferred-section">
           <a className="footer-logo" href="#top" aria-label="Sofas By Daneen home">Sofas By Daneen</a>
           <div className="footer-news"><h2>Join our newsletter and receive a €15 gift voucher</h2><p>Your weekly dose of inspiration.<br />Discover our creations first and receive a €15 voucher for your next order over €150.</p><div className="newsletter-field"><label className="sr-only" htmlFor="newsletter-email">Email address</label><input id="newsletter-email" name="email" type="email" autoComplete="email" inputMode="email" placeholder="Your email *" /><button type="button" aria-label="Subscribe to the newsletter">→</button></div></div>
-          <div className="footer-columns"><div><h4>The House of Sofas By Daneen</h4><a href="#sur-mesure">The House</a><a href="/collections">Lookbook</a><a href="/collections">Fabrics</a><a href="#showrooms">Showrooms</a><a href="#atelier">The Sofas By Daneen Workshop</a><a href="#atelier">Reupholstery - Artisan Upholsterers</a></div><div><h4>Information &amp; Contact</h4><a href="#top">Search</a><a href="#showrooms">Find a showroom</a><a href="#showrooms">Catalogue</a><a href="/collections">Leopard Ottoman</a><a href="/collections">Designer Benches</a><a href="/collections">Editorials</a></div><div id="professionals"><h4>Legal Information</h4><a href="#showrooms">Legal notice</a><a href="#showrooms">Privacy policy</a><a href="#showrooms">Terms and conditions</a><a href="#showrooms">FAQ</a><a href="#showrooms">Make a return</a><a href="#showrooms">Contact us</a></div><div><h4>Follow Us</h4><a href="#showrooms">YouTube</a><a href="#showrooms">Pinterest</a><a href="#showrooms">Instagram</a><a href="#showrooms">LinkedIn</a><a href="#showrooms">Email</a></div></div>
+          <div className="footer-columns"><div><h4>The House of Sofas By Daneen</h4><a href="#sur-mesure">The House</a><Link href="/collections">Lookbook</Link><Link href="/collections">Fabrics</Link><a href="#showrooms">Showrooms</a><a href="#atelier">The Sofas By Daneen Workshop</a><a href="#atelier">Reupholstery - Artisan Upholsterers</a></div><div><h4>Information &amp; Contact</h4><a href="#top">Search</a><a href="#showrooms">Find a showroom</a><a href="#showrooms">Catalogue</a><Link href="/collections">Leopard Ottoman</Link><Link href="/collections">Designer Benches</Link><Link href="/collections">Editorials</Link></div><div id="professionals"><h4>Legal Information</h4><a href="#showrooms">Legal notice</a><a href="#showrooms">Privacy policy</a><a href="#showrooms">Terms and conditions</a><a href="#showrooms">FAQ</a><a href="#showrooms">Make a return</a><a href="#showrooms">Contact us</a></div><div><h4>Follow Us</h4><a href="#showrooms">YouTube</a><a href="#showrooms">Pinterest</a><a href="#showrooms">Instagram</a><a href="#showrooms">LinkedIn</a><a href="#showrooms">Email</a></div></div>
           <div className="copyright"><span>LANGUAGE &nbsp; English</span><span>Copyright © 2026 Sofas By Daneen. Designed by BureauBarbara</span></div>
         </footer>
       </div>
