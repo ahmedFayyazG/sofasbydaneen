@@ -5,6 +5,7 @@ import SiteHeader from "../../components/SiteHeader";
 import { getAllSlugs, getProduct } from "../../lib/products";
 import ProductGallery from "./ProductGallery";
 import "./product.css";
+import "./product-refine.css";
 
 const SITE_URL = "https://sofas-by-daneen-fashion-recreation.ahmedfayyaz47.chatgpt.site";
 
