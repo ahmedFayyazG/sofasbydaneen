@@ -49,7 +49,7 @@ const P = (slug: string, path: string) => `/products/${slug}/${path}`;
 type AuthoredProduct = Omit<Product, "colorFamilies" | "seatOptions" | "priceFromValue">;
 
 function parsePriceValue(price: string): number {
-  return Number(price.replace(/[^\d,]/g, "").replace(",", "."));
+  return Number(price.replace(/[^\d.]/g, ""));
 }
 
 function uniqueSorted<T extends string | number>(values: T[]): T[] {
@@ -102,10 +102,10 @@ const productCatalog: AuthoredProduct[] = [
     category: "Corner Sofas",
     tagline: "A generous L-shaped silhouette for grand living rooms",
     heroImage: P("corner-sofa", "01-slate-grey-velvet/white-bg/daneen-corner-sofa-slate-grey-velvet-white-front.jpg"),
-    priceFrom: "€3.290,00",
+    priceFrom: "£3,290.00",
     intro: [
       "The Loire is our most generous corner silhouette — a low, deep-seated L-shape built to anchor a living room without ever feeling heavy. Square block arms and a plump, loose back cushion give it an easy, lived-in elegance.",
-      "Every Loire is upholstered by hand in our Lille workshop, in a fabric chosen from our couture colourway library or your own designer of choice.",
+      "Every Loire is upholstered by hand in our United Kingdom workshop, in a fabric chosen from our couture colourway library or your own designer of choice.",
     ],
     silhouette: "Low profile L-shaped corner sofa with square block arms, a deep single seat cushion and loose plump back cushions. Small dark timber feet keep the silhouette grounded and architectural.",
     details: [
@@ -195,7 +195,7 @@ const productCatalog: AuthoredProduct[] = [
     category: "Chaise Sofas",
     tagline: "A relaxed silhouette with a sweeping chaise return",
     heroImage: P("chaise-sofa", "01-slate-grey-velvet/studio/daneen-chaise-sofa-slate-grey-velvet-studio-01.jpg"),
-    priceFrom: "€2.980,00",
+    priceFrom: "£2,980.00",
     intro: [
       "The Vosges pairs a traditional three-seat sofa with a long, cushioned chaise return — the piece to stretch out on at the end of the day. Its rounded arm and softly upholstered chaise edge keep the whole silhouette relaxed rather than rigid.",
       "Hand-built in our workshop and finished in the fabric of your choosing, the Vosges is equally at home as a reading corner or the centrepiece of an open living space.",
@@ -288,10 +288,10 @@ const productCatalog: AuthoredProduct[] = [
     category: "U-Shape Sofas",
     tagline: "Our largest silhouette, built for gathering",
     heroImage: P("u-shape-sofa", "01-slate-grey-velvet/studio/daneen-u-shape-sofa-slate-grey-velvet-studio-01.jpg"),
-    priceFrom: "€4.480,00",
+    priceFrom: "£4,480.00",
     intro: [
       "The Camargue is the largest piece in our collection: a full U-shaped sectional with two facing chaise returns, designed for households who gather. It seats a crowd without ever losing the low, tailored profile that runs through every Sofas By Daneen silhouette.",
-      "Every panel is upholstered by hand, seam by seam, in our Lille workshop — the same couture attention we give a single armchair, scaled up to a piece that can hold a whole family.",
+      "Every panel is upholstered by hand, seam by seam, in our United Kingdom workshop — the same couture attention we give a single armchair, scaled up to a piece that can hold a whole family.",
     ],
     silhouette: "Symmetrical U-shaped sectional with two opposing chaise returns, square block arms and deep bench-style seating upholstered in one continuous run for a clean, tailored line.",
     details: [
@@ -381,7 +381,7 @@ const productCatalog: AuthoredProduct[] = [
     category: "Modular Sofas",
     tagline: "Configurable seating that grows with your room",
     heroImage: P("modular-corner-sofa", "by-size/03-3-seat/daneen-modular-corner-sofa-3-seat-beige-studio-front.jpg"),
-    priceFrom: "€1.690,00",
+    priceFrom: "£1,690.00",
     intro: [
       "The Marais is our modular system: clean-lined seating blocks with a single crisp front seam that click together into anything from a compact one-seater to a full five-seat corner arrangement with a chaise return.",
       "Because each module is upholstered separately, you can start small and add sections later, or mix fabrics between blocks for a more graphic, contemporary layout.",
@@ -427,7 +427,7 @@ const productCatalog: AuthoredProduct[] = [
     category: "Chesterfield Sofas",
     tagline: "The classic tufted silhouette, remade in couture fabrics",
     heroImage: P("chesterfield-sofa", "by-size/03-3-seat/daneen-chesterfield-sofa-3-seat-beige-studio-front.jpg"),
-    priceFrom: "€2.190,00",
+    priceFrom: "£2,190.00",
     intro: [
       "Our Chesterfield honours the original silhouette in full: rolled scroll arms, nailhead trim in warm antique bronze, and a fully diamond-tufted back and seat, hand-buttoned by our upholsterers.",
       "Available from a single armchair through to a five-seat chaise-corner configuration, and in eight couture fabrics — from soft brushed linen to jewel-toned velvet.",

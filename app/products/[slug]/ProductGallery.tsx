@@ -151,7 +151,7 @@ export default function ProductGallery({ product, initialFabricCode }: { product
         </div>
 
         <div className="daneen-service-list">
-          <div><span>Delivery</span><b>International delivery available</b></div>
+          <div><span>Delivery</span><b>UK delivery available</b></div>
           <div><span>Production</span><b>Made to order</b></div>
           <div><span>Guarantee</span><b>10 year frame guarantee</b></div>
           <div><span>Finish</span><b>Handcrafted upholstery</b></div>

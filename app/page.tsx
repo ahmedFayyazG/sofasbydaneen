@@ -97,10 +97,10 @@ const structuredData = {
       "@id": `${SITE_URL}/#business`,
       name: "Sofas By Daneen",
       url: SITE_URL,
-      description: "French house of handcrafted bespoke furniture and couture upholstery.",
+      description: "British house of handcrafted bespoke furniture and couture upholstery.",
       logo: `${SITE_URL}/favicon.svg`,
       image: `${SITE_URL}/sofas-by-daneen-hero.png`,
-      priceRange: "€€€",
+      priceRange: "£££",
     },
     {
       "@type": "ItemList",
@@ -116,7 +116,7 @@ const structuredData = {
           brand: { "@type": "Brand", name: "Sofas By Daneen" },
           offers: {
             "@type": "Offer",
-            priceCurrency: "EUR",
+            priceCurrency: "GBP",
             price: product.priceValue,
             availability: "https://schema.org/InStock",
             url: `${SITE_URL}/products/${product.slug}`,
@@ -195,7 +195,7 @@ export default function Home() {
                   <img className="delivery-step-image" src="/delivery-worldwide-truck.png" alt="" width="1536" height="1024" loading="lazy" decoding="async" />
                 </div>
                 <h3>3 · DELIVERED WITH CARE WORLDWIDE</h3>
-                <p>Handcrafted in France and delivered worldwide.</p>
+                <p>Handcrafted in the United Kingdom and delivered worldwide.</p>
               </article>
             </div>
           </section>
@@ -304,7 +304,7 @@ export default function Home() {
           <section className="reassurance deferred-section" aria-label="Service commitments">
             <article><img src={`${CDN}Reassurance_-_icons_Plan_de_travail_1.png?crop=center&height=64&v=1729675736&width=64`} alt="" width="64" height="64" loading="lazy" decoding="async" /><h3>CLIENT SERVICE &amp; EASY RETURNS</h3><p>Enjoy 14 days to return your order<br />(excluding bespoke and international orders).</p></article>
             <article><img src={`${CDN}Reassurance_-_icons_Plan_de_travail_1.png?crop=center&height=64&v=1729675736&width=64`} alt="" width="64" height="64" loading="lazy" decoding="async" /><h3>FRENCH ARTISANAL PRODUCTION</h3><p>Bespoke personalisation service.<br />Quote within 48 hours, appointment on request.</p></article>
-            <article><img src={`${CDN}Reassurance_-_icons_Plan_de_travail_1.png?crop=center&height=64&v=1729675736&width=64`} alt="" width="64" height="64" loading="lazy" decoding="async" /><h3>SECURE DELIVERY &amp; PAYMENT</h3><p>International delivery service.<br />Pay in three instalments with Klarna.<br />Complimentary samples available.</p></article>
+            <article><img src={`${CDN}Reassurance_-_icons_Plan_de_travail_1.png?crop=center&height=64&v=1729675736&width=64`} alt="" width="64" height="64" loading="lazy" decoding="async" /><h3>SECURE DELIVERY &amp; PAYMENT</h3><p>UK delivery service.<br />Pay in three instalments with Klarna.<br />Complimentary samples available.</p></article>
           </section>
         </main>
 
@@ -312,7 +312,7 @@ export default function Home() {
 
         <footer id="showrooms" className="deferred-section">
           <a className="footer-logo" href="#top" aria-label="Sofas By Daneen home">Sofas By Daneen</a>
-          <div className="footer-news"><h2>Join our newsletter and receive a €15 gift voucher</h2><p>Your weekly dose of inspiration.<br />Discover our creations first and receive a €15 voucher for your next order over €150.</p><div className="newsletter-field"><label className="sr-only" htmlFor="newsletter-email">Email address</label><input id="newsletter-email" name="email" type="email" autoComplete="email" inputMode="email" placeholder="Your email *" /><button type="button" aria-label="Subscribe to the newsletter">→</button></div></div>
+          <div className="footer-news"><h2>Join our newsletter and receive a £15 gift voucher</h2><p>Your weekly dose of inspiration.<br />Discover our creations first and receive a £15 voucher for your next order over £150.</p><div className="newsletter-field"><label className="sr-only" htmlFor="newsletter-email">Email address</label><input id="newsletter-email" name="email" type="email" autoComplete="email" inputMode="email" placeholder="Your email *" /><button type="button" aria-label="Subscribe to the newsletter">→</button></div></div>
           <div className="footer-columns"><div><h4>The House of Sofas By Daneen</h4><a href="#sur-mesure">The House</a><Link href="/collections">Lookbook</Link><Link href="/collections">Fabrics</Link><a href="#showrooms">Showrooms</a><a href="#atelier">The Sofas By Daneen Workshop</a><a href="#atelier">Reupholstery - Artisan Upholsterers</a></div><div><h4>Information &amp; Contact</h4><a href="#top">Search</a><a href="#showrooms">Find a showroom</a><a href="#showrooms">Catalogue</a><Link href="/collections">Leopard Ottoman</Link><Link href="/collections">Designer Benches</Link><Link href="/collections">Editorials</Link></div><div id="professionals"><h4>Legal Information</h4><a href="#showrooms">Legal notice</a><a href="#showrooms">Privacy policy</a><a href="#showrooms">Terms and conditions</a><a href="#showrooms">FAQ</a><a href="#showrooms">Make a return</a><a href="#showrooms">Contact us</a></div><div><h4>Follow Us</h4><a href="#showrooms">YouTube</a><a href="#showrooms">Pinterest</a><a href="#showrooms">Instagram</a><a href="#showrooms">LinkedIn</a><a href="#showrooms">Email</a></div></div>
           <div className="copyright"><span>LANGUAGE &nbsp; English</span><span>Copyright © 2026 Sofas By Daneen. Designed by BureauBarbara</span></div>
         </footer>

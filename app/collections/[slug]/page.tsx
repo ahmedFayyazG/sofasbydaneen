@@ -28,7 +28,7 @@ export default async function CategoryPage({ params }: { params: Promise<{ slug:
     <>
       <a className="skip-link" href="#main-content">Skip to content</a>
       <div id="top">
-        <div className="announce"><span aria-hidden="true">‹</span><p>International delivery.</p><span aria-hidden="true">›</span></div>
+        <div className="announce"><span aria-hidden="true">‹</span><p>Autumn promotional events and mid-season clearance sales across UK</p><span aria-hidden="true">›</span></div>
         <SiteHeader />
         <main id="main-content">
           <nav className="breadcrumb" aria-label="Breadcrumb">

@@ -7,7 +7,7 @@ const HERO_IMAGE = "/sofas-by-daneen-hero.png";
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: "Sofas By Daneen | Handcrafted Bespoke Furniture",
-  description: "Discover handcrafted bespoke armchairs, benches and ottomans by Sofas By Daneen. Couture fabrics, made-to-measure design and French artisanal craftsmanship.",
+  description: "Discover handcrafted bespoke armchairs, benches and ottomans by Sofas By Daneen. Couture fabrics, made-to-measure design and British artisanal craftsmanship.",
   applicationName: "Sofas By Daneen",
   manifest: "/manifest.webmanifest",
   authors: [{ name: "Sofas By Daneen" }],
@@ -17,7 +17,7 @@ export const metadata: Metadata = {
   keywords: [
     "bespoke furniture",
     "handcrafted furniture",
-    "French furniture design",
+    "British furniture design",
     "custom armchair",
     "designer bench",
     "luxury ottoman",
@@ -34,13 +34,13 @@ export const metadata: Metadata = {
     url: SITE_URL,
     siteName: "Sofas By Daneen",
     title: "Sofas By Daneen | Handcrafted Bespoke Furniture",
-    description: "Bespoke couture furniture, handcrafted in France for distinctive interiors.",
+    description: "Bespoke couture furniture, handcrafted in the United Kingdom for distinctive interiors.",
     images: [{ url: HERO_IMAGE, width: 1200, height: 896, alt: "Sofas By Daneen summer sale living room with green sofa" }],
   },
   twitter: {
     card: "summary_large_image",
     title: "Sofas By Daneen | Handcrafted Bespoke Furniture",
-    description: "Bespoke couture furniture, handcrafted in France for distinctive interiors.",
+    description: "Bespoke couture furniture, handcrafted in the United Kingdom for distinctive interiors.",
     images: [HERO_IMAGE],
   },
   robots: {

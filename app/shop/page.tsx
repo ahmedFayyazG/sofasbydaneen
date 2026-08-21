@@ -57,7 +57,7 @@ export default async function ShopPage({ searchParams }: { searchParams: Promise
     <>
       <a className="skip-link" href="#main-content">Skip to content</a>
       <div id="top">
-        <div className="announce"><span aria-hidden="true">‹</span><p>International delivery.</p><span aria-hidden="true">›</span></div>
+        <div className="announce"><span aria-hidden="true">‹</span><p>Autumn promotional events and mid-season clearance sales across UK</p><span aria-hidden="true">›</span></div>
         <SiteHeader />
         <main id="main-content" className="daneen-shop-shell">
           <nav className="shop-breadcrumb" aria-label="Breadcrumb"><Link href="/">Home</Link><span>/</span><Link href="/shop">Sofas</Link>{colour && <><span>/</span><span>{colour}</span></>}</nav>
