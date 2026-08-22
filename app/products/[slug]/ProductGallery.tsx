@@ -17,6 +17,7 @@ const getMaterial = (name: string) => {
 };
 
 const colourName = (name: string) => name.replace(/\b(Velvet|Linen|Bouclé|Boucle|Chenille|Leather|Woven)\b/gi, "").trim();
+const money = (value: number) => new Intl.NumberFormat("en-GB", { style: "currency", currency: "GBP", maximumFractionDigits: 0 }).format(value);
 
 export default function ProductGallery({ product, initialFabricCode }: { product: Product; initialFabricCode?: string }) {
   const initialFabric = product.fabrics.find((f) => f.code === initialFabricCode)
@@ -38,11 +39,16 @@ export default function ProductGallery({ product, initialFabricCode }: { product
   const gallery = [front, angle, ...(fabric.lifestyle ?? [])].filter(Boolean);
   const image = gallery[Math.min(galleryIndex, Math.max(gallery.length - 1, 0))] ?? front;
 
+  const salePrice = Number(product.priceFromValue) || 0;
+  const saving = Math.max(50, Math.round((salePrice * 0.06) / 10) * 10);
+  const previousPrice = salePrice + saving;
+  const monthly = salePrice / 48;
+
   const chooseFabric = (code: string) => { if (product.fabrics.some((f) => f.code === code)) { setFabricCode(code); setGalleryIndex(0); } };
   const chooseMaterial = (material: string) => { const first = product.fabrics.find((f) => getMaterial(f.name) === material); if (first) chooseFabric(first.code); };
   const nextImage = (direction: number) => { if (gallery.length > 1) setGalleryIndex((current) => (current + direction + gallery.length) % gallery.length); };
 
-  const Options = ({ mobile = false }: { mobile?: boolean }) => <div className={mobile ? "dfs-mobile-options" : ""}>
+  const Options = ({ mobile = false, purchase = true }: { mobile?: boolean; purchase?: boolean }) => <div className={mobile ? "dfs-mobile-options" : ""}>
     <button className="dfs-option-card" type="button" onClick={() => setDrawerOpen(true)}>
       <span className="dfs-option-swatch" style={{ background: fabric.hex }} />
       <span><b>Material:</b> {selectedMaterial}<br/><b>Colour:</b> {colourName(fabric.name)}<small>{materials.length} material{materials.length === 1 ? "" : "s"} and {product.fabrics.length} colours available</small></span>
@@ -51,11 +57,13 @@ export default function ProductGallery({ product, initialFabricCode }: { product
     {product.sizes && <div className="dfs-size-block"><div className="dfs-size-title"><b>Size:</b><span>{size?.label}</span></div><div className="dfs-size-buttons">{product.sizes.map((s) => <button type="button" key={s.seats} className={size?.seats === s.seats ? "active" : ""} onClick={() => { setSeat(s.seats); setGalleryIndex(0); }}>{s.label}</button>)}</div></div>}
     <div className="dfs-option-card static"><span className="dfs-option-icon">≋</span><span><b>Seat padding:</b> Premium comfort<small>Supportive seat filling</small></span></div>
     <div className="dfs-option-card static"><span className="dfs-option-icon">▧</span><span><b>Feet:</b> Standard finish<small>Selected to suit this model</small></span></div>
-    <div className="dfs-price-area"><small>From</small><strong>{product.priceFrom}</strong><p>Flexible finance options available</p></div>
-    <div className="dfs-delivery-note">Handcrafted. Delivered to your home.</div>
-    <a className="dfs-primary-action" href="#showrooms">REQUEST A QUOTE</a>
-    <button className="dfs-secondary-action" type="button" onClick={() => setDrawerOpen(true)}>CHOOSE MATERIAL</button>
-    {!mobile && <button className="dfs-shortlist" type="button">♡ &nbsp; Add to shortlist</button>}
+    {purchase && <>
+      <div className="dfs-price-area"><small>From</small><strong>{product.priceFrom}</strong><p>Flexible finance options available</p></div>
+      <div className="dfs-delivery-note">Handcrafted. Delivered to your home.</div>
+      <a className="dfs-primary-action" href="#showrooms">REQUEST A QUOTE</a>
+      <button className="dfs-secondary-action" type="button" onClick={() => setDrawerOpen(true)}>CHOOSE MATERIAL</button>
+      {!mobile && <button className="dfs-shortlist" type="button">♡ &nbsp; Add to shortlist</button>}
+    </>}
   </div>;
 
   return <>
@@ -71,7 +79,21 @@ export default function ProductGallery({ product, initialFabricCode }: { product
         <div className="dfs-gallery-tools"><div className="dfs-thumbs">{gallery.slice(0, 4).map((src, index) => <button type="button" key={`${src}-${index}`} className={galleryIndex === index ? "active" : ""} onClick={() => setGalleryIndex(index)}><img src={src} alt={`${product.name} view ${index + 1}`} /></button>)}</div><div className="dfs-view-links"><span>Product gallery</span><span>{gallery.length} views</span></div></div>
 
         <div className="dfs-mobile-reassurance"><div><b>Made to order</b><span>Built for your home</span></div><div><b>Fabric samples</b><span>See colours at home</span></div><div><b>Expert help</b><span>Advice before you order</span></div></div>
-        <Options mobile />
+        <Options mobile purchase={false} />
+
+        <section className="dfs-mobile-purchase" aria-label="Price and purchase options">
+          <div className="dfs-mobile-sale-price"><span>Sale Price</span><div><strong>{money(salePrice)}</strong><p><b>Save {money(saving)}</b><small>After Sale Price {money(previousPrice)}</small></p></div></div>
+
+          <div className="dfs-mobile-offer"><div><b>Seasonal offer</b><span>ends in</span></div><div className="dfs-offer-countdown"><span><b>11</b><small>Days</small></span><span><b>07</b><small>Hours</small></span><span><b>04</b><small>Minutes</small></span><span><b>05</b><small>Seconds</small></span></div></div>
+
+          <div className="dfs-mobile-finance"><div className="dfs-finance-main"><span className="dfs-finance-icon">▣</span><div><p><b>{money(monthly)}</b> a month for 48 months</p><p>0% APR – No deposit</p><a href="#showrooms">Try our finance calculator</a></div></div><a className="dfs-finance-check" href="#showrooms">▱ &nbsp; Check your finance eligibility</a></div>
+
+          <div className="dfs-mobile-delivery">▰ &nbsp; Handcrafted. Delivered in est. 6 weeks</div>
+          <a className="dfs-mobile-basket" href="#showrooms">▱ &nbsp; Add to basket</a>
+          <div className="dfs-mobile-or"><span />or<span /></div>
+          <a className="dfs-mobile-phone" href="tel:+440000000000">⌕ &nbsp; Order by phone</a>
+          <button className="dfs-mobile-shortlist" type="button">♡ &nbsp; Add to shortlist</button>
+        </section>
 
         <div className="dfs-detail-tabs dfs-desktop-details" role="tablist" aria-label="Product information">{(["description", "dimensions", "delivery", "reviews"] as DetailTab[]).map((item) => <button key={item} type="button" role="tab" aria-selected={tab === item} className={tab === item ? "active" : ""} onClick={() => setTab(item)}>{item[0].toUpperCase() + item.slice(1)}</button>)}</div>
         <div className="dfs-tab-panel dfs-desktop-details">
