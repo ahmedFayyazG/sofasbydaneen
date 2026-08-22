@@ -3,20 +3,20 @@
 import { useMemo, useState } from "react";
 import type { Product } from "../../lib/products";
 
-const getFabricType = (name: string) => {
-  const value = name.toLowerCase();
-  if (value.includes("bouclé") || value.includes("boucle")) return "Bouclé";
-  if (value.includes("velvet")) return "Velvet";
-  if (value.includes("linen")) return "Linen";
-  if (value.includes("chenille")) return "Chenille";
-  if (value.includes("leather")) return "Leather";
-  if (value.includes("woven")) return "Woven";
-  return "Other";
+type DetailTab = "description" | "dimensions" | "delivery" | "reviews";
+
+const getMaterial = (name: string) => {
+  const v = name.toLowerCase();
+  if (v.includes("velvet")) return "Velvet";
+  if (v.includes("bouclé") || v.includes("boucle")) return "Bouclé";
+  if (v.includes("linen")) return "Linen";
+  if (v.includes("chenille")) return "Chenille";
+  if (v.includes("leather")) return "Leather";
+  if (v.includes("woven")) return "Woven";
+  return "Upholstery";
 };
 
-const getColourName = (name: string) => name
-  .replace(/\b(Velvet|Linen|Bouclé|Boucle|Chenille|Leather|Woven)\b/gi, "")
-  .trim();
+const colourName = (name: string) => name.replace(/\b(Velvet|Linen|Bouclé|Boucle|Chenille|Leather|Woven)\b/gi, "").trim();
 
 export default function ProductGallery({ product, initialFabricCode }: { product: Product; initialFabricCode?: string }) {
   const initialFabric = product.fabrics.find((f) => f.code === initialFabricCode)
@@ -24,141 +24,90 @@ export default function ProductGallery({ product, initialFabricCode }: { product
     ?? product.fabrics[0];
 
   const [fabricCode, setFabricCode] = useState(initialFabric.code);
-  const [seats, setSeats] = useState<number | null>(product.sizes?.[Math.min(1, product.sizes.length - 1)]?.seats ?? null);
+  const [seat, setSeat] = useState<number | null>(product.sizes?.[0]?.seats ?? null);
   const [galleryIndex, setGalleryIndex] = useState(0);
-  const [activeType, setActiveType] = useState(getFabricType(initialFabric.name));
+  const [drawerOpen, setDrawerOpen] = useState(false);
+  const [tab, setTab] = useState<DetailTab>("description");
 
   const fabric = useMemo(() => product.fabrics.find((f) => f.code === fabricCode) ?? product.fabrics[0], [product.fabrics, fabricCode]);
-  const size = useMemo(() => product.sizes?.find((s) => s.seats === seats) ?? product.sizes?.[0] ?? null, [product.sizes, seats]);
-  const fabricTypes = useMemo(() => Array.from(new Set(product.fabrics.map((f) => getFabricType(f.name)))), [product.fabrics]);
-  const visibleFabrics = useMemo(() => product.fabrics.filter((f) => getFabricType(f.name) === activeType), [product.fabrics, activeType]);
+  const size = useMemo(() => product.sizes?.find((s) => s.seats === seat) ?? product.sizes?.[0] ?? null, [product.sizes, seat]);
+  const material = getMaterial(fabric.name);
+  const materialCount = new Set(product.fabrics.map((f) => getMaterial(f.name))).size;
 
-  const studioFront = product.sizes && size && fabricCode === product.defaultFabricCode ? size.studioFront : fabric.studioFront;
-  const studioAngle = product.sizes && size && fabricCode === product.defaultFabricCode ? size.studioAngle : fabric.studioAngle;
-  const gallery = [studioFront, studioAngle, ...(fabric.lifestyle ?? [])].filter(Boolean);
-  const selectedImage = gallery[Math.min(galleryIndex, gallery.length - 1)] ?? studioFront;
+  const front = product.sizes && size && fabric.code === product.defaultFabricCode ? size.studioFront : fabric.studioFront;
+  const angle = product.sizes && size && fabric.code === product.defaultFabricCode ? size.studioAngle : fabric.studioAngle;
+  const gallery = [front, angle, ...(fabric.lifestyle ?? [])].filter(Boolean);
+  const image = gallery[Math.min(galleryIndex, gallery.length - 1)] ?? front;
 
   const chooseFabric = (code: string) => {
-    const next = product.fabrics.find((f) => f.code === code);
-    if (!next) return;
     setFabricCode(code);
-    setActiveType(getFabricType(next.name));
     setGalleryIndex(0);
   };
 
-  const chooseFabricType = (type: string) => {
-    setActiveType(type);
-    const firstFabric = product.fabrics.find((f) => getFabricType(f.name) === type);
-    if (firstFabric) {
-      setFabricCode(firstFabric.code);
-      setGalleryIndex(0);
-    }
-  };
+  const nextImage = (direction: number) => setGalleryIndex((current) => (current + direction + gallery.length) % gallery.length);
 
-  return (
-    <section className="daneen-pdp-grid">
-      <div className="daneen-pdp-left">
-        <div className="daneen-main-image">
-          <span className="daneen-badge">BESTSELLER</span>
-          <button className="daneen-heart" type="button" aria-label="Add to favourites">♡</button>
-          <button className="daneen-arrow daneen-arrow-left" type="button" aria-label="Previous image" onClick={() => setGalleryIndex((index) => (index - 1 + gallery.length) % gallery.length)}>‹</button>
-          <img src={selectedImage} alt={`${product.name} in ${fabric.name}`} width="1100" height="820" loading="eager" decoding="async" />
-          <button className="daneen-arrow daneen-arrow-right" type="button" aria-label="Next image" onClick={() => setGalleryIndex((index) => (index + 1) % gallery.length)}>›</button>
+  return <>
+    <section className="dfs-pdp-shell">
+      <div className="dfs-gallery-column">
+        <div className="dfs-gallery-stage">
+          <button type="button" className="dfs-gallery-arrow prev" aria-label="Previous image" onClick={() => nextImage(-1)}>‹</button>
+          <img src={image} alt={`${product.name} in ${fabric.name}`} width="1100" height="780" loading="eager" />
+          <button type="button" className="dfs-gallery-arrow next" aria-label="Next image" onClick={() => nextImage(1)}>›</button>
+          <button type="button" className="dfs-zoom" aria-label="Zoom product image">⌕</button>
         </div>
 
-        <div className="daneen-thumb-row" aria-label="Product gallery">
-          {gallery.slice(0, 4).map((image, index) => (
-            <button key={`${image}-${index}`} type="button" className={galleryIndex === index ? "active" : ""} onClick={() => setGalleryIndex(index)}>
-              <img src={image} alt={`${product.name} view ${index + 1}`} />
-            </button>
-          ))}
-          <button type="button" className="daneen-360" aria-label="360 degree view"><span>↻</span><b>360°</b></button>
+        <div className="dfs-gallery-tools">
+          <div className="dfs-thumbs">
+            {gallery.slice(0, 3).map((src, index) => <button key={`${src}-${index}`} className={galleryIndex === index ? "active" : ""} onClick={() => setGalleryIndex(index)}><img src={src} alt={`View ${index + 1}`} /></button>)}
+          </div>
+          <div className="dfs-view-links"><button type="button">Product video</button><button type="button">360° spin</button><button type="button">Virtual view</button><button type="button">Share</button></div>
         </div>
 
-        <div className="daneen-product-intro">
-          <h1>{product.name}</h1>
-          <div className="daneen-review-line"><span>★★★★★</span><b>4.9</b><small>(32)</small><a href="#reviews">Read reviews</a></div>
-          <p>{product.tagline}. {product.intro[0]}</p>
+        <div className="dfs-detail-tabs" role="tablist" aria-label="Product information">
+          {(["description", "dimensions", "delivery", "reviews"] as DetailTab[]).map((item) => <button key={item} role="tab" aria-selected={tab === item} className={tab === item ? "active" : ""} onClick={() => setTab(item)}>{item[0].toUpperCase() + item.slice(1)}</button>)}
         </div>
 
-        <div className="daneen-product-notes" aria-label="Product highlights">
-          <div><small>FRAME</small><strong>10 year guarantee</strong></div>
-          <div><small>MADE</small><strong>Handcrafted to order</strong></div>
-          <div><small>MATERIALS</small><strong>Premium upholstery</strong></div>
-          <div><small>PAYMENT</small><strong>Flexible finance</strong></div>
-        </div>
-
-        <div className="daneen-left-accordions">
-          <details><summary><span>Dimensions</span><b>+</b></summary><div>{product.sizes?.map((item) => <p key={item.seats}><b>{item.label}</b><span>{item.seats} seat configuration</span></p>) ?? <p>Made to order configuration</p>}</div></details>
-          <details><summary><span>Product details</span><b>+</b></summary><div>{product.details.map((detail) => <p key={detail.label}><b>{detail.label}</b><span>{detail.value}</span></p>)}</div></details>
-          <details><summary><span>Delivery &amp; returns</span><b>+</b></summary><div><p>Your sofa is made to order. Delivery details and access will be confirmed before dispatch.</p></div></details>
-          <details><summary><span>Care guide</span><b>+</b></summary><div><p>Vacuum gently, rotate loose cushions regularly and keep upholstery away from prolonged direct sunlight.</p></div></details>
+        <div className="dfs-tab-panel">
+          {tab === "description" && <div className="dfs-description"><h2>{product.name.replace(/^The\s+/i, "")}</h2>{product.intro.map((p, i) => <p key={i}>{p}</p>)}<h3>Key features</h3><ul><li>{product.silhouette}</li>{product.details.slice(0, 5).map((d) => <li key={d.label}><b>{d.label}:</b> {d.value}</li>)}</ul></div>}
+          {tab === "dimensions" && <div className="dfs-dimensions"><div className="dfs-dimension-visual"><img src={angle} alt={`${product.name} dimensions reference`} /><span>Approx. configuration</span></div><div className="dfs-dimension-table"><div className="dfs-unit-switch"><button className="active">Inch</button><button>Cm</button></div>{product.sizes?.map((s, i) => <p key={s.seats}><span>{i + 1}</span><b>{s.label}</b><em>{s.seats} seats</em></p>) ?? <p><span>1</span><b>Configuration</b><em>{product.details.find((d) => d.label === "Configuration")?.value ?? "Made to order"}</em></p>}</div></div>}
+          {tab === "delivery" && <div className="dfs-description"><h2>Delivery</h2><p>Your sofa is made to order. Access and delivery details are confirmed before dispatch.</p><p>{product.details.find((d) => d.label === "Lead time")?.value}</p></div>}
+          {tab === "reviews" && <div className="dfs-description"><h2>Customer reviews</h2><p>★★★★★ 4.9 average rating</p><p>Review content will appear here when connected to your review provider.</p></div>}
         </div>
       </div>
 
-      <aside className="daneen-config-card">
-        <div className="daneen-config-head">
-          <small>Step 1 of 4</small>
-          <h2>Create your {product.name.replace(/^The\s+/i, "")}</h2>
-          <p>Choose your size, fabric and colour</p>
-        </div>
+      <aside className="dfs-buy-column">
+        <div className="dfs-sale-banner">DANEEN COLLECTION</div>
+        <div className="dfs-product-heading"><h1>{product.name.replace(/^The\s+/i, "")}</h1><p>{product.tagline}</p><div className="dfs-stars">★★★★★ <span>4.9 · 32 reviews</span></div></div>
 
-        {product.sizes && (
-          <div className="daneen-step">
-            <h3>1. Choose your size</h3>
-            <div className="daneen-size-options">
-              {product.sizes.slice(0, 3).map((item) => (
-                <button type="button" key={item.seats} className={size?.seats === item.seats ? "active" : ""} onClick={() => { setSeats(item.seats); setGalleryIndex(0); }}>
-                  <b>{item.label}</b><small>{item.seats} Seater</small><span>From {product.priceFrom}</span>
-                </button>
-              ))}
-            </div>
-            <button className="daneen-text-button" type="button">View dimensions</button>
-          </div>
-        )}
+        <button className="dfs-option-card" type="button" onClick={() => setDrawerOpen(true)}>
+          <span className="dfs-option-swatch" style={{ background: fabric.hex }} />
+          <span><b>Material:</b> {material}<br/><b>Colour:</b> {colourName(fabric.name)}<small>{materialCount} material{materialCount === 1 ? "" : "s"} and {product.fabrics.length} colours available</small></span>
+          <strong>›</strong>
+        </button>
 
-        <div className="daneen-step">
-          <h3>{product.sizes ? "2" : "1"}. Choose your fabric</h3>
-          <div className="daneen-fabric-tabs">
-            {fabricTypes.map((type) => <button key={type} type="button" className={activeType === type ? "active" : ""} onClick={() => chooseFabricType(type)}>{type}</button>)}
-          </div>
-          <p className="daneen-showing">Showing {visibleFabrics.length} {activeType} colour{visibleFabrics.length === 1 ? "" : "s"}</p>
-          <div className="daneen-fabric-tiles">
-            {visibleFabrics.map((item) => (
-              <button key={item.code} type="button" className={item.code === fabricCode ? "active" : ""} aria-label={item.name} title={item.name} onClick={() => chooseFabric(item.code)}>
-                <span className="daneen-fabric-texture" style={{ background: item.hex }} />
-                {item.code === fabricCode && <i>✓</i>}
-              </button>
-            ))}
-          </div>
-          <div className="daneen-selected-fabric"><span style={{ background: fabric.hex }} /><p><small>Selected fabric</small><b>{fabric.name}</b><em>{fabric.code}</em></p><button type="button">Change</button></div>
-        </div>
+        {product.sizes && <div className="dfs-size-block"><div className="dfs-size-title"><b>Size:</b><span>{size?.label}</span></div><div className="dfs-size-buttons">{product.sizes.map((s) => <button key={s.seats} className={size?.seats === s.seats ? "active" : ""} onClick={() => { setSeat(s.seats); setGalleryIndex(0); }}>{s.label}</button>)}</div></div>}
 
-        <div className="daneen-step">
-          <h3>{product.sizes ? "3" : "2"}. Choose your colour</h3>
-          <div className="daneen-colour-dots">
-            {product.fabrics.map((item) => (
-              <button key={item.code} type="button" className={item.code === fabricCode ? "active" : ""} style={{ background: item.hex }} aria-label={getColourName(item.name)} title={getColourName(item.name)} onClick={() => chooseFabric(item.code)} />
-            ))}
-          </div>
-          <p className="daneen-colour-name">{getColourName(fabric.name)}</p>
-        </div>
+        <div className="dfs-option-card static"><span className="dfs-option-icon">≋</span><span><b>Seat padding:</b> Premium comfort<small>Supportive seat filling</small></span></div>
+        <div className="dfs-option-card static"><span className="dfs-option-icon">▧</span><span><b>Feet:</b> Standard finish<small>Selected to suit this model</small></span></div>
 
-        <div className="daneen-price-box">
-          <small>From</small><strong>{product.priceFrom}</strong><p>or spread the cost with flexible finance</p>
-          <a href="#showrooms" className="daneen-main-cta">REQUEST A QUOTE <span>›</span></a>
-          <button type="button" className="daneen-sample-cta">Request a free fabric sample</button>
-        </div>
-
-        <div className="daneen-service-list">
-          <div><span>Delivery</span><b>UK delivery available</b></div>
-          <div><span>Production</span><b>Made to order</b></div>
-          <div><span>Guarantee</span><b>10 year frame guarantee</b></div>
-          <div><span>Finish</span><b>Handcrafted upholstery</b></div>
-        </div>
-
-        <div className="daneen-support-links"><a href="#showrooms">Book a design appointment</a><a href="#showrooms">Chat with our team</a></div>
+        <div className="dfs-price-area"><small>From</small><strong>{product.priceFrom}</strong><p>Flexible finance options available</p></div>
+        <div className="dfs-delivery-note">Handcrafted. Delivered to your home.</div>
+        <a className="dfs-primary-action" href="#showrooms">REQUEST A QUOTE</a>
+        <button className="dfs-secondary-action" type="button" onClick={() => setDrawerOpen(true)}>CHOOSE MATERIAL</button>
+        <button className="dfs-shortlist" type="button">♡ &nbsp; Add to shortlist</button>
       </aside>
     </section>
-  );
+
+    {drawerOpen && <div className="dfs-drawer-layer" role="dialog" aria-modal="true" aria-label="Choose your material">
+      <button className="dfs-drawer-backdrop" aria-label="Close material selector" onClick={() => setDrawerOpen(false)} />
+      <aside className="dfs-material-drawer">
+        <div className="dfs-drawer-head"><div><h2>Choose your material</h2><p>{materialCount} material{materialCount === 1 ? "" : "s"} and {product.fabrics.length} colours available</p></div><button onClick={() => setDrawerOpen(false)} aria-label="Close">×</button></div>
+        <div className="dfs-drawer-preview"><img src={fabric.studioAngle} alt={`${product.name} in ${fabric.name}`} /></div>
+        <div className="dfs-drawer-copy"><h3>{material}</h3><p>Choose from the available upholstery options for this model. Select a colour below to preview it instantly on the sofa.</p><p><b>Selected colour:</b> {colourName(fabric.name)}</p></div>
+        <div className="dfs-drawer-swatches">{product.fabrics.map((f) => <button key={f.code} type="button" className={f.code === fabric.code ? "active" : ""} aria-label={f.name} title={f.name} onClick={() => chooseFabric(f.code)}><span style={{ background: f.hex }} />{f.code === fabric.code && <i>✓</i>}</button>)}</div>
+        <div className="dfs-drawer-selected"><span style={{ background: fabric.hex }} /><div><b>{fabric.name}</b><small>{fabric.code}</small></div></div>
+        <div className="dfs-drawer-footer"><button type="button" onClick={() => setDrawerOpen(false)}>Confirm selection</button></div>
+      </aside>
+    </div>}
+  </>;
 }
