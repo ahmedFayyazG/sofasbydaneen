@@ -1,6 +1,8 @@
 .dfs-mobile-heading,.dfs-mobile-options,.dfs-mobile-reassurance,.dfs-mobile-full-details,.dfs-mobile-purchase{display:none}
-.dfs-top-finance-banner{max-width:1400px;margin:18px auto 28px;background:#5f0b31;color:#fff;min-height:58px;display:flex;align-items:center;justify-content:center;gap:10px;padding:12px 24px;font-size:18px;letter-spacing:.01em;text-align:center}
-.dfs-top-finance-banner b{font-weight:600}.dfs-top-finance-banner strong{font-weight:700;color:#e8c8a8}
+.dfs-top-finance-banner{max-width:1400px;margin:18px auto 28px;background:transparent;color:#111;min-height:58px;display:flex;align-items:center;justify-content:center;gap:10px;padding:12px 24px;font-size:18px;letter-spacing:.01em;text-align:center;border:1px solid #111;position:relative;isolation:isolate;transition:color .2s ease,transform .2s ease}
+.dfs-top-finance-banner::before{content:"";position:absolute;left:8px;top:8px;width:100%;height:100%;background:#fde047;z-index:-1;transition:transform .2s ease;transform:translate(0,0)}
+.dfs-top-finance-banner:hover::before{transform:translate(-8px,-8px)}
+.dfs-top-finance-banner b{font-weight:600}.dfs-top-finance-banner strong{font-weight:800;color:#111}
 @keyframes daneen-sale-shimmer{from{background-position:0 0}to{background-position:-200% 0}}
 .dfs-desktop-summer-sale{background:linear-gradient(110deg,#000103 45%,#1e2631 55%,#000103);background-size:200% 100%;animation:daneen-sale-shimmer 2s linear infinite;color:#fff;text-align:center;padding:19px 16px;margin:0 0 28px;font-family:Melodrama,Georgia,serif;font-size:32px;line-height:1;font-weight:600;letter-spacing:.01em;border:1px solid #1e2631}
 .dfs-desktop-purchase{margin-top:22px;padding-top:18px;border-top:1px solid #ddd4d8}.dfs-desktop-sale-price>span{display:block;font-size:13px;font-weight:700;color:var(--burgundy);margin-bottom:3px}.dfs-desktop-sale-price>div{display:flex;align-items:flex-end;gap:10px}.dfs-desktop-sale-price strong{font-family:Melodrama,Georgia,serif;font-size:37px;line-height:1;color:var(--burgundy);font-weight:600}.dfs-desktop-sale-price p{margin:0 0 1px;font-size:13px;line-height:1.2;color:#594a51}.dfs-desktop-sale-price p b{display:block;color:var(--burgundy)}.dfs-desktop-sale-price p small{display:block;font-size:12px;font-weight:600}
@@ -31,6 +33,7 @@
 
 @media(max-width:640px){
   .dfs-top-finance-banner{margin:8px 14px 18px;min-height:48px;padding:10px 12px;font-size:13px;gap:6px;flex-wrap:wrap}
+  .dfs-top-finance-banner::before{left:5px;top:5px}.dfs-top-finance-banner:hover::before{transform:translate(-5px,-5px)}
   .dfs-pdp-shell{display:flex!important;flex-direction:column!important;gap:0!important;padding:0 14px!important;margin-bottom:45px!important}
   .dfs-gallery-column{order:1!important;width:100%!important;display:flex!important;flex-direction:column!important}.dfs-desktop-buy{display:none!important}.dfs-sale-banner{display:none!important}
   .dfs-mobile-heading{display:block!important;margin:8px 0 18px!important;order:1}.dfs-mobile-heading h1{font-family:Melodrama,Georgia,serif;font-size:30px!important;line-height:1.08!important;font-weight:500;color:var(--burgundy);margin:0 0 10px!important}.dfs-mobile-heading p{font-size:17px!important;line-height:1.45!important;color:#6d6267;margin:0 0 10px!important}.dfs-mobile-heading .dfs-stars,.dfs-mobile-heading .dfs-stars span{font-size:17px!important;line-height:1.4!important}.dfs-mobile-heading .dfs-stars{margin:0 0 18px!important}
