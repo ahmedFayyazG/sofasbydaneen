@@ -7,6 +7,7 @@ import ProductGallery from "./ProductGallery";
 import TrendingProducts from "./TrendingProducts";
 import "./dfs-product.css";
 import "./dfs-fixes.css";
+import "./mobile-pdp-order.css";
 import "./trending.css";
 
 const SITE_URL = "https://sofas-by-daneen-fashion-recreation.ahmedfayyaz47.chatgpt.site";
