@@ -73,6 +73,8 @@ export default function ProductGallery({ product, initialFabricCode }: { product
     <button className={mobile ? "dfs-mobile-shortlist" : "dfs-desktop-shortlist"} type="button">♡ &nbsp; Add to shortlist</button>
   </section>;
 
+  const Reassurance = () => <div className="dfs-mobile-reassurance"><div><b>Made to order</b><span>Built for your home</span></div><div><b>Fabric samples</b><span>See colours at home</span></div><div><b>Expert help</b><span>Advice before you order</span></div></div>;
+
   return <>
     <div className="dfs-top-finance-banner"><b>4 YEARS INTEREST FREE CREDIT</b><strong>NO DEPOSIT NEEDED</strong></div>
     <section className="dfs-pdp-shell">
@@ -81,10 +83,10 @@ export default function ProductGallery({ product, initialFabricCode }: { product
         <div className="dfs-gallery-stage">{gallery.length > 1 && <button type="button" className="dfs-gallery-arrow prev" aria-label="Previous image" onClick={() => nextImage(-1)}>‹</button>}<img src={image} alt={`${product.name} in ${fabric.name}`} width="1100" height="780" loading="eager" decoding="async" />{gallery.length > 1 && <button type="button" className="dfs-gallery-arrow next" aria-label="Next image" onClick={() => nextImage(1)}>›</button>}</div>
         <div className="dfs-gallery-tools"><div className="dfs-thumbs">{gallery.slice(0, 4).map((src, index) => <button type="button" key={`${src}-${index}`} className={galleryIndex === index ? "active" : ""} onClick={() => setGalleryIndex(index)}><img src={src} alt={`${product.name} view ${index + 1}`} /></button>)}</div><div className="dfs-view-links"><span>Product gallery</span><span>{gallery.length} views</span></div></div>
 
-        <div className="dfs-mobile-reassurance"><div><b>Made to order</b><span>Built for your home</span></div><div><b>Fabric samples</b><span>See colours at home</span></div><div><b>Expert help</b><span>Advice before you order</span></div></div>
         <SaleSummary mobile />
         <Options mobile />
         <PurchaseActions mobile />
+        <Reassurance />
 
         <div className="dfs-detail-tabs dfs-desktop-details" role="tablist" aria-label="Product information">{(["description", "dimensions", "delivery", "reviews"] as DetailTab[]).map((item) => <button key={item} type="button" role="tab" aria-selected={tab === item} className={tab === item ? "active" : ""} onClick={() => setTab(item)}>{item[0].toUpperCase() + item.slice(1)}</button>)}</div>
         <div className="dfs-tab-panel dfs-desktop-details">{tab === "description" && <div className="dfs-description"><h2>{product.name.replace(/^The\s+/i, "")}</h2>{product.intro.map((p, i) => <p key={i}>{p}</p>)}<h3>Key features</h3><ul><li>{product.silhouette}</li>{product.details.map((d) => <li key={d.label}><b>{d.label}:</b> {d.value}</li>)}</ul></div>}{tab === "dimensions" && <div className="dfs-dimensions"><div className="dfs-dimension-visual"><img src={angle} alt={`${product.name} configuration`} /><span>Configuration shown for reference</span></div><div className="dfs-dimension-table"><h3>Available configurations</h3>{product.sizes?.map((s, i) => <p key={s.seats}><span>{i + 1}</span><b>{s.label}</b><em>{s.seats} seats</em></p>) ?? product.details.filter((d) => /configuration|width|depth|height/i.test(d.label)).map((d, i) => <p key={d.label}><span>{i + 1}</span><b>{d.label}</b><em>{d.value}</em></p>)}</div></div>}{tab === "delivery" && <div className="dfs-description"><h2>Delivery</h2><p>Your sofa is made to order. Access and delivery details are confirmed before dispatch.</p><p>{product.details.find((d) => d.label === "Lead time")?.value ?? "Delivery timing is confirmed when you place your order."}</p></div>}{tab === "reviews" && <div className="dfs-description"><h2>Customer reviews</h2><p>★★★★★ 4.9 average rating</p><p>Based on 32 reviews.</p></div>}</div>
