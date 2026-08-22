@@ -72,6 +72,12 @@ export default function ProductGallery({ product, initialFabricCode }: { product
           <div className="dfs-view-links"><span>Product gallery</span><span>{gallery.length} views</span></div>
         </div>
 
+        <div className="dfs-mobile-reassurance" aria-label="Shopping benefits">
+          <div><b>Made to order</b><span>Built for your home</span></div>
+          <div><b>Fabric samples</b><span>See colours at home</span></div>
+          <div><b>Expert help</b><span>Advice before you order</span></div>
+        </div>
+
         <div className="dfs-detail-tabs dfs-desktop-details" role="tablist" aria-label="Product information">
           {(["description", "dimensions", "delivery", "reviews"] as DetailTab[]).map((item) => <button key={item} type="button" role="tab" aria-selected={tab === item} className={tab === item ? "active" : ""} onClick={() => setTab(item)}>{item[0].toUpperCase() + item.slice(1)}</button>)}
         </div>
@@ -81,50 +87,6 @@ export default function ProductGallery({ product, initialFabricCode }: { product
           {tab === "dimensions" && <div className="dfs-dimensions"><div className="dfs-dimension-visual"><img src={angle} alt={`${product.name} configuration`} /><span>Configuration shown for reference</span></div><div className="dfs-dimension-table"><h3>Available configurations</h3>{product.sizes?.map((s, i) => <p key={s.seats}><span>{i + 1}</span><b>{s.label}</b><em>{s.seats} seats</em></p>) ?? product.details.filter((d) => /configuration|width|depth|height/i.test(d.label)).map((d, i) => <p key={d.label}><span>{i + 1}</span><b>{d.label}</b><em>{d.value}</em></p>)}</div></div>}
           {tab === "delivery" && <div className="dfs-description"><h2>Delivery</h2><p>Your sofa is made to order. Access and delivery details are confirmed before dispatch.</p><p>{product.details.find((d) => d.label === "Lead time")?.value ?? "Delivery timing is confirmed when you place your order."}</p></div>}
           {tab === "reviews" && <div className="dfs-description"><h2>Customer reviews</h2><p>★★★★★ 4.9 average rating</p><p>Review content can be connected here when your review provider is added.</p></div>}
-        </div>
-
-        <div className="dfs-mobile-details" aria-label="Product details">
-          <div className="dfs-mobile-reassurance">
-            <div><b>Made to order</b><span>Built for your home</span></div>
-            <div><b>Fabric samples</b><span>See colours at home</span></div>
-            <div><b>Expert help</b><span>Advice before you order</span></div>
-          </div>
-
-          <section className="dfs-mobile-about">
-            <p className="dfs-mobile-kicker">ABOUT THIS SOFA</p>
-            <h2>{product.name.replace(/^The\s+/i, "")}</h2>
-            {product.intro.map((p, i) => <p key={i}>{p}</p>)}
-          </section>
-
-          <details className="dfs-mobile-accordion" open>
-            <summary>Key features <span>+</span></summary>
-            <div><ul><li>{product.silhouette}</li>{product.details.map((d) => <li key={d.label}><b>{d.label}:</b> {d.value}</li>)}</ul></div>
-          </details>
-
-          <details className="dfs-mobile-accordion">
-            <summary>Dimensions &amp; configuration <span>+</span></summary>
-            <div>
-              <img className="dfs-mobile-dimension-image" src={angle} alt={`${product.name} configuration`} />
-              {product.sizes?.map((s) => <p className="dfs-mobile-detail-row" key={s.seats}><b>{s.label}</b><span>{s.seats} seats</span></p>) ?? product.details.filter((d) => /configuration|width|depth|height/i.test(d.label)).map((d) => <p className="dfs-mobile-detail-row" key={d.label}><b>{d.label}</b><span>{d.value}</span></p>)}
-            </div>
-          </details>
-
-          <details className="dfs-mobile-accordion">
-            <summary>Delivery &amp; lead time <span>+</span></summary>
-            <div><p>Your sofa is made to order. Access and delivery details are confirmed before dispatch.</p><p>{product.details.find((d) => d.label === "Lead time")?.value ?? "Delivery timing is confirmed when you place your order."}</p></div>
-          </details>
-
-          <details className="dfs-mobile-accordion">
-            <summary>Reviews <span>+</span></summary>
-            <div className="dfs-mobile-review"><strong>4.9</strong><div><span>★★★★★</span><p>Based on 32 reviews</p></div></div>
-          </details>
-
-          <div className="dfs-mobile-help">
-            <p>Need help choosing?</p>
-            <h3>Talk to a sofa specialist</h3>
-            <span>We can help with fabrics, configuration, measurements and delivery access.</span>
-            <a href="#showrooms">GET EXPERT ADVICE</a>
-          </div>
         </div>
       </div>
 
@@ -157,9 +119,7 @@ export default function ProductGallery({ product, initialFabricCode }: { product
         <div className="dfs-drawer-head"><div><h2>Choose your material</h2><p>{materials.length} material{materials.length === 1 ? "" : "s"} and {product.fabrics.length} colours available</p></div><button type="button" onClick={() => setDrawerOpen(false)} aria-label="Close">×</button></div>
         <div className="dfs-drawer-preview"><img src={fabric.studioAngle} alt={`${product.name} in ${fabric.name}`} /></div>
         <div className="dfs-drawer-copy"><h3>{selectedMaterial}</h3><p>Select a material first, then choose one of its available colours.</p><p><b>Selected colour:</b> {colourName(fabric.name)}</p></div>
-
         {materials.length > 1 && <div className="dfs-material-tabs">{materials.map((item) => <button key={item} type="button" className={item === selectedMaterial ? "active" : ""} onClick={() => chooseMaterial(item)}>{item}</button>)}</div>}
-
         <div className="dfs-drawer-swatches">{visibleFabrics.map((f) => <button key={f.code} type="button" className={f.code === fabric.code ? "active" : ""} aria-label={f.name} title={f.name} onClick={() => chooseFabric(f.code)}><span style={{ background: f.hex }} />{f.code === fabric.code && <i>✓</i>}</button>)}</div>
         <div className="dfs-drawer-selected"><span style={{ background: fabric.hex }} /><div><b>{fabric.name}</b><small>{fabric.code}</small></div></div>
         <div className="dfs-drawer-footer"><button type="button" onClick={() => setDrawerOpen(false)}>Confirm selection</button></div>
