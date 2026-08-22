@@ -4,6 +4,7 @@ import { useMemo, useState } from "react";
 import type { Product } from "../../lib/products";
 
 type DetailTab = "description" | "dimensions" | "delivery" | "reviews";
+type FeetStyle = "Dark" | "Light";
 
 const getMaterial = (name: string) => {
   const v = name.toLowerCase();
@@ -25,6 +26,9 @@ export default function ProductGallery({ product, initialFabricCode }: { product
   const [seat, setSeat] = useState<number | null>(product.sizes?.[0]?.seats ?? null);
   const [galleryIndex, setGalleryIndex] = useState(0);
   const [drawerOpen, setDrawerOpen] = useState(false);
+  const [feetDrawerOpen, setFeetDrawerOpen] = useState(false);
+  const [feetStyle, setFeetStyle] = useState<FeetStyle>("Dark");
+  const [pendingFeetStyle, setPendingFeetStyle] = useState<FeetStyle>("Dark");
   const [tab, setTab] = useState<DetailTab>("description");
   const fabric = useMemo(() => product.fabrics.find((f) => f.code === fabricCode) ?? product.fabrics[0], [product.fabrics, fabricCode]);
   const size = useMemo(() => product.sizes?.find((s) => s.seats === seat) ?? product.sizes?.[0] ?? null, [product.sizes, seat]);
@@ -43,12 +47,14 @@ export default function ProductGallery({ product, initialFabricCode }: { product
   const chooseFabric = (code: string) => { if (product.fabrics.some((f) => f.code === code)) { setFabricCode(code); setGalleryIndex(0); } };
   const chooseMaterial = (material: string) => { const first = product.fabrics.find((f) => getMaterial(f.name) === material); if (first) chooseFabric(first.code); };
   const nextImage = (direction: number) => { if (gallery.length > 1) setGalleryIndex((current) => (current + direction + gallery.length) % gallery.length); };
+  const openFeetDrawer = () => { setPendingFeetStyle(feetStyle); setFeetDrawerOpen(true); };
+  const confirmFeet = () => { setFeetStyle(pendingFeetStyle); setFeetDrawerOpen(false); };
 
   const Options = ({ mobile = false }: { mobile?: boolean }) => <div className={mobile ? "dfs-mobile-options" : ""}>
     <button className="dfs-option-card" type="button" onClick={() => setDrawerOpen(true)}><span className="dfs-option-swatch" style={{ background: fabric.hex }} /><span><b>Material:</b> {selectedMaterial}<br/><b>Colour:</b> {colourName(fabric.name)}<small>{materials.length} material{materials.length === 1 ? "" : "s"} and {product.fabrics.length} colours available</small></span><strong>›</strong></button>
     {product.sizes && <div className="dfs-size-block"><div className="dfs-size-title"><b>Size:</b><span>{size?.label}</span></div><div className="dfs-size-buttons">{product.sizes.map((s) => <button type="button" key={s.seats} className={size?.seats === s.seats ? "active" : ""} onClick={() => { setSeat(s.seats); setGalleryIndex(0); }}>{s.label}</button>)}</div></div>}
     <div className="dfs-option-card static"><span className="dfs-option-icon">≋</span><span><b>Seat padding:</b> Premium comfort<small>Supportive seat filling</small></span></div>
-    <div className="dfs-option-card static"><span className="dfs-option-icon">▧</span><span><b>Feet:</b> Standard finish<small>Selected to suit this model</small></span></div>
+    <button className="dfs-option-card" type="button" onClick={openFeetDrawer}><span className="dfs-option-swatch dfs-feet-card-swatch" style={{ background: feetStyle === "Dark" ? "#3a2a24" : "#d9b58d" }} /><span><b>Feet:</b> {feetStyle}<small>2 styles available</small></span><strong>›</strong></button>
   </div>;
 
   const PurchaseBlock = ({ mobile = false }: { mobile?: boolean }) => <section className={mobile ? "dfs-mobile-purchase" : "dfs-desktop-purchase"} aria-label="Price and purchase options">
@@ -81,5 +87,7 @@ export default function ProductGallery({ product, initialFabricCode }: { product
     </section>
 
     {drawerOpen && <div className="dfs-drawer-layer" role="dialog" aria-modal="true" aria-label="Choose your material"><button type="button" className="dfs-drawer-backdrop" aria-label="Close material selector" onClick={() => setDrawerOpen(false)} /><aside className="dfs-material-drawer"><div className="dfs-drawer-head"><div><h2>Choose your material</h2><p>{materials.length} material{materials.length === 1 ? "" : "s"} and {product.fabrics.length} colours available</p></div><button type="button" onClick={() => setDrawerOpen(false)} aria-label="Close">×</button></div><div className="dfs-drawer-preview"><img src={fabric.studioAngle} alt={`${product.name} in ${fabric.name}`} /></div><div className="dfs-drawer-copy"><h3>{selectedMaterial}</h3><p>Select a material first, then choose one of its available colours.</p><p><b>Selected colour:</b> {colourName(fabric.name)}</p></div>{materials.length > 1 && <div className="dfs-material-tabs">{materials.map((item) => <button key={item} type="button" className={item === selectedMaterial ? "active" : ""} onClick={() => chooseMaterial(item)}>{item}</button>)}</div>}<div className="dfs-drawer-swatches">{visibleFabrics.map((f) => <button key={f.code} type="button" className={f.code === fabric.code ? "active" : ""} aria-label={f.name} title={f.name} onClick={() => chooseFabric(f.code)}><span style={{ background: f.hex }} />{f.code === fabric.code && <i>✓</i>}</button>)}</div><div className="dfs-drawer-selected"><span style={{ background: fabric.hex }} /><div><b>{fabric.name}</b><small>{fabric.code}</small></div></div><div className="dfs-drawer-footer"><button type="button" onClick={() => setDrawerOpen(false)}>Confirm selection</button></div></aside></div>}
+
+    {feetDrawerOpen && <div className="dfs-drawer-layer" role="dialog" aria-modal="true" aria-label="Choose your feet style"><button type="button" className="dfs-drawer-backdrop" aria-label="Close feet selector" onClick={() => setFeetDrawerOpen(false)} /><aside className="dfs-feet-drawer"><div className="dfs-feet-head"><div><h2>Choose your feet style</h2><p>Available in Dark and Light feet at no extra cost.</p></div><button type="button" onClick={() => setFeetDrawerOpen(false)} aria-label="Close">×</button></div><div className="dfs-feet-preview"><img src={front} alt={`${product.name} with ${pendingFeetStyle.toLowerCase()} feet`} /></div><div className="dfs-feet-options"><button type="button" className={pendingFeetStyle === "Dark" ? "active" : ""} onClick={() => setPendingFeetStyle("Dark")}><span className="dfs-feet-swatch dark"/><b>Dark</b>{pendingFeetStyle === "Dark" && <strong>✓</strong>}</button><button type="button" className={pendingFeetStyle === "Light" ? "active" : ""} onClick={() => setPendingFeetStyle("Light")}><span className="dfs-feet-swatch light"/><b>Light</b>{pendingFeetStyle === "Light" && <strong>✓</strong>}</button></div><div className="dfs-feet-footer"><button type="button" onClick={confirmFeet}>Confirm selection</button></div></aside></div>}
   </>;
 }
