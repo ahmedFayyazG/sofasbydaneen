@@ -35,8 +35,8 @@ export default function ProductGallery({ product, initialFabricCode }: { product
   const materials = useMemo(() => Array.from(new Set(product.fabrics.map((f) => getMaterial(f.name)))), [product.fabrics]);
   const selectedMaterial = getMaterial(fabric.name);
   const visibleFabrics = useMemo(() => product.fabrics.filter((f) => getMaterial(f.name) === selectedMaterial), [product.fabrics, selectedMaterial]);
-  const front = product.sizes && size && fabric.code === product.defaultFabricCode ? size.studioFront : fabric.studioFront;
-  const angle = product.sizes && size && fabric.code === product.defaultFabricCode ? size.studioAngle : fabric.studioAngle;
+  const front = product.sizes && size ? size.studioFront : fabric.studioFront;
+  const angle = product.sizes && size ? size.studioAngle : fabric.studioAngle;
   const gallery = [front, angle, ...(fabric.lifestyle ?? [])].filter(Boolean);
   const image = gallery[Math.min(galleryIndex, Math.max(gallery.length - 1, 0))] ?? front;
   const salePrice = Number(product.priceFromValue) || 0;
