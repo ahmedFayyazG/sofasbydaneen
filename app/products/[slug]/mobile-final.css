@@ -1,20 +1,20 @@
 .dfs-mobile-heading,.dfs-mobile-reassurance,.dfs-mobile-options,.dfs-mobile-full-details{display:none}
 
-/* Apple-inspired configurator surfaces: white, quiet, minimal, no shimmer */
+/* Uiverse-style neumorphic configurator surfaces */
 .dfs-option-card,.dfs-size-block{
-  background:#fff!important;
-  border:1px solid #e5e5e7!important;
-  border-radius:12px!important;
-  box-shadow:0 1px 2px rgba(0,0,0,.04),0 4px 14px rgba(0,0,0,.035)!important;
+  background:#e0e0e0!important;
+  border:0!important;
+  border-radius:24px!important;
+  box-shadow:12px 12px 30px #bebebe,-12px -12px 30px #ffffff!important;
   transform:none!important;
   overflow:hidden!important;
-  transition:border-color .2s ease,box-shadow .2s ease,background-color .2s ease!important;
+  transition:box-shadow .2s ease,transform .2s ease!important;
 }
 .dfs-option-card::before,.dfs-size-block::before{display:none!important;content:none!important;animation:none!important;background:none!important}
-.dfs-option-card:hover,.dfs-size-block:hover{transform:none!important;background:#fff!important;border-color:#d8d8dc!important;box-shadow:0 1px 3px rgba(0,0,0,.05),0 6px 18px rgba(0,0,0,.045)!important}
-.dfs-size-buttons button{background:#fff!important;border:1px solid #dedee2!important;border-radius:9px!important;box-shadow:none!important;color:#343437!important;transition:background-color .2s ease,border-color .2s ease,color .2s ease!important}
-.dfs-size-buttons button:hover{background:#f7f7f8!important;border-color:#cfcfd4!important}
-.dfs-size-buttons button.active{background:#f7f7f8!important;border:1.5px solid var(--burgundy)!important;color:var(--burgundy)!important;box-shadow:none!important}
+.dfs-option-card:hover,.dfs-size-block:hover{transform:translateY(-1px)!important;box-shadow:14px 14px 34px #b8b8b8,-14px -14px 34px #ffffff!important;background:#e0e0e0!important}
+.dfs-size-buttons button{background:#e0e0e0!important;border:0!important;border-radius:14px!important;box-shadow:5px 5px 12px #bebebe,-5px -5px 12px #ffffff!important;color:#343437!important;transition:box-shadow .2s ease,color .2s ease!important}
+.dfs-size-buttons button:hover{background:#e0e0e0!important;box-shadow:inset 3px 3px 8px #bebebe,inset -3px -3px 8px #ffffff!important}
+.dfs-size-buttons button.active{background:#e0e0e0!important;border:0!important;color:var(--burgundy)!important;box-shadow:inset 4px 4px 10px #bebebe,inset -4px -4px 10px #ffffff!important}
 
 @media(max-width:640px){
   .dfs-pdp-shell{display:block!important;padding:0 12px!important;margin:0 auto 48px!important}
@@ -38,7 +38,7 @@
   .dfs-mobile-reassurance span{font-size:11px;line-height:1.35;color:#71666b;margin-top:4px}
 
   .dfs-mobile-options{display:block!important;padding-bottom:30px!important}
-  .dfs-mobile-options .dfs-option-card,.dfs-mobile-options .dfs-size-block{margin-bottom:10px!important;border-radius:12px!important;background:#fff!important;border:1px solid #e5e5e7!important;box-shadow:0 1px 2px rgba(0,0,0,.035),0 3px 10px rgba(0,0,0,.03)!important}
+  .dfs-mobile-options .dfs-option-card,.dfs-mobile-options .dfs-size-block{margin:0 8px 24px!important;border-radius:20px!important;background:#e0e0e0!important;border:0!important;box-shadow:9px 9px 22px #bebebe,-9px -9px 22px #ffffff!important}
   .dfs-mobile-options .dfs-price-area{margin-top:18px!important;padding-top:16px!important}
   .dfs-mobile-options .dfs-primary-action,.dfs-mobile-options .dfs-secondary-action{height:52px!important;font-size:14px!important}
 
