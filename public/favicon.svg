@@ -1,6 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" role="img" aria-labelledby="title">
   <title id="title">Sofas By Daneen</title>
-  <style>@font-face{font-family:Melodrama;src:url("https://cdn.fontshare.com/wf/VEUKFNC77KIIUSHNOWJWAF2K4XRJIN3O/QVM7H4UBRHRYAZVIJFG42NIFQOHEU4LT/RSPG5F452B5Q23RR6KSVIVZS3KHJF6UY.woff2") format("woff2");font-weight:400}text{font-family:Melodrama,Georgia,serif}</style>
-  <rect width="120" height="120" rx="12" fill="#6b1438" />
-  <text x="60" y="76" text-anchor="middle" font-size="46" letter-spacing="1" fill="#fffefb">SBD</text>
+  <rect width="120" height="120" fill="#6b1438"/>
+  <text x="60" y="76" text-anchor="middle" font-family="Melodrama, Georgia, serif" font-size="46" letter-spacing="1" fill="#fffefb">SBD</text>
 </svg>
