@@ -55,6 +55,14 @@ export default async function ShopPage({
         .shop-page > .shop-filter-section:nth-of-type(3) {
           display: none !important;
         }
+
+        /* Hide Sofa beds and Cinema sofas from Shop by type and the Type filter. */
+        .shop-type-grid > .shop-type-tile:nth-child(7),
+        .shop-type-grid > .shop-type-tile:nth-child(8),
+        .ref-filter-groups > div:first-child > button:nth-of-type(7),
+        .ref-filter-groups > div:first-child > button:nth-of-type(8) {
+          display: none !important;
+        }
       `}</style>
     </>
   );
