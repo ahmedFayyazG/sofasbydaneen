@@ -4,7 +4,6 @@ import LazyVideo from "./components/LazyVideo";
 import SiteHeader from "./components/SiteHeader";
 import { products as catalog } from "./lib/products";
 
-const CDN = "https://www.clovi-paris.com/cdn/shop/files/";
 const SITE_URL = "https://sofas-by-daneen-fashion-recreation.ahmedfayyaz47.chatgpt.site";
 
 const products = catalog.map((product) => ({
@@ -81,6 +80,90 @@ const instagramReels = [
     href: "https://www.instagram.com/reel/C_soONsosRW/",
   },
 ] as const;
+
+const trustHighlights = [
+  {
+    icon: "sofa",
+    title: "Handcrafted to order",
+    copy: "Many of our sofas are made by hand for your home",
+  },
+  {
+    icon: "guarantee",
+    title: "Made for lasting comfort",
+    copy: "Selected wooden frames include our 15 year guarantee",
+  },
+  {
+    icon: "finance",
+    title: "Flexible ways to pay",
+    copy: "4 years interest-free credit, subject to status",
+  },
+  {
+    icon: "craft",
+    title: "Made with care",
+    copy: "Every sofa is handcrafted and quality checked",
+  },
+  {
+    icon: "swatches",
+    title: "Choose with confidence",
+    copy: "Complimentary fabric samples are available",
+  },
+] as const;
+
+type TrustIconName = (typeof trustHighlights)[number]["icon"];
+
+function TrustIcon({ name }: { name: TrustIconName }) {
+  if (name === "finance") {
+    return <span className="trust-finance-icon" aria-hidden="true"><strong>0%</strong><small>APR</small></span>;
+  }
+
+  const commonProps = {
+    className: "trust-highlight-icon",
+    viewBox: "0 0 64 64",
+    fill: "none",
+    stroke: "currentColor",
+    strokeWidth: 1.8,
+    strokeLinecap: "round" as const,
+    strokeLinejoin: "round" as const,
+    "aria-hidden": true,
+  };
+
+  if (name === "sofa") {
+    return (
+      <svg {...commonProps}>
+        <path d="M12 31v-7c0-3 2-5 5-5h30c3 0 5 2 5 5v7" />
+        <path d="M9 31h46a4 4 0 0 1 4 4v12H5V35a4 4 0 0 1 4-4Z" />
+        <path d="M12 47v5M52 47v5M22 31V19M42 31V19" />
+      </svg>
+    );
+  }
+
+  if (name === "guarantee") {
+    return (
+      <svg {...commonProps}>
+        <path d="M32 5 38 9l7-1 3 7 7 3-1 7 4 7-4 6 1 8-7 3-3 7-7-1-6 4-6-4-7 1-3-7-7-3 1-8-4-6 4-7-1-7 7-3 3-7 7 1 6-4Z" />
+        <text x="32" y="37" textAnchor="middle" fill="currentColor" stroke="none" fontSize="16" fontWeight="700">15</text>
+      </svg>
+    );
+  }
+
+  if (name === "craft") {
+    return (
+      <svg {...commonProps}>
+        <path d="m12 42 16-16 10 10-16 16H12V42Z" />
+        <path d="m31 23 5-5 10 10-5 5M42 14l4-4M46 18l7-1M39 10l1-6" />
+        <path d="m16 43 6 5" />
+      </svg>
+    );
+  }
+
+  return (
+    <svg {...commonProps}>
+      <path d="M18 8h26a4 4 0 0 1 4 4v18L32 55 16 30V12a4 4 0 0 1 2-4Z" />
+      <path d="M16 20h32M16 30h32" />
+      <circle cx="32" cy="14" r="2" />
+    </svg>
+  );
+}
 
 const structuredData = {
   "@context": "https://schema.org",
@@ -284,7 +367,7 @@ export default function Home() {
           <section className="instagram-reels deferred-section" aria-labelledby="instagram-reels-title">
             <h2 id="instagram-reels-title">Watch our pieces come to life</h2>
             <div className="reel-carousel" aria-label="Instagram reels carousel">
-              {instagramReels.map((reel, index) => (
+              {instagramReels.map((reel) => (
                 <article className="reel-card" key={reel.title}>
                   <div className="reel-embed-frame">
                     <iframe
@@ -301,14 +384,23 @@ export default function Home() {
             </div>
           </section>
 
-          <section className="reassurance deferred-section" aria-label="Service commitments">
-            <article><img src={`${CDN}Reassurance_-_icons_Plan_de_travail_1.png?crop=center&height=64&v=1729675736&width=64`} alt="" width="64" height="64" loading="lazy" decoding="async" /><h3>CLIENT SERVICE &amp; EASY RETURNS</h3><p>Enjoy 14 days to return your order<br />(excluding bespoke and international orders).</p></article>
-            <article><img src={`${CDN}Reassurance_-_icons_Plan_de_travail_1.png?crop=center&height=64&v=1729675736&width=64`} alt="" width="64" height="64" loading="lazy" decoding="async" /><h3>FRENCH ARTISANAL PRODUCTION</h3><p>Bespoke personalisation service.<br />Quote within 48 hours, appointment on request.</p></article>
-            <article><img src={`${CDN}Reassurance_-_icons_Plan_de_travail_1.png?crop=center&height=64&v=1729675736&width=64`} alt="" width="64" height="64" loading="lazy" decoding="async" /><h3>SECURE DELIVERY &amp; PAYMENT</h3><p>International delivery service.<br />Pay in three instalments with Klarna.<br />Complimentary samples available.</p></article>
+          <section className="brand-trust deferred-section" aria-label="Why choose Sofas By Daneen">
+            <div className="brand-trust-strip">
+              {trustHighlights.map((item) => (
+                <article className="brand-trust-card" key={item.title}>
+                  <TrustIcon name={item.icon} />
+                  <h3>{item.title}</h3>
+                  <p>{item.copy}</p>
+                </article>
+              ))}
+            </div>
+            <div className="brand-trust-intro">
+              <h2>Welcome to Sofas By Daneen — Your Sofa &amp; Furniture Experts</h2>
+              <p>At Sofas By Daneen, considered design meets skilled craftsmanship and made-to-order comfort. From fabric and size to the finishing details, every piece is created to feel at home in your space and delivered with care.</p>
+              <a href="#sur-mesure">Read more</a>
+            </div>
           </section>
         </main>
-
-        <div className="prefooter-mark deferred-section"><span aria-label="Sofas By Daneen monogram">SBD</span></div>
 
         <footer id="showrooms" className="deferred-section">
           <a className="footer-logo" href="#top" aria-label="Sofas By Daneen home">Sofas By Daneen</a>
