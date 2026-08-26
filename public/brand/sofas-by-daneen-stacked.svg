@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 300" role="img" aria-labelledby="title">
+  <title id="title">Sofas By Daneen</title>
+  <rect width="360" height="300" fill="#fffefb"/>
+  <text x="180" y="92" text-anchor="middle" font-family="Melodrama, Georgia, serif" font-size="64" fill="#6b1438">Sofas</text>
+  <text x="180" y="150" text-anchor="middle" font-family="Cabinet Grotesk, Arial, sans-serif" font-size="14" letter-spacing="7" fill="#6b1438" opacity=".55">BY</text>
+  <text x="180" y="226" text-anchor="middle" font-family="Melodrama, Georgia, serif" font-size="64" fill="#6b1438">Daneen</text>
+</svg>
