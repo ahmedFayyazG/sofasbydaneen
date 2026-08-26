@@ -1,276 +1,69 @@
 "use client";
-
 import Link from "next/link";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { useMemo, useRef, useState } from "react";
-import type { MouseEvent, TouchEvent } from "react";
+import { usePathname,useRouter,useSearchParams } from "next/navigation";
+import { useMemo,useRef,useState } from "react";
+import type { MouseEvent,TouchEvent } from "react";
 import { colorFamilyFromFabric } from "../lib/products";
-import type { ColorFamily, Product, ProductType } from "../lib/products";
+import type { ColorFamily,Product,ProductType } from "../lib/products";
 
-type SizeFilterKey = "1" | "2" | "3" | "4" | "chaise" | "modular";
-type RawFilters = { type: string | null; color: string | null; seats: string | null };
-type FilterState = { type: ProductType | null; color: ColorFamily | null; seats: SizeFilterKey | null };
+type SizeFilterKey="1"|"2"|"3"|"4"|"chaise"|"modular";
+type RawFilters={type:string|null;color:string|null;seats:string|null};
+type FilterState={type:ProductType|null;color:ColorFamily|null;seats:SizeFilterKey|null};
+const typeOptions:{key:ProductType;label:string}[]=[{key:"corner",label:"Corner sofas"},{key:"chaise",label:"Chaise sofas"},{key:"u-shape",label:"U-shape sofas"},{key:"modular",label:"Modular sofas"},{key:"chesterfield",label:"Chesterfield"}];
+const colorOptions:{key:ColorFamily;label:string;hex:string}[]=[{key:"ivory",label:"Ivory",hex:"#f2ede2"},{key:"beige",label:"Beige",hex:"#d9c7a8"},{key:"grey",label:"Grey",hex:"#5b6472"},{key:"green",label:"Green",hex:"#2f6f6a"},{key:"red",label:"Red",hex:"#8b1e1e"},{key:"brown",label:"Brown",hex:"#6b4a34"},{key:"blue",label:"Blue",hex:"#1f2a44"},{key:"black",label:"Black",hex:"#2b2b2d"}];
+const sizeOptions:{key:SizeFilterKey;label:string;icon:string}[]=[{key:"1",label:"Armchairs",icon:"1"},{key:"2",label:"2 seater sofas",icon:"2"},{key:"3",label:"3 seater sofas",icon:"3"},{key:"4",label:"4 seater sofas",icon:"4"},{key:"chaise",label:"Chaise",icon:"L"},{key:"modular",label:"Modular",icon:"+"}];
+const isProductType=(v:string|null):v is ProductType=>typeOptions.some(o=>o.key===v);
+const isColorFamily=(v:string|null):v is ColorFamily=>colorOptions.some(o=>o.key===v);
+const isSizeFilter=(v:string|null):v is SizeFilterKey=>sizeOptions.some(o=>o.key===v);
+function parseFilters(f:RawFilters):FilterState{return{type:isProductType(f.type)?f.type:null,color:isColorFamily(f.color)?f.color:null,seats:isSizeFilter(f.seats)?f.seats:null}}
+function matchesSize(p:Product,s:SizeFilterKey){if(s==="chaise")return p.type==="chaise"||p.sizes?.some(o=>/chaise/i.test(o.label));if(s==="modular")return p.type==="modular";return p.seatOptions.includes(Number(s))}
 
-const typeOptions: { key: ProductType; label: string }[] = [
-  { key: "corner", label: "Corner sofas" },
-  { key: "chaise", label: "Chaise sofas" },
-  { key: "u-shape", label: "U-shape sofas" },
-  { key: "modular", label: "Modular sofas" },
-  { key: "chesterfield", label: "Chesterfield" },
-];
-
-const colorOptions: { key: ColorFamily; label: string; hex: string }[] = [
-  { key: "ivory", label: "Ivory", hex: "#f2ede2" },
-  { key: "beige", label: "Beige", hex: "#d9c7a8" },
-  { key: "grey", label: "Grey", hex: "#5b6472" },
-  { key: "green", label: "Green", hex: "#2f6f6a" },
-  { key: "red", label: "Red", hex: "#8b1e1e" },
-  { key: "brown", label: "Brown", hex: "#6b4a34" },
-  { key: "blue", label: "Blue", hex: "#1f2a44" },
-  { key: "black", label: "Black", hex: "#2b2b2d" },
-];
-
-const sizeOptions: { key: SizeFilterKey; label: string; icon: string }[] = [
-  { key: "1", label: "Armchairs", icon: "1" },
-  { key: "2", label: "2 seater sofas", icon: "2" },
-  { key: "3", label: "3 seater sofas", icon: "3" },
-  { key: "4", label: "4 seater sofas", icon: "4" },
-  { key: "chaise", label: "Chaise", icon: "L" },
-  { key: "modular", label: "Modular", icon: "+" },
-];
-
-const isProductType = (value: string | null): value is ProductType =>
-  typeOptions.some((option) => option.key === value);
-
-const isColorFamily = (value: string | null): value is ColorFamily =>
-  colorOptions.some((option) => option.key === value);
-
-const isSizeFilter = (value: string | null): value is SizeFilterKey =>
-  sizeOptions.some((option) => option.key === value);
-
-function parseFilters(filters: RawFilters): FilterState {
-  return {
-    type: isProductType(filters.type) ? filters.type : null,
-    color: isColorFamily(filters.color) ? filters.color : null,
-    seats: isSizeFilter(filters.seats) ? filters.seats : null,
-  };
+function ProductCard({product,selectedColor}:{product:Product;selectedColor:ColorFamily|null}){
+ const initialFabric=product.fabrics.find(f=>f.code===product.defaultFabricCode)??product.fabrics[0];
+ const colorMatchedFabric=selectedColor?product.fabrics.find(f=>colorFamilyFromFabric(f)===selectedColor):null;
+ const [fabricCode,setFabricCode]=useState((colorMatchedFabric??initialFabric).code);
+ const touchStartRef=useRef<{x:number;y:number}|null>(null);const didSwipeRef=useRef(false);
+ const selectedFabric=product.fabrics.find(f=>f.code===fabricCode)??colorMatchedFabric??initialFabric;
+ const selectedIndex=Math.max(product.fabrics.findIndex(f=>f.code===selectedFabric.code),0);const hasMultipleImages=product.fabrics.length>1;
+ const showAdjacentFabric=(direction:-1|1)=>{if(!hasMultipleImages)return;const next=(selectedIndex+direction+product.fabrics.length)%product.fabrics.length;const fabric=product.fabrics[next];if(fabric)setFabricCode(fabric.code)};
+ const handleTouchStart=(e:TouchEvent<HTMLDivElement>)=>{const t=e.touches[0];if(!t)return;didSwipeRef.current=false;touchStartRef.current={x:t.clientX,y:t.clientY}};
+ const handleTouchEnd=(e:TouchEvent<HTMLDivElement>)=>{const start=touchStartRef.current,t=e.changedTouches[0];touchStartRef.current=null;if(!start||!t||!hasMultipleImages)return;const dx=t.clientX-start.x,dy=t.clientY-start.y;if(Math.abs(dx)<42||Math.abs(dx)<Math.abs(dy)*1.2)return;didSwipeRef.current=true;showAdjacentFabric(dx<0?1:-1)};
+ const handleImageClick=(e:MouseEvent<HTMLAnchorElement>)=>{if(!didSwipeRef.current)return;e.preventDefault();didSwipeRef.current=false};
+ const monthly=((product.priceFromValue*.9)/48).toFixed(2);const deliveryWeeks=product.type==="corner"?"6":"7";
+ return <article className="ref-product-card">
+  <div className="product-image-frame ref-card-image" onTouchStart={handleTouchStart} onTouchEnd={handleTouchEnd}>
+   <Link href={`/products/${product.slug}`} className="product-image" aria-label={`View ${product.name}`} onClick={handleImageClick}><img src={selectedFabric.studioFront} alt={`${product.name} in ${selectedFabric.name}`} width="750" height="520" loading="lazy" decoding="async"/></Link>
+   <span className="ref-delivery-badge">▱ <b>From {deliveryWeeks} weeks</b></span>
+   {hasMultipleImages&&<div className="product-image-controls"><button type="button" className="product-image-arrow prev" onClick={()=>showAdjacentFabric(-1)}>‹</button><button type="button" className="product-image-arrow next" onClick={()=>showAdjacentFabric(1)}>›</button></div>}
+  </div>
+  <div className="ref-card-title"><h3><Link href={`/products/${product.slug}`}>{product.name.replace(/^The /,"")}</Link></h3><button type="button" aria-label={`Add ${product.name} to favourites`}>♡</button></div>
+  <p className="ref-card-tagline">{product.tagline}</p>
+  <p className="ref-card-fabric">{selectedFabric.name}</p>
+  <div className="ref-card-options"><span className="ref-rainbow" aria-hidden="true"></span><span className="ref-sofa-icon" aria-hidden="true">▱</span><span>more sizes and colours available</span></div>
+  <div className="ref-card-price"><strong>{product.priceFrom}</strong><i></i><b>£{monthly} per month</b></div>
+  <div className="ref-card-finance">over 4 years 10% deposit <strong>0% APR*</strong></div>
+  <div className="ref-hidden-swatches" aria-label={`${product.fabrics.length} colours`}>{product.fabrics.map(f=><button type="button" key={f.code} onClick={()=>setFabricCode(f.code)} aria-label={f.name}/>)}</div>
+ </article>
 }
 
-function matchesSize(product: Product, size: SizeFilterKey) {
-  if (size === "chaise") return product.type === "chaise" || product.sizes?.some((option) => /chaise/i.test(option.label));
-  if (size === "modular") return product.type === "modular";
-  return product.seatOptions.includes(Number(size));
-}
-
-function ProductCard({ product, selectedColor }: { product: Product; selectedColor: ColorFamily | null }) {
-  const initialFabric = product.fabrics.find((fabric) => fabric.code === product.defaultFabricCode) ?? product.fabrics[0];
-  const colorMatchedFabric = selectedColor ? product.fabrics.find((fabric) => colorFamilyFromFabric(fabric) === selectedColor) : null;
-  const [fabricCode, setFabricCode] = useState((colorMatchedFabric ?? initialFabric).code);
-  const touchStartRef = useRef<{ x: number; y: number } | null>(null);
-  const didSwipeRef = useRef(false);
-
-  const selectedFabric = product.fabrics.find((fabric) => fabric.code === fabricCode) ?? colorMatchedFabric ?? initialFabric;
-  const selectedIndex = Math.max(product.fabrics.findIndex((fabric) => fabric.code === selectedFabric.code), 0);
-  const hasMultipleImages = product.fabrics.length > 1;
-
-  const showAdjacentFabric = (direction: -1 | 1) => {
-    if (!hasMultipleImages) return;
-    const nextIndex = (selectedIndex + direction + product.fabrics.length) % product.fabrics.length;
-    const nextFabric = product.fabrics[nextIndex];
-    if (nextFabric) setFabricCode(nextFabric.code);
-  };
-
-  const handleTouchStart = (event: TouchEvent<HTMLDivElement>) => {
-    const touch = event.touches[0];
-    if (!touch) return;
-    didSwipeRef.current = false;
-    touchStartRef.current = { x: touch.clientX, y: touch.clientY };
-  };
-
-  const handleTouchEnd = (event: TouchEvent<HTMLDivElement>) => {
-    const start = touchStartRef.current;
-    const touch = event.changedTouches[0];
-    touchStartRef.current = null;
-    if (!start || !touch || !hasMultipleImages) return;
-
-    const deltaX = touch.clientX - start.x;
-    const deltaY = touch.clientY - start.y;
-    if (Math.abs(deltaX) < 42 || Math.abs(deltaX) < Math.abs(deltaY) * 1.2) return;
-
-    didSwipeRef.current = true;
-    showAdjacentFabric(deltaX < 0 ? 1 : -1);
-  };
-
-  const handleImageClick = (event: MouseEvent<HTMLAnchorElement>) => {
-    if (!didSwipeRef.current) return;
-    event.preventDefault();
-    didSwipeRef.current = false;
-  };
-
-  return (
-    <article>
-      <div className="product-image-frame" onTouchStart={handleTouchStart} onTouchEnd={handleTouchEnd}>
-        <Link href={`/products/${product.slug}`} className="product-image" aria-label={`View ${product.name}`} onClick={handleImageClick}>
-          <img
-            src={selectedFabric.studioFront}
-            alt={`${product.name} in ${selectedFabric.name}`}
-            width="750"
-            height="750"
-            loading="lazy"
-            decoding="async"
-          />
-        </Link>
-        {hasMultipleImages && (
-          <div className="product-image-controls" aria-label={`Browse ${product.name} colours`}>
-            <button type="button" className="product-image-arrow prev" aria-label={`Previous ${product.name} image`} onClick={() => showAdjacentFabric(-1)}>‹</button>
-            <button type="button" className="product-image-arrow next" aria-label={`Next ${product.name} image`} onClick={() => showAdjacentFabric(1)}>›</button>
-          </div>
-        )}
-      </div>
-      <div className="swatch-row" aria-label={`${product.fabrics.length} available colour${product.fabrics.length === 1 ? "" : "s"}`}>
-        {product.fabrics.map((fabric) => (
-          <button
-            type="button"
-            className={fabric.code === selectedFabric.code ? "active" : ""}
-            style={{ background: fabric.hex }}
-            key={fabric.code}
-            aria-label={`Show ${product.name} in ${fabric.name}`}
-            aria-pressed={fabric.code === selectedFabric.code}
-            onClick={() => setFabricCode(fabric.code)}
-          />
-        ))}
-      </div>
-      <h3><Link href={`/products/${product.slug}`}>{product.name}</Link></h3>
-      <p>{product.priceFrom}</p>
-    </article>
-  );
-}
-
-export default function ShopFilters({ products, initialFilters }: { products: Product[]; initialFilters: RawFilters }) {
-  const router = useRouter();
-  const pathname = usePathname();
-  const searchParams = useSearchParams();
-  void initialFilters;
-
-  const urlFilters = useMemo(() => parseFilters({
-    type: searchParams.get("type"),
-    color: searchParams.get("color"),
-    seats: searchParams.get("seats"),
-  }), [searchParams]);
-
-  const selectedType = urlFilters.type;
-  const selectedColor = urlFilters.color;
-  const selectedSize = urlFilters.seats;
-  const hasFilters = Boolean(selectedType || selectedColor || selectedSize);
-
-  const typeImages = useMemo(() => {
-    return Object.fromEntries(typeOptions.map((option) => {
-      const product = products.find((item) => item.type === option.key);
-      return [option.key, product?.heroImage ?? products[0]?.heroImage ?? ""];
-    })) as Record<ProductType, string>;
-  }, [products]);
-
-  const filteredProducts = useMemo(() => {
-    return products.filter((product) => {
-      if (selectedType && product.type !== selectedType) return false;
-      if (selectedColor && !product.colorFamilies.includes(selectedColor)) return false;
-      if (selectedSize && !matchesSize(product, selectedSize)) return false;
-      return true;
-    });
-  }, [products, selectedType, selectedColor, selectedSize]);
-
-  const setFilter = (key: "type" | "color" | "seats", value: string) => {
-    const params = new URLSearchParams(searchParams.toString());
-    if (params.get(key) === value) {
-      params.delete(key);
-    } else {
-      params.set(key, value);
-    }
-    const query = params.toString();
-    router.replace(query ? `${pathname}?${query}` : pathname, { scroll: false });
-  };
-
-  const clearFilters = () => {
-    router.replace(pathname, { scroll: false });
-  };
-
-  return (
-    <div className="shop-page">
-      <section className="shop-filter-section" aria-labelledby="shop-by-type-title">
-        <div className="shop-filter-heading">
-          <h2 id="shop-by-type-title">Shop by type</h2>
-          {hasFilters && <button type="button" className="shop-clear" onClick={clearFilters}>Clear filters</button>}
-        </div>
-        <div className="shop-type-grid">
-          {typeOptions.map((option) => (
-            <button
-              type="button"
-              className={selectedType === option.key ? "shop-type-tile active" : "shop-type-tile"}
-              aria-pressed={selectedType === option.key}
-              key={option.key}
-              onClick={() => setFilter("type", option.key)}
-            >
-              <img src={typeImages[option.key]} alt="" width="320" height="220" loading="lazy" decoding="async" />
-              <span>{option.label}</span>
-            </button>
-          ))}
-        </div>
-      </section>
-
-      <section className="shop-filter-section" aria-labelledby="shop-colour-title">
-        <h2 id="shop-colour-title">Got a colour in mind</h2>
-        <div className="shop-colour-row">
-          {colorOptions.map((option) => (
-            <button
-              type="button"
-              className={selectedColor === option.key ? "shop-colour active" : "shop-colour"}
-              style={{ background: option.hex }}
-              aria-label={option.label}
-              aria-pressed={selectedColor === option.key}
-              key={option.key}
-              onClick={() => setFilter("color", option.key)}
-            />
-          ))}
-        </div>
-      </section>
-
-      <section className="shop-filter-section" aria-labelledby="shop-size-title">
-        <h2 id="shop-size-title">Got a size in mind</h2>
-        <div className="shop-size-row">
-          {sizeOptions.map((option) => (
-            <button
-              type="button"
-              className={selectedSize === option.key ? "shop-size active" : "shop-size"}
-              aria-pressed={selectedSize === option.key}
-              key={option.key}
-              onClick={() => setFilter("seats", option.key)}
-            >
-              <span aria-hidden="true">{option.icon}</span>
-              {option.label}
-            </button>
-          ))}
-        </div>
-      </section>
-
-      <section className="shop-results" aria-labelledby="shop-results-title">
-        <div className="shop-results-heading">
-          <h2 id="shop-results-title">{filteredProducts.length} matching sofa{filteredProducts.length === 1 ? "" : "s"}</h2>
-        </div>
-
-        {filteredProducts.length > 0 ? (
-          <div className="products-clone shop-products">
-            {filteredProducts.map((product) => (
-              <ProductCard product={product} selectedColor={selectedColor} key={`${product.slug}-${selectedColor ?? "all"}`} />
-            ))}
-          </div>
-        ) : (
-          <div className="shop-empty">
-            <h3>No sofas match these filters</h3>
-            <p>Try removing one filter or return to the full collection.</p>
-            <button type="button" className="pill filled" onClick={clearFilters}>CLEAR FILTERS</button>
-          </div>
-        )}
-      </section>
-    </div>
-  );
+export default function ShopFilters({products,initialFilters}:{products:Product[];initialFilters:RawFilters}){
+ const router=useRouter(),pathname=usePathname(),searchParams=useSearchParams();void initialFilters;
+ const urlFilters=useMemo(()=>parseFilters({type:searchParams.get("type"),color:searchParams.get("color"),seats:searchParams.get("seats")}),[searchParams]);
+ const selectedType=urlFilters.type,selectedColor=urlFilters.color,selectedSize=urlFilters.seats,hasFilters=Boolean(selectedType||selectedColor||selectedSize);
+ const typeImages=useMemo(()=>Object.fromEntries(typeOptions.map(o=>{const p=products.find(i=>i.type===o.key);return[o.key,p?.heroImage??products[0]?.heroImage??""]})) as Record<ProductType,string>,[products]);
+ const filteredProducts=useMemo(()=>products.filter(p=>{if(selectedType&&p.type!==selectedType)return false;if(selectedColor&&!p.colorFamilies.includes(selectedColor))return false;if(selectedSize&&!matchesSize(p,selectedSize))return false;return true}),[products,selectedType,selectedColor,selectedSize]);
+ const setFilter=(key:"type"|"color"|"seats",value:string)=>{const params=new URLSearchParams(searchParams.toString());if(params.get(key)===value)params.delete(key);else params.set(key,value);const q=params.toString();router.replace(q?`${pathname}?${q}`:pathname,{scroll:false})};
+ const clearFilters=()=>router.replace(pathname,{scroll:false});
+ return <div className="shop-page">
+  <section className="shop-filter-section" aria-labelledby="shop-by-type-title"><div className="shop-filter-heading"><h2 id="shop-by-type-title">Shop by type</h2>{hasFilters&&<button type="button" className="shop-clear" onClick={clearFilters}>Clear filters</button>}</div><div className="shop-type-grid">{typeOptions.map(o=><button type="button" className={selectedType===o.key?"shop-type-tile active":"shop-type-tile"} aria-pressed={selectedType===o.key} key={o.key} onClick={()=>setFilter("type",o.key)}><img src={typeImages[o.key]} alt="" width="320" height="220" loading="lazy"/><span>{o.label}</span></button>)}</div></section>
+  <section className="shop-filter-section" aria-labelledby="shop-colour-title"><h2 id="shop-colour-title">Got a colour in mind</h2><div className="shop-colour-row">{colorOptions.map(o=><button type="button" className={selectedColor===o.key?"shop-colour active":"shop-colour"} style={{background:o.hex}} aria-label={o.label} aria-pressed={selectedColor===o.key} key={o.key} onClick={()=>setFilter("color",o.key)}/>)}</div></section>
+  <section className="shop-filter-section" aria-labelledby="shop-size-title"><h2 id="shop-size-title">Got a size in mind</h2><div className="shop-size-row">{sizeOptions.map(o=><button type="button" className={selectedSize===o.key?"shop-size active":"shop-size"} aria-pressed={selectedSize===o.key} key={o.key} onClick={()=>setFilter("seats",o.key)}><span>{o.icon}</span>{o.label}</button>)}</div></section>
+  <section className="shop-results" aria-labelledby="shop-results-title"><div className="ref-results-toolbar"><button type="button">Filter <span>☷</span></button><button type="button">Sort By <span>⌄</span></button></div><div className="shop-results-heading"><h2 id="shop-results-title">{filteredProducts.length} matching sofa{filteredProducts.length===1?"":"s"}</h2></div>{filteredProducts.length>0?<div className="products-clone shop-products ref-product-grid">{filteredProducts.map(p=><ProductCard product={p} selectedColor={selectedColor} key={`${p.slug}-${selectedColor??"all"}`}/>)}</div>:<div className="shop-empty"><h3>No sofas match these filters</h3><p>Try removing one filter or return to the full collection.</p><button type="button" className="pill filled" onClick={clearFilters}>CLEAR FILTERS</button></div>}</section>
+  <style jsx global>{`
+   .ref-results-toolbar{max-width:1480px;margin:0 auto 26px;padding:0 28px;display:flex;gap:14px}.ref-results-toolbar button{width:145px;height:44px;border:0;border-bottom:1px solid #333;background:#fff;color:#333;display:flex;align-items:center;justify-content:space-between;font-size:16px;padding:0}.shop-results-heading{display:none!important}
+   .products-clone.ref-product-grid{max-width:1480px;padding:0 28px;gap:30px;grid-template-columns:repeat(4,minmax(0,1fr));align-items:start}.products-clone.ref-product-grid article.ref-product-card{text-align:left;color:#3c3b3b;min-width:0}.ref-card-image .product-image{aspect-ratio:1.54/1;background:#f3f1ed}.ref-card-image .product-image img{object-fit:cover}.ref-delivery-badge{position:absolute;right:0;bottom:0;background:#454545;color:#fff;border-radius:18px 0 0 0;padding:6px 12px;font-size:11px;display:flex;align-items:center;gap:6px}.ref-delivery-badge b{font-weight:500}.ref-card-title{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:17px}.products-clone.ref-product-grid .ref-card-title h3{font-family:Graphik,Arial,sans-serif;font-size:17px;line-height:1.25;color:#3d3d3d;margin:0;font-weight:500}.ref-card-title>button{border:0;background:none;font-size:25px;line-height:1;padding:0;color:#555;cursor:pointer;font-weight:300}.products-clone.ref-product-grid p.ref-card-tagline,.products-clone.ref-product-grid p.ref-card-fabric{font-size:14px;line-height:1.35;color:#555;font-weight:400;margin:7px 0 0}.products-clone.ref-product-grid p.ref-card-fabric{margin-top:5px}.ref-card-options{display:flex;align-items:center;gap:9px;margin-top:12px;font-size:13px;color:#555;white-space:nowrap}.ref-rainbow{width:18px;height:18px;border-radius:50%;background:conic-gradient(#ef3b36,#ffd83d,#46c96f,#37aaf5,#805ad5,#ef3b36);position:relative}.ref-rainbow:after{content:"";position:absolute;inset:2px;background:#fff;border-radius:50%}.ref-sofa-icon{font-size:22px;line-height:1;color:#555}.ref-card-price{display:flex;align-items:center;gap:9px;margin-top:23px;color:#444;font-size:15px;line-height:1}.ref-card-price strong,.ref-card-price b{font-weight:500}.ref-card-price i{width:1px;height:17px;background:#aaa}.ref-card-finance{font-size:11px;line-height:1.35;color:#666;margin-top:4px}.ref-card-finance strong{font-weight:700;color:#444}.ref-hidden-swatches{display:none}.ref-product-card .product-image-controls{opacity:0;display:block;transition:opacity .2s}.ref-product-card:hover .product-image-controls{opacity:1}
+   @media(max-width:900px){.products-clone.ref-product-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:32px 16px;padding:0 16px}.ref-results-toolbar{padding:0 16px}.ref-card-options{white-space:normal}.ref-card-price{flex-wrap:wrap}}
+   @media(max-width:560px){.products-clone.ref-product-grid{grid-template-columns:1fr 1fr;gap:28px 10px;padding:0 10px}.ref-results-toolbar{padding:0 10px;margin-bottom:18px}.ref-results-toolbar button{width:50%;font-size:14px}.ref-card-title{margin-top:10px}.products-clone.ref-product-grid .ref-card-title h3{font-size:15px}.products-clone.ref-product-grid p.ref-card-tagline,.products-clone.ref-product-grid p.ref-card-fabric{font-size:12px}.ref-card-options{font-size:11px;gap:5px;margin-top:8px}.ref-rainbow{width:15px;height:15px}.ref-sofa-icon{font-size:17px}.ref-card-price{font-size:13px;margin-top:14px;gap:5px}.ref-card-finance{font-size:9px}.ref-delivery-badge{font-size:9px;padding:4px 7px}.ref-card-title>button{font-size:20px}}
+  `}</style>
+ </div>
 }
