@@ -12,6 +12,7 @@ import "./mobile-pdp-order.css";
 import "./mobile-final.css";
 import "./trending.css";
 import "./restore-prior.css";
+import "./sofas-friends-layout.css";
 
 const SITE_URL = "https://sofas-by-daneen-fashion-recreation.ahmedfayyaz47.chatgpt.site";
 
