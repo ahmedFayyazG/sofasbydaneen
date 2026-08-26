@@ -66,21 +66,21 @@ footer{background:#6b1438;color:#fffefb;padding:38px 40px 22px;position:relative
 @media(max-width:540px){.shop-filter-section h2,.shop-results-heading h2{text-align:left;font-size:25px}.shop-filter-heading{justify-content:space-between}.shop-type-tile{flex-basis:158px}.shop-colour{width:48px;height:48px;flex-basis:48px;border-width:7px}.shop-size{min-width:118px;padding:11px 12px;font-size:13px}.shop-size span{width:30px;height:22px}.shop-products.products-clone{gap:34px;padding:0 18px}.shop-empty{margin:20px 18px 0}}
 
 .brand-trust{color:var(--burgundy);border-top:1px solid rgba(107,20,56,.1)}
-.brand-trust-strip{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:clamp(18px,2.8vw,52px);align-items:start;background:#f2efed;padding:44px clamp(28px,8vw,150px) 48px}
+.brand-trust-strip{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:clamp(18px,2.8vw,52px);align-items:start;background:#f2f2f2;padding:44px clamp(28px,8vw,150px) 54px}
 .brand-trust-card{text-align:center;min-width:0}
-.trust-highlight-icon{display:block;width:58px;height:58px;margin:0 auto 8px;color:var(--burgundy)}
+.trust-highlight-icon{display:block;width:64px;height:58px;margin:0 auto 8px;color:var(--burgundy)}
 .trust-finance-icon{height:58px;display:flex;align-items:flex-end;justify-content:center;gap:4px;margin:0 auto 8px;line-height:1;color:var(--burgundy)}
 .trust-finance-icon strong{font-size:50px;font-weight:400;letter-spacing:-3px}
 .trust-finance-icon small{font-size:10px;margin-bottom:8px;letter-spacing:.4px}
-.brand-trust-card h3{font-size:15px;line-height:1.25;margin:0 0 4px;font-weight:700}
-.brand-trust-card p{max-width:190px;margin:0 auto;font-size:15px;line-height:1.5;color:var(--burgundy)}
+.brand-trust-card p{max-width:205px;margin:0 auto;font-size:15px;line-height:1.7;color:var(--burgundy)}
+.brand-trust-card p span{display:block}
 .brand-trust-intro{text-align:center;background:var(--ivory);padding:40px 24px 36px}
 .brand-trust-intro h2{max-width:940px;margin:0 auto 12px;font-size:29px;line-height:1.15;color:var(--burgundy)}
 .brand-trust-intro p{max-width:860px;margin:0 auto 8px;font-size:15px;line-height:1.7;color:rgba(57,42,51,.78)}
 .brand-trust-intro a{display:inline-block;font-size:14px;line-height:1.4;font-weight:800;text-decoration:none;border-bottom:1px solid currentColor}
 html body .brand-trust-intro h2{font-family:"Melodrama","Cabinet Grotesk",serif!important;font-weight:500!important}
 @media(max-width:1000px){.brand-trust-strip{display:flex;gap:12px;overflow-x:auto;overscroll-behavior-x:contain;scroll-snap-type:x mandatory;padding:34px 18px 38px}.brand-trust-card{flex:0 0 min(220px,68vw);scroll-snap-align:center;padding:0 10px}.brand-trust-intro{padding:34px 20px 32px}.brand-trust-intro h2{font-size:26px}.brand-trust-intro p{font-size:14px}}
-@media(max-width:540px){.brand-trust-strip{padding-top:30px}.trust-highlight-icon,.trust-finance-icon{height:52px}.trust-highlight-icon{width:52px}.trust-finance-icon strong{font-size:44px}.brand-trust-card h3{font-size:14px}.brand-trust-card p{font-size:14px}.brand-trust-intro h2{font-size:23px;line-height:1.2}}
+@media(max-width:540px){.brand-trust-strip{padding-top:30px}.trust-highlight-icon,.trust-finance-icon{height:52px}.trust-highlight-icon{width:58px}.trust-finance-icon strong{font-size:44px}.brand-trust-card p{font-size:14px}.brand-trust-intro h2{font-size:23px;line-height:1.2}}
 
 @media(min-width:901px){.colour-finder,.size-finder{padding-left:72px;padding-right:72px;overflow:visible}.colour-grid{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));align-items:center;gap:20px;width:100%;max-width:none;margin:0 auto;padding:0}.colour-grid a{display:grid;place-items:center;width:100%;height:auto}.colour-grid img{width:min(80px,100%);height:auto;aspect-ratio:1/1}.size-grid{width:100%;max-width:none;display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:12px;padding:0;margin:0 auto}.size-grid>a{width:100%;min-width:0;flex:initial;text-align:center}.size-grid img{width:min(200px,100%);margin:0 auto}}
 @media(max-width:1180px){.bespoke-band{width:calc(100% - 36px);margin-top:28px;padding:28px 18px 32px}.bespoke-heading{padding:42px 18px 0}.bespoke-heading h2{font-size:30px}.process-grid{grid-template-columns:1fr;gap:22px}.process-grid article{padding:0 14px}.process-grid .process-image-space{min-height:86px;height:auto;margin-bottom:2px}.process-grid p{white-space:normal}}
@@ -89,15 +89,19 @@ html body,html body *{font-family:"Cabinet Grotesk",Arial,sans-serif!important}
 html body .brand,html body .hero-content h1,html body .bespoke-heading h2,html body .process-grid h3,html body .collection-heading h2,html body .couture-copy h2,html body .atelier-content h2,html body .featured-strip h2,html body .reviews-clone h2,html body .instagram-reels h2,html body .reassurance h3,html body .footer-logo,html body .footer-columns h4,html body .cats-hero h1,html body .cat-hero-copy h1,html body .cat-card h2,html body .cat-other h2,html body .cat-fabrics h2,html body .product-fabric-list h2,html body .product-info h1,html body .product-content h2,html body .product-details h2,html body .product-lifestyle h2,html body .shop-hero h1,html body .shop-filter-section h2,html body .shop-results-heading h2,html body .shop-empty h3,html body .sofa-finder h2,html body .colour-finder h2,html body .size-finder h2,html body .pill,html body .square-button,html body .video-button,html body .cat-card-label,html body .atelier-tag{font-family:"Melodrama","Cabinet Grotesk",serif!important;font-weight:500!important}
 html body .main-nav a{font-family:"Melodrama","Cabinet Grotesk",serif!important;font-size:clamp(18px,1.25vw,23px)!important;font-weight:500!important;line-height:1!important}
 .brand-logo{color:inherit}
-.brand-logo--primary,.brand-logo--reverse{display:inline-flex;align-items:baseline;justify-content:center;gap:.22em;white-space:nowrap;font-size:36px;line-height:1}
+.brand-logo--primary,.brand-logo--reverse{display:inline-flex;align-items:baseline;justify-content:center;gap:.2272727em;white-space:nowrap;font-size:36px;line-height:1}
 .brand-logo-word,.brand-logo-mark-letters{font-family:"Melodrama",Georgia,serif!important;font-weight:400!important}
 .brand-logo-by,.brand-logo-mark-name{font-family:"Cabinet Grotesk",Arial,sans-serif!important}
-.brand-logo-by{font-size:.21em;letter-spacing:.32em;text-transform:uppercase;opacity:.58;transform:translateY(-.06em)}
+.brand-logo-by{font-size:.215909em;letter-spacing:.315789em;text-transform:uppercase;opacity:.55}
+.brand-logo--reverse .brand-logo-by{opacity:.6}
+.brand-logo--primary,.brand-logo--stacked,.brand-logo--mark{color:#6b1438}
+.brand-logo--reverse,.brand-logo--mark-reverse{color:#fffefb}
 .brand-logo--stacked{display:inline-flex;flex-direction:column;align-items:center;line-height:.94;font-size:64px}
 .brand-logo--stacked .brand-logo-by{font-size:14px;letter-spacing:7px;margin:16px 0 14px;transform:none}
 .brand-logo--mark,.brand-logo--mark-reverse{display:block;width:100%;height:auto}
 .brand{display:flex;align-items:center;justify-content:center;max-width:250px;text-transform:none}
-.brand .brand-logo{font-size:clamp(27px,2vw,35px)}
+.brand .brand-logo{display:inline-flex;font-size:clamp(27px,2vw,34px)}
+.brand .brand-logo>span{display:inline-block}
 .footer-logo{display:flex;align-items:center;justify-content:center;text-transform:none}
 .footer-logo .brand-logo{font-size:clamp(38px,4vw,58px)}
 @media(max-width:1180px){html body .brand,html body .hero-content h1,html body .bespoke-heading h2,html body .process-grid h3,html body .collection-heading h2,html body .couture-copy h2,html body .atelier-content h2,html body .featured-strip h2,html body .reviews-clone h2,html body .instagram-reels h2,html body .reassurance h3,html body .footer-logo,html body .footer-columns h4,html body .cats-hero h1,html body .cat-hero-copy h1,html body .cat-card h2,html body .cat-other h2,html body .cat-fabrics h2,html body .product-fabric-list h2,html body .product-info h1,html body .product-content h2,html body .product-details h2,html body .product-lifestyle h2,html body .shop-hero h1,html body .shop-filter-section h2,html body .shop-results-heading h2,html body .shop-empty h3,html body .sofa-finder h2,html body .colour-finder h2,html body .size-finder h2,html body .pill,html body .square-button,html body .video-button,html body .cat-card-label,html body .atelier-tag{font-weight:500!important;line-height:1.04!important}html body .main-nav{width:100%;max-width:100%;overflow-x:hidden;padding-right:22px!important}html body .main-nav a{max-width:100%;white-space:normal;overflow-wrap:anywhere;font-size:clamp(31px,8.6vw,39px)!important;font-weight:500!important;line-height:1.02!important}}
