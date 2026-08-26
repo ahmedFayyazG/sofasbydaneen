@@ -24,10 +24,29 @@ export default function SiteHeader() {
       >
         {menuOpen ? "CLOSE" : "MENU"}
       </button>
-      <Link className="brand" href="/" aria-label="Sofas By Daneen home" onClick={closeMenu}>
-        <span className="brand-word">Sofas</span>
-        <span className="brand-by">BY</span>
-        <span className="brand-word">Daneen</span>
+      <Link
+        className="brand"
+        href="/"
+        aria-label="Sofas By Daneen home"
+        onClick={closeMenu}
+        style={{
+          display: "inline-flex",
+          alignItems: "baseline",
+          justifyContent: "flex-start",
+          gap: "8px",
+          width: "max-content",
+          maxWidth: "290px",
+          color: "#6b1438",
+          lineHeight: 1,
+          whiteSpace: "nowrap",
+          textTransform: "none",
+          textAlign: "left",
+          letterSpacing: 0,
+        }}
+      >
+        <span style={{ display: "inline-block", fontFamily: "Melodrama, serif", fontSize: "38px", fontWeight: 400, letterSpacing: "-1.2px", textTransform: "none" }}>Sofas</span>
+        <span style={{ display: "inline-block", fontFamily: "'Cabinet Grotesk', sans-serif", fontSize: "10px", fontWeight: 500, letterSpacing: "3.2px", textTransform: "uppercase", opacity: 0.55, margin: "0 2px" }}>BY</span>
+        <span style={{ display: "inline-block", fontFamily: "Melodrama, serif", fontSize: "38px", fontWeight: 400, letterSpacing: "-1.2px", textTransform: "none" }}>Daneen</span>
       </Link>
       <nav
         id="primary-navigation"
