@@ -3,6 +3,7 @@
 import Link from "next/link";
 import type React from "react";
 import { useState } from "react";
+import BrandLogo from "./BrandLogo";
 
 const Icon = ({ children }: { children: React.ReactNode }) => (
   <span className="head-icon" aria-hidden="true">{children}</span>
@@ -25,7 +26,7 @@ export default function SiteHeader() {
         {menuOpen ? "CLOSE" : "MENU"}
       </button>
       <Link className="brand" href="/" aria-label="Sofas By Daneen home" onClick={closeMenu}>
-        <span>Sofas By Daneen</span>
+        <BrandLogo variant="primary" />
       </Link>
       <nav
         id="primary-navigation"

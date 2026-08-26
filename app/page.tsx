@@ -1,10 +1,10 @@
 import Link from "next/link";
+import BrandLogo from "./components/BrandLogo";
 import HomeProductGrid from "./components/HomeProductGrid";
 import LazyVideo from "./components/LazyVideo";
 import SiteHeader from "./components/SiteHeader";
 import { products as catalog } from "./lib/products";
 
-const CDN = "https://www.clovi-paris.com/cdn/shop/files/";
 const SITE_URL = "https://sofas-by-daneen-fashion-recreation.ahmedfayyaz47.chatgpt.site";
 
 const products = catalog.map((product) => ({
@@ -81,6 +81,86 @@ const instagramReels = [
     href: "https://www.instagram.com/reel/C_soONsosRW/",
   },
 ] as const;
+
+const trustHighlights = [
+  {
+    icon: "britain",
+    lines: ["Many of our sofas", "handmade in Britain"],
+  },
+  {
+    icon: "guarantee",
+    lines: ["Wooden framed sofas", "include our 15 year", "guarantee"],
+  },
+  {
+    icon: "finance",
+    lines: ["4 years interest free", "credit, subject to status"],
+  },
+  {
+    icon: "craft",
+    lines: ["Sofas are made by hand", "and quality tested"],
+  },
+  {
+    icon: "kitemark",
+    lines: ["Awarded the British", "Standard Kitemark"],
+  },
+] as const;
+
+type TrustIconName = (typeof trustHighlights)[number]["icon"];
+
+function TrustIcon({ name }: { name: TrustIconName }) {
+  if (name === "finance") {
+    return <span className="trust-finance-icon" aria-hidden="true"><strong>0%</strong><small>APR</small></span>;
+  }
+
+  const commonProps = {
+    className: "trust-highlight-icon",
+    viewBox: "0 0 72 64",
+    fill: "none",
+    stroke: "currentColor",
+    strokeWidth: 1.8,
+    strokeLinecap: "round" as const,
+    strokeLinejoin: "round" as const,
+    "aria-hidden": true,
+  };
+
+  if (name === "britain") {
+    return (
+      <svg {...commonProps}>
+        <circle cx="36" cy="32" r="20" />
+        <path d="M22 18 50 46M50 18 22 46M16 32h40M36 12v40" />
+        <path d="m18.5 24 9 8-9 8M53.5 24l-9 8 9 8M28 14.2l8 8 8-8M28 49.8l8-8 8 8" strokeWidth="1" />
+      </svg>
+    );
+  }
+
+  if (name === "guarantee") {
+    return (
+      <svg {...commonProps}>
+        <path d="M6 36v-6a4 4 0 0 1 4-4h30a4 4 0 0 1 4 4v6M4 36h42a4 4 0 0 1 4 4v10H2V40a4 4 0 0 1 2-4ZM8 50v4M44 50v4M17 36V26M34 36V26" />
+        <path d="m55 7 4 3 5-1 2 5 5 2-1 5 2 5-4 3-1 5-5 1-4 3-4-3-5 1-2-5-5-2 1-5-3-4 3-4-1-5 5-2 2-5 5 1 4-3Z" />
+        <text x="57" y="26" textAnchor="middle" fill="currentColor" stroke="none" fontSize="12" fontWeight="700">15</text>
+      </svg>
+    );
+  }
+
+  if (name === "craft") {
+    return (
+      <svg {...commonProps}>
+        <path d="m12 39 8-8 8 7 9-9 7 6-13 14c-4 4-10 4-14 1l-5-4c-2-2-2-5 0-7Z" />
+        <path d="m37 29 8-9M42 15l7-7 11 8-7 7-11-8ZM49 12l-4 6" />
+        <path d="M18 36 9 27M22 32l-8-8" />
+      </svg>
+    );
+  }
+
+  return (
+    <svg {...commonProps}>
+      <path d="M22 12h28a4 4 0 0 1 4 4v15L36 55 18 31V16a4 4 0 0 1 4-4Z" />
+      <path d="M18 26h36M22 31l14 19 14-19" />
+      <circle cx="36" cy="19" r="4" />
+    </svg>
+  );
+}
 
 const structuredData = {
   "@context": "https://schema.org",
@@ -284,7 +364,7 @@ export default function Home() {
           <section className="instagram-reels deferred-section" aria-labelledby="instagram-reels-title">
             <h2 id="instagram-reels-title">Watch our pieces come to life</h2>
             <div className="reel-carousel" aria-label="Instagram reels carousel">
-              {instagramReels.map((reel, index) => (
+              {instagramReels.map((reel) => (
                 <article className="reel-card" key={reel.title}>
                   <div className="reel-embed-frame">
                     <iframe
@@ -301,17 +381,25 @@ export default function Home() {
             </div>
           </section>
 
-          <section className="reassurance deferred-section" aria-label="Service commitments">
-            <article><img src={`${CDN}Reassurance_-_icons_Plan_de_travail_1.png?crop=center&height=64&v=1729675736&width=64`} alt="" width="64" height="64" loading="lazy" decoding="async" /><h3>CLIENT SERVICE &amp; EASY RETURNS</h3><p>Enjoy 14 days to return your order<br />(excluding bespoke and international orders).</p></article>
-            <article><img src={`${CDN}Reassurance_-_icons_Plan_de_travail_1.png?crop=center&height=64&v=1729675736&width=64`} alt="" width="64" height="64" loading="lazy" decoding="async" /><h3>FRENCH ARTISANAL PRODUCTION</h3><p>Bespoke personalisation service.<br />Quote within 48 hours, appointment on request.</p></article>
-            <article><img src={`${CDN}Reassurance_-_icons_Plan_de_travail_1.png?crop=center&height=64&v=1729675736&width=64`} alt="" width="64" height="64" loading="lazy" decoding="async" /><h3>SECURE DELIVERY &amp; PAYMENT</h3><p>International delivery service.<br />Pay in three instalments with Klarna.<br />Complimentary samples available.</p></article>
+          <section className="brand-trust deferred-section" aria-label="Why choose Sofas By Daneen">
+            <div className="brand-trust-strip">
+              {trustHighlights.map((item) => (
+                <article className="brand-trust-card" key={item.icon}>
+                  <TrustIcon name={item.icon} />
+                  <p>{item.lines.map((line) => <span key={line}>{line}</span>)}</p>
+                </article>
+              ))}
+            </div>
+            <div className="brand-trust-intro">
+              <h2>Welcome to Sofas By Daneen — Your Sofa &amp; Furniture Experts</h2>
+              <p>With years of experience creating high quality, comfortable and stylish sofas, our team combines considered design with skilled craftsmanship. From choosing the right shape and fabric to the finishing details, we help you create furniture that feels at home in your space.</p>
+              <a href="#sur-mesure">Read more</a>
+            </div>
           </section>
         </main>
 
-        <div className="prefooter-mark deferred-section"><span aria-label="Sofas By Daneen monogram">SBD</span></div>
-
         <footer id="showrooms" className="deferred-section">
-          <a className="footer-logo" href="#top" aria-label="Sofas By Daneen home">Sofas By Daneen</a>
+          <a className="footer-logo" href="#top" aria-label="Sofas By Daneen home"><BrandLogo variant="reverse" /></a>
           <div className="footer-news"><h2>Join our newsletter and receive a €15 gift voucher</h2><p>Your weekly dose of inspiration.<br />Discover our creations first and receive a €15 voucher for your next order over €150.</p><div className="newsletter-field"><label className="sr-only" htmlFor="newsletter-email">Email address</label><input id="newsletter-email" name="email" type="email" autoComplete="email" inputMode="email" placeholder="Your email *" /><button type="button" aria-label="Subscribe to the newsletter">→</button></div></div>
           <div className="footer-columns"><div><h4>The House of Sofas By Daneen</h4><a href="#sur-mesure">The House</a><Link href="/collections">Lookbook</Link><Link href="/collections">Fabrics</Link><a href="#showrooms">Showrooms</a><a href="#atelier">The Sofas By Daneen Workshop</a><a href="#atelier">Reupholstery - Artisan Upholsterers</a></div><div><h4>Information &amp; Contact</h4><a href="#top">Search</a><a href="#showrooms">Find a showroom</a><a href="#showrooms">Catalogue</a><Link href="/collections">Leopard Ottoman</Link><Link href="/collections">Designer Benches</Link><Link href="/collections">Editorials</Link></div><div id="professionals"><h4>Legal Information</h4><a href="#showrooms">Legal notice</a><a href="#showrooms">Privacy policy</a><a href="#showrooms">Terms and conditions</a><a href="#showrooms">FAQ</a><a href="#showrooms">Make a return</a><a href="#showrooms">Contact us</a></div><div><h4>Follow Us</h4><a href="#showrooms">YouTube</a><a href="#showrooms">Pinterest</a><a href="#showrooms">Instagram</a><a href="#showrooms">LinkedIn</a><a href="#showrooms">Email</a></div></div>
           <div className="copyright"><span>LANGUAGE &nbsp; English</span><span>Copyright © 2026 Sofas By Daneen. Designed by BureauBarbara</span></div>
