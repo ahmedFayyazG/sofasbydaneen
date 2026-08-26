@@ -35,6 +35,7 @@ export default function SiteHeader() {
         <Link href="/shop" onClick={closeMenu}>Shop</Link>
         <Link href="/collections" onClick={closeMenu}>Our Collections <small aria-hidden="true">⌄</small></Link>
         <Link href="/#sur-mesure" onClick={closeMenu}>Bespoke by Sofas By Daneen</Link>
+        <Link href="/inspiration" onClick={closeMenu}>Inspiration</Link>
         <Link href="/#professionals" onClick={closeMenu}>Professionals</Link>
         <Link href="/#showrooms" onClick={closeMenu}>Showrooms</Link>
         <Link href="/#atelier" onClick={closeMenu}>Craftsmanship</Link>
