@@ -2,12 +2,10 @@ import type { Product } from "../../lib/products";
 import "./size-configuration.css";
 
 const columns = [
-  { name: "4 Seater Sofa", key: "four" },
-  { name: "2.5 Seater Sofa", key: "twohalf" },
-  { name: "Chair", key: "chair" },
-  { name: "Storage Footstool", key: "footstool" },
-  { name: "Corner Sofa LHF", key: "lhf" },
-  { name: "Corner Sofa RHF", key: "rhf" },
+  { name: "4 Seater Sofa", key: "four", sourceIndex: 0 },
+  { name: "2.5 Seater Sofa", key: "twohalf", sourceIndex: 1 },
+  { name: "Corner Sofa LHF", key: "lhf", sourceIndex: 4 },
+  { name: "Corner Sofa RHF", key: "rhf", sourceIndex: 5 },
 ] as const;
 
 const rows = [
@@ -27,8 +25,6 @@ export default function SizeConfigurationMatrix({ product }: { product: Product 
   const images = [
     productSizes.find((s) => s.seats === 4)?.studioFront ?? productSizes.at(-1)?.studioFront ?? fallback,
     productSizes.find((s) => s.seats === 2)?.studioFront ?? productSizes[1]?.studioFront ?? fallback,
-    productSizes.find((s) => s.seats === 1)?.studioFront ?? fallback,
-    fallback,
     productSizes.at(-1)?.studioAngle ?? fallback,
     productSizes.at(-1)?.studioAngle ?? fallback,
   ];
@@ -58,7 +54,7 @@ export default function SizeConfigurationMatrix({ product }: { product: Product 
               {rows.map((row) => (
                 <tr key={row.code}>
                   <th><span>({row.code})</span> {row.label}</th>
-                  {row.values.map((value, index) => <td key={`${row.code}-${columns[index].key}`}>{value || "\u00a0"}</td>)}
+                  {columns.map((column) => <td key={`${row.code}-${column.key}`}>{row.values[column.sourceIndex] || "\u00a0"}</td>)}
                 </tr>
               ))}
             </tbody>
