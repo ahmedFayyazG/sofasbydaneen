@@ -25,7 +25,9 @@ export default function SiteHeader() {
         {menuOpen ? "CLOSE" : "MENU"}
       </button>
       <Link className="brand" href="/" aria-label="Sofas By Daneen home" onClick={closeMenu}>
-        <span>Sofas By Daneen</span>
+        <span className="brand-word">Sofas</span>
+        <span className="brand-by">BY</span>
+        <span className="brand-word">Daneen</span>
       </Link>
       <nav
         id="primary-navigation"
