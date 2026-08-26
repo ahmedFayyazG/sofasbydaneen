@@ -30,6 +30,19 @@ export default async function ShopPage({
       <div id="top">
         <div className="announce"><span aria-hidden="true">‹</span><p>Autumn promotional events and mid-season clearance sales across UK</p><span aria-hidden="true">›</span></div>
         <SiteHeader />
+        <div className="promo-marquee" aria-label="Current offers">
+          <div className="promo-marquee-track">
+            {[0, 1].map((loop) => (
+              <div className="promo-marquee-group" aria-hidden={loop === 1 ? "true" : undefined} key={loop}>
+                <span>Free Delivery Across England &amp; Wales.</span>
+                <a href="https://www.thehouseofbrands.co.uk/pages/contact-us">Summer Sale Is Live</a>
+                <span>Spread the Cost with Flexible Finance Options</span>
+                <span>25% Off Already Applied</span>
+                <span>Showroom open 7 days a week</span>
+              </div>
+            ))}
+          </div>
+        </div>
         <main id="main-content">
           <section className="shop-hero" aria-labelledby="shop-title">
             <p className="kicker">SOFAS BY DANEEN</p>
