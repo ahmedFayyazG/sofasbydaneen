@@ -4,6 +4,7 @@ import { Suspense } from "react";
 import SiteHeader from "../components/SiteHeader";
 import { products } from "../lib/products";
 import ShopFilters from "./ShopFilters";
+import "./type-cards.css";
 
 export const metadata: Metadata = {
   title: "Shop Sofas | Sofas By Daneen",
