@@ -33,7 +33,7 @@ export default function SiteHeader() {
           display: "inline-flex",
           alignItems: "baseline",
           justifyContent: "flex-start",
-          gap: "8px",
+          gap: "7px",
           width: "max-content",
           maxWidth: "290px",
           color: "#6b1438",
@@ -44,9 +44,9 @@ export default function SiteHeader() {
           letterSpacing: 0,
         }}
       >
-        <span style={{ display: "inline-block", fontFamily: "Melodrama, serif", fontSize: "38px", fontWeight: 400, letterSpacing: "-1.2px", textTransform: "none" }}>Sofas</span>
-        <span style={{ display: "inline-block", fontFamily: "'Cabinet Grotesk', sans-serif", fontSize: "10px", fontWeight: 500, letterSpacing: "3.2px", textTransform: "uppercase", opacity: 0.55, margin: "0 2px" }}>BY</span>
-        <span style={{ display: "inline-block", fontFamily: "Melodrama, serif", fontSize: "38px", fontWeight: 400, letterSpacing: "-1.2px", textTransform: "none" }}>Daneen</span>
+        <span style={{ display: "inline-block", fontFamily: "GraphikCondensed, sans-serif", fontSize: "29px", fontWeight: 700, letterSpacing: "-0.3px", textTransform: "uppercase" }}>SOFAS</span>
+        <span style={{ display: "inline-block", fontFamily: "GraphikCondensed, sans-serif", fontSize: "12px", fontWeight: 700, letterSpacing: "2.4px", textTransform: "uppercase", opacity: 0.58, margin: "0 1px" }}>BY</span>
+        <span style={{ display: "inline-block", fontFamily: "GraphikCondensed, sans-serif", fontSize: "29px", fontWeight: 700, letterSpacing: "-0.3px", textTransform: "uppercase" }}>DANEEN</span>
       </Link>
       <nav
         id="primary-navigation"
