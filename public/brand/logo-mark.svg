@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" role="img" aria-labelledby="title">
+  <title id="title">Sofas By Daneen monogram</title>
+  <style>@font-face{font-family:Melodrama;src:url("https://cdn.fontshare.com/wf/VEUKFNC77KIIUSHNOWJWAF2K4XRJIN3O/QVM7H4UBRHRYAZVIJFG42NIFQOHEU4LT/RSPG5F452B5Q23RR6KSVIVZS3KHJF6UY.woff2") format("woff2");font-weight:400}.letters{font-family:Melodrama,Georgia,serif}.name{font-family:Arial,sans-serif}</style>
+  <rect x="1" y="1" width="198" height="198" fill="none" stroke="#6b1438" stroke-width="1.4" />
+  <rect x="11" y="11" width="178" height="178" fill="none" stroke="#6b1438" stroke-width=".6" opacity=".45" />
+  <text class="letters" x="100" y="122" text-anchor="middle" font-size="66" letter-spacing="1" fill="#6b1438">SBD</text>
+  <path d="M62 140 H138" stroke="#6b1438" stroke-width=".8" opacity=".4" />
+  <text class="name" x="100" y="160" text-anchor="middle" font-size="9" letter-spacing="4" fill="#6b1438" opacity=".7">SOFAS BY DANEEN</text>
+</svg>
