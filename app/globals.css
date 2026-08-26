@@ -65,6 +65,23 @@ footer{background:#6b1438;color:#fffefb;padding:38px 40px 22px;position:relative
 @media(max-width:900px){.shop-hero{padding:55px 18px 24px}.shop-hero h1{font-size:42px}.shop-filter-section{padding:24px 18px 10px}.shop-filter-heading{display:flex;align-items:center;justify-content:center;gap:14px;flex-wrap:wrap}.shop-clear{position:static}.shop-type-grid{display:flex;overflow-x:auto;gap:10px;padding:0 0 8px;scroll-snap-type:x proximity}.shop-type-tile{flex:0 0 178px;scroll-snap-align:start}.shop-colour-row,.shop-size-row{justify-content:flex-start;overflow-x:auto;flex-wrap:nowrap;padding:4px 4px 12px}.shop-colour{width:54px;height:54px;flex:0 0 54px}.shop-size{min-width:124px;flex:0 0 auto}.shop-results{margin-top:22px}.shop-products.products-clone{padding:0 18px}}
 @media(max-width:540px){.shop-filter-section h2,.shop-results-heading h2{text-align:left;font-size:25px}.shop-filter-heading{justify-content:space-between}.shop-type-tile{flex-basis:158px}.shop-colour{width:48px;height:48px;flex-basis:48px;border-width:7px}.shop-size{min-width:118px;padding:11px 12px;font-size:13px}.shop-size span{width:30px;height:22px}.shop-products.products-clone{gap:34px;padding:0 18px}.shop-empty{margin:20px 18px 0}}
 
+.brand-trust{color:var(--burgundy);border-top:1px solid rgba(107,20,56,.1)}
+.brand-trust-strip{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:clamp(18px,2.8vw,52px);align-items:start;background:#f2efed;padding:44px clamp(28px,8vw,150px) 48px}
+.brand-trust-card{text-align:center;min-width:0}
+.trust-highlight-icon{display:block;width:58px;height:58px;margin:0 auto 8px;color:var(--burgundy)}
+.trust-finance-icon{height:58px;display:flex;align-items:flex-end;justify-content:center;gap:4px;margin:0 auto 8px;line-height:1;color:var(--burgundy)}
+.trust-finance-icon strong{font-size:50px;font-weight:400;letter-spacing:-3px}
+.trust-finance-icon small{font-size:10px;margin-bottom:8px;letter-spacing:.4px}
+.brand-trust-card h3{font-size:15px;line-height:1.25;margin:0 0 4px;font-weight:700}
+.brand-trust-card p{max-width:190px;margin:0 auto;font-size:15px;line-height:1.5;color:var(--burgundy)}
+.brand-trust-intro{text-align:center;background:var(--ivory);padding:40px 24px 36px}
+.brand-trust-intro h2{max-width:940px;margin:0 auto 12px;font-size:29px;line-height:1.15;color:var(--burgundy)}
+.brand-trust-intro p{max-width:860px;margin:0 auto 8px;font-size:15px;line-height:1.7;color:rgba(57,42,51,.78)}
+.brand-trust-intro a{display:inline-block;font-size:14px;line-height:1.4;font-weight:800;text-decoration:none;border-bottom:1px solid currentColor}
+html body .brand-trust-intro h2{font-family:"Melodrama","Cabinet Grotesk",serif!important;font-weight:500!important}
+@media(max-width:1000px){.brand-trust-strip{display:flex;gap:12px;overflow-x:auto;overscroll-behavior-x:contain;scroll-snap-type:x mandatory;padding:34px 18px 38px}.brand-trust-card{flex:0 0 min(220px,68vw);scroll-snap-align:center;padding:0 10px}.brand-trust-intro{padding:34px 20px 32px}.brand-trust-intro h2{font-size:26px}.brand-trust-intro p{font-size:14px}}
+@media(max-width:540px){.brand-trust-strip{padding-top:30px}.trust-highlight-icon,.trust-finance-icon{height:52px}.trust-highlight-icon{width:52px}.trust-finance-icon strong{font-size:44px}.brand-trust-card h3{font-size:14px}.brand-trust-card p{font-size:14px}.brand-trust-intro h2{font-size:23px;line-height:1.2}}
+
 @media(min-width:901px){.colour-finder,.size-finder{padding-left:72px;padding-right:72px;overflow:visible}.colour-grid{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));align-items:center;gap:20px;width:100%;max-width:none;margin:0 auto;padding:0}.colour-grid a{display:grid;place-items:center;width:100%;height:auto}.colour-grid img{width:min(80px,100%);height:auto;aspect-ratio:1/1}.size-grid{width:100%;max-width:none;display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:12px;padding:0;margin:0 auto}.size-grid>a{width:100%;min-width:0;flex:initial;text-align:center}.size-grid img{width:min(200px,100%);margin:0 auto}}
 @media(max-width:1180px){.bespoke-band{width:calc(100% - 36px);margin-top:28px;padding:28px 18px 32px}.bespoke-heading{padding:42px 18px 0}.bespoke-heading h2{font-size:30px}.process-grid{grid-template-columns:1fr;gap:22px}.process-grid article{padding:0 14px}.process-grid .process-image-space{min-height:86px;height:auto;margin-bottom:2px}.process-grid p{white-space:normal}}
 
