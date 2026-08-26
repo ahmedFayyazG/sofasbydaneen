@@ -1,0 +1,142 @@
+/* Final restoration layer: preserve the previously approved PDP structure even if older experimental CSS is still imported. */
+
+/* Breadcrumb/readability requested for the product page. */
+.dfs-breadcrumb,
+.dfs-breadcrumb a,
+.dfs-breadcrumb span{
+  font-size:16px!important;
+  line-height:1.45!important;
+}
+
+/* Keep the reference-sized supporting copy throughout the configurator. */
+.dfs-product-heading>p,
+.dfs-product-heading .dfs-stars,
+.dfs-product-heading .dfs-stars span,
+.dfs-option-card>span:not(.dfs-option-swatch):not(.dfs-option-icon),
+.dfs-size-title,
+.dfs-description p,
+.dfs-description li{
+  font-size:17px!important;
+  line-height:1.5!important;
+}
+
+/* Sale stays above configuration on desktop. */
+.dfs-desktop-buy{
+  display:flex!important;
+  flex-direction:column!important;
+}
+.dfs-desktop-buy>.dfs-desktop-summer-sale{order:1!important}
+.dfs-desktop-buy>.dfs-product-heading{order:2!important}
+.dfs-desktop-purchase{display:contents!important}
+.dfs-desktop-sale-price{order:3!important}
+.dfs-desktop-offer{order:4!important}
+.dfs-desktop-buy>div[class=""]{order:5!important}
+.dfs-desktop-finance{order:6!important}
+.dfs-desktop-delivery{order:7!important}
+.dfs-desktop-basket{order:8!important}
+.dfs-desktop-or{order:9!important}
+.dfs-desktop-phone{order:10!important}
+.dfs-desktop-shortlist{order:11!important}
+
+@media(max-width:640px){
+  /* Exact approved mobile sequence:
+     title -> image -> thumbnails -> sale -> countdown -> options -> finance ->
+     delivery -> basket -> or -> phone -> reassurance -> shortlist -> full details. */
+  .dfs-pdp-shell{
+    display:block!important;
+    padding:0 12px!important;
+    margin:0 auto 48px!important;
+  }
+  .dfs-gallery-column{
+    width:100%!important;
+    display:flex!important;
+    flex-direction:column!important;
+  }
+  .dfs-desktop-buy,.dfs-desktop-details{display:none!important}
+
+  .dfs-mobile-heading{display:block!important;order:1!important}
+  .dfs-gallery-stage{order:2!important;margin-top:0!important}
+  .dfs-gallery-tools{order:3!important;padding:12px 0 18px!important}
+
+  .dfs-mobile-purchase{display:contents!important}
+  .dfs-mobile-sale-price{order:4!important;margin-top:8px!important}
+  .dfs-mobile-offer{order:5!important;margin:20px 0 24px!important}
+
+  .dfs-mobile-options{
+    display:block!important;
+    order:6!important;
+    padding-bottom:0!important;
+  }
+  .dfs-mobile-options .dfs-option-card,
+  .dfs-mobile-options .dfs-size-block{
+    margin-bottom:12px!important;
+  }
+
+  .dfs-mobile-finance{order:7!important;margin:16px 0 18px!important}
+  .dfs-mobile-delivery{order:8!important;margin:0 0 16px!important}
+  .dfs-mobile-basket{order:9!important}
+  .dfs-mobile-or{order:10!important}
+  .dfs-mobile-phone{order:11!important}
+
+  .dfs-mobile-reassurance{
+    display:grid!important;
+    order:12!important;
+    grid-template-columns:repeat(3,minmax(0,1fr))!important;
+    margin:24px 0 0!important;
+    border-top:1px solid #e8dfe3!important;
+    border-bottom:1px solid #e8dfe3!important;
+    background:#fff!important;
+  }
+  .dfs-mobile-reassurance>div{
+    min-width:0!important;
+    padding:17px 9px 16px!important;
+    border-right:1px solid #e8dfe3!important;
+  }
+  .dfs-mobile-reassurance>div:last-child{border-right:0!important}
+  .dfs-mobile-reassurance b{font-size:13px!important;line-height:1.2!important;color:var(--burgundy)!important}
+  .dfs-mobile-reassurance span{font-size:11px!important;line-height:1.35!important;color:#71666b!important;margin-top:5px!important}
+
+  .dfs-mobile-shortlist{
+    order:13!important;
+    margin-top:24px!important;
+  }
+
+  .dfs-mobile-full-details{
+    display:block!important;
+    order:14!important;
+    margin-top:34px!important;
+    border-top:1px solid #ded5d9!important;
+  }
+  .dfs-mobile-full-details p,
+  .dfs-mobile-full-details li{
+    font-size:17px!important;
+    line-height:1.55!important;
+  }
+
+  .dfs-mobile-heading h1{font-size:30px!important;line-height:1.08!important}
+  .dfs-mobile-heading p,
+  .dfs-mobile-heading .dfs-stars,
+  .dfs-mobile-heading .dfs-stars span{
+    font-size:17px!important;
+    line-height:1.45!important;
+  }
+
+  /* Material, size, seat padding and feet copy stays readable at the requested size. */
+  .dfs-mobile-options .dfs-option-card>span:not(.dfs-option-swatch):not(.dfs-option-icon),
+  .dfs-mobile-options .dfs-size-title{
+    font-size:17px!important;
+    line-height:1.45!important;
+  }
+
+  /* Keep the main product image prominent on mobile. */
+  .dfs-gallery-stage{
+    width:100%!important;
+    min-height:0!important;
+    aspect-ratio:4/3!important;
+  }
+  .dfs-gallery-stage>img{
+    width:100%!important;
+    height:100%!important;
+    object-fit:contain!important;
+  }
+}
