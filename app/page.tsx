@@ -1,5 +1,6 @@
 import Link from "next/link";
 import HomeProductGrid from "./components/HomeProductGrid";
+import HomeTrustPrefooter from "./components/HomeTrustPrefooter";
 import LazyVideo from "./components/LazyVideo";
 import SiteHeader from "./components/SiteHeader";
 import { products as catalog } from "./lib/products";
@@ -307,6 +308,8 @@ export default function Home() {
             <article><img src={`${CDN}Reassurance_-_icons_Plan_de_travail_1.png?crop=center&height=64&v=1729675736&width=64`} alt="" width="64" height="64" loading="lazy" decoding="async" /><h3>SECURE DELIVERY &amp; PAYMENT</h3><p>UK delivery service.<br />Pay in three instalments with Klarna.<br />Complimentary samples available.</p></article>
           </section>
         </main>
+
+        <HomeTrustPrefooter />
 
         <div className="prefooter-mark deferred-section"><span aria-label="Sofas By Daneen monogram">SBD</span></div>
 
