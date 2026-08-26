@@ -44,9 +44,9 @@ export default function SiteHeader() {
           letterSpacing: 0,
         }}
       >
-        <span style={{ display: "inline-block", fontFamily: "GraphikCondensed, sans-serif", fontSize: "29px", fontWeight: 700, letterSpacing: "-0.3px", textTransform: "uppercase" }}>SOFAS</span>
-        <span style={{ display: "inline-block", fontFamily: "GraphikCondensed, sans-serif", fontSize: "12px", fontWeight: 700, letterSpacing: "2.4px", textTransform: "uppercase", opacity: 0.58, margin: "0 1px" }}>BY</span>
-        <span style={{ display: "inline-block", fontFamily: "GraphikCondensed, sans-serif", fontSize: "29px", fontWeight: 700, letterSpacing: "-0.3px", textTransform: "uppercase" }}>DANEEN</span>
+        <span style={{ display: "inline-block", fontFamily: "Melodrama, serif", fontSize: "38px", fontWeight: 400, letterSpacing: "-1.2px", textTransform: "none" }}>Sofas</span>
+        <span style={{ display: "inline-block", fontFamily: "Melodrama, serif", fontSize: "11px", fontWeight: 400, letterSpacing: "3px", textTransform: "uppercase", opacity: 0.58, margin: "0 2px" }}>BY</span>
+        <span style={{ display: "inline-block", fontFamily: "Melodrama, serif", fontSize: "38px", fontWeight: 400, letterSpacing: "-1.2px", textTransform: "none" }}>Daneen</span>
       </Link>
       <nav
         id="primary-navigation"
