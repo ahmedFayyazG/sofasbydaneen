@@ -46,6 +46,15 @@ export default async function ShopPage({
           <div className="copyright"><span>LANGUAGE &nbsp; English</span><span>Copyright © 2026 Sofas By Daneen. Designed by BureauBarbara</span></div>
         </footer>
       </div>
+
+      <style>{`
+        /* Keep Shop by type, but remove the two promotional filter rows.
+           Colour and size remain available inside the working Filter control. */
+        .shop-page > .shop-filter-section:nth-of-type(2),
+        .shop-page > .shop-filter-section:nth-of-type(3) {
+          display: none !important;
+        }
+      `}</style>
     </>
   );
 }
