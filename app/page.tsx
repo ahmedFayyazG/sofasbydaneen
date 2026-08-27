@@ -195,8 +195,8 @@ export default function Home() {
                 <div className="process-image-space">
                   <img className="delivery-step-image" src="/delivery-worldwide-truck.png" alt="" width="1536" height="1024" loading="lazy" decoding="async" />
                 </div>
-                <h3>3 · DELIVERED WITH CARE WORLDWIDE</h3>
-                <p>Handcrafted in the United Kingdom and delivered worldwide.</p>
+                <h3>3 · DELIVERED WITH CARE ACROSS ENGLAND &amp; WALES</h3>
+                <p>Handcrafted in Britain. Delivered across England and Wales.</p>
               </article>
             </div>
           </section>
