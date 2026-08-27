@@ -302,11 +302,6 @@ export default function Home() {
             </div>
           </section>
 
-          <section className="reassurance deferred-section" aria-label="Service commitments">
-            <article><img src={`${CDN}Reassurance_-_icons_Plan_de_travail_1.png?crop=center&height=64&v=1729675736&width=64`} alt="" width="64" height="64" loading="lazy" decoding="async" /><h3>CLIENT SERVICE &amp; EASY RETURNS</h3><p>Enjoy 14 days to return your order<br />(excluding bespoke and international orders).</p></article>
-            <article><img src={`${CDN}Reassurance_-_icons_Plan_de_travail_1.png?crop=center&height=64&v=1729675736&width=64`} alt="" width="64" height="64" loading="lazy" decoding="async" /><h3>FRENCH ARTISANAL PRODUCTION</h3><p>Bespoke personalisation service.<br />Quote within 48 hours, appointment on request.</p></article>
-            <article><img src={`${CDN}Reassurance_-_icons_Plan_de_travail_1.png?crop=center&height=64&v=1729675736&width=64`} alt="" width="64" height="64" loading="lazy" decoding="async" /><h3>SECURE DELIVERY &amp; PAYMENT</h3><p>UK delivery service.<br />Pay in three instalments with Klarna.<br />Complimentary samples available.</p></article>
-          </section>
         </main>
 
         <HomeTrustPrefooter />

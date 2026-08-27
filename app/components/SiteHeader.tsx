@@ -58,7 +58,6 @@ export default function SiteHeader() {
         <Link href="/#sur-mesure" onClick={closeMenu}>Bespoke by Sofas By Daneen</Link>
         <Link href="/inspiration" onClick={closeMenu}>Inspiration</Link>
         <Link href="/#professionals" onClick={closeMenu}>Professionals</Link>
-        <Link href="/#showrooms" onClick={closeMenu}>Showrooms</Link>
         <Link href="/#atelier" onClick={closeMenu}>Craftsmanship</Link>
       </nav>
       <div className="header-tools" aria-label="Customer tools">

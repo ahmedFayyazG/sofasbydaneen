@@ -59,22 +59,22 @@ export default function HomeTrustPrefooter() {
         <a href="#sur-mesure">Read more</a>
       </div>
       <style>{`
-        .home-trust-prefooter{width:100%;color:#351052;background:#fff}
+        .home-trust-prefooter{width:100%;color:#6b1438;background:#fff}
         .home-trust-strip{background:#f2f2f2;padding:42px 24px 44px}
         .home-trust-grid{width:min(1120px,100%);margin:0 auto;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:34px}
         .home-trust-item{text-align:center;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;min-width:0}
-        .home-trust-icon{height:62px;display:flex;align-items:center;justify-content:center;margin-bottom:10px;color:#351052}
+        .home-trust-icon{height:62px;display:flex;align-items:center;justify-content:center;margin-bottom:10px;color:#6b1438}
         .home-trust-icon svg{width:58px;height:58px;display:block}
-        .home-trust-item p{margin:0;font-size:15px;line-height:1.55;color:#351052}
-        .home-trust-apr{display:flex;align-items:flex-start;line-height:1;color:#351052;height:60px}
+        .home-trust-item p{margin:0;font-size:15px;line-height:1.55;color:#6b1438}
+        .home-trust-apr{display:flex;align-items:flex-start;line-height:1;color:#6b1438;height:60px}
         .home-trust-apr strong{font-size:58px;font-weight:400;letter-spacing:-4px}
         .home-trust-apr span{font-size:27px;margin:4px 0 0 5px;display:flex;flex-direction:column;align-items:flex-start}
         .home-trust-apr small{font-size:10px;margin-top:2px}
         .home-trust-intro{text-align:center;padding:38px 24px 34px;background:#fff}
-        .home-trust-intro h2{font-family:Graphik,Arial,sans-serif;font-size:26px;line-height:1.25;font-weight:600;margin:0 auto 16px;color:#351052}
-        .home-trust-intro p{max-width:820px;margin:0 auto;color:#5d5667;font-size:15px;line-height:1.65}
-        .home-trust-intro strong{color:#351052}
-        .home-trust-intro a{display:inline-block;margin-top:9px;font-size:14px;font-weight:700;color:#351052;text-decoration:none}
+        .home-trust-intro h2{font-family:Graphik,Arial,sans-serif;font-size:26px;line-height:1.25;font-weight:600;margin:0 auto 16px;color:#6b1438}
+        .home-trust-intro p{max-width:820px;margin:0 auto;color:rgba(107,20,56,.72);font-size:15px;line-height:1.65}
+        .home-trust-intro strong{color:#6b1438}
+        .home-trust-intro a{display:inline-block;margin-top:9px;font-size:14px;font-weight:700;color:#6b1438;text-decoration:none}
         @media(max-width:900px){.home-trust-grid{grid-template-columns:repeat(3,1fr);row-gap:36px}.home-trust-item:nth-child(4){grid-column:1/2}.home-trust-item:nth-child(5){grid-column:2/3}}
         @media(max-width:600px){.home-trust-strip{padding:34px 16px}.home-trust-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:32px 12px}.home-trust-item:nth-child(4){grid-column:auto}.home-trust-item:nth-child(5){grid-column:1/-1}.home-trust-item p{font-size:13px}.home-trust-intro{padding:32px 18px}.home-trust-intro h2{font-size:21px}.home-trust-intro p{font-size:14px}}
       `}</style>
