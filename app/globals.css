@@ -1,5 +1,4 @@
 @import "tailwindcss";
-@import url("https://api.fontshare.com/v2/css?f[]=cabinet-grotesk@400,500,700,800,900&display=swap");
 
 @font-face{font-family:Graphik;src:url("https://cdn.shopify.com/s/files/1/0866/4114/8238/files/Graphik-Regular-Web.woff2?v=1730811463") format("woff2");font-style:normal;font-weight:400;font-display:swap}
 @font-face{font-family:GraphikCondensed;src:url("https://cdn.shopify.com/s/files/1/0866/4114/8238/files/GraphikCondensed-Bold-Web.woff2?v=1730811437") format("woff2");font-style:normal;font-weight:700;font-display:swap}

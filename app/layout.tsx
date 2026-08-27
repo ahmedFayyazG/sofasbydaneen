@@ -79,7 +79,7 @@ export default function RootLayout({
     <html lang="en">
       <head>
         <link rel="preconnect" href="https://api.fontshare.com" crossOrigin="anonymous" />
-        <link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=melodrama@400,500&display=swap" />
+        <link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=melodrama@400,500&f[]=cabinet-grotesk@400,500,700,800,900&display=swap" />
         <link rel="preconnect" href="https://www.clovi-paris.com" crossOrigin="anonymous" />
         <link rel="preconnect" href="https://cdn.shopify.com" crossOrigin="anonymous" />
         <link rel="dns-prefetch" href="https://www.clovi-paris.com" />
