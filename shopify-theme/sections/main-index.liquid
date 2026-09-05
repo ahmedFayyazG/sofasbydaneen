@@ -4,21 +4,50 @@
 
   <header class="site-header">
     <button class="mobile-menu" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="primary-navigation">MENU</button>
-    <a class="brand" href="#top" aria-label="Sofas By Daneen home"><span>Sofas By Daneen</span></a>
+    <a class="brand" href="{{ routes.root_url }}" aria-label="Sofas By Daneen home"><span class="brand-word">Sofas</span><span class="brand-by">BY</span><span class="brand-word">Daneen</span></a>
     <nav id="primary-navigation" class="main-nav" aria-label="Primary navigation">
-      <a href="#collection">Our Creations <small aria-hidden="true">⌄</small></a>
+      <a href="{{ routes.all_products_collection_url }}">Shop</a>
+      <a href="/collections">Our Collections <small aria-hidden="true">⌄</small></a>
       <a href="#sur-mesure">Bespoke by Sofas By Daneen</a>
+      <a href="/pages/inspiration">Inspiration</a>
       <a href="#professionals">Professionals</a>
-      <a href="#showrooms">Showrooms</a>
       <a href="#atelier">Craftsmanship</a>
     </nav>
     <div class="header-tools" aria-label="Customer tools">
-      <a href="{{ routes.search_url }}" aria-label="Search"><span class="head-icon" aria-hidden="true">⌕</span></a>
-      <a href="/pages/wishlist" aria-label="Wishlist"><span class="head-icon" aria-hidden="true">♡</span></a>
-      <a href="{{ routes.account_url }}" aria-label="Account"><span class="head-icon" aria-hidden="true">♙</span></a>
-      <a href="{{ routes.cart_url }}" aria-label="Basket" class="bag-icon">▢<b aria-hidden="true">{{ cart.item_count }}</b></a>
+      <a class="header-icon-link" href="{{ routes.search_url }}" aria-label="Search">
+        <svg class="head-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="4.8"></circle><path d="m14.2 14.2 4.3 4.3"></path></svg>
+      </a>
+      <a class="header-icon-link" href="/pages/wishlist" aria-label="Wishlist">
+        <svg class="head-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19.3S5.2 15.2 3.5 10.6C2.3 7.4 4.2 4.8 7.1 4.8c1.8 0 3.3 1 4.1 2.4.8-1.4 2.3-2.4 4.1-2.4 2.9 0 4.8 2.6 3.6 5.8C17.2 15.2 12 19.3 12 19.3Z"></path></svg>
+      </a>
+      <a class="header-icon-link" href="{{ routes.account_url }}" aria-label="Account">
+        <svg class="head-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="7.5" r="3"></circle><path d="M6.5 18.5c.5-3.2 2.4-5.2 5.5-5.2s5 2 5.5 5.2"></path></svg>
+      </a>
+      <a class="header-icon-link bag-icon" href="{{ routes.cart_url }}" aria-label="Basket, {{ cart.item_count }} items">
+        <svg class="head-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M6.5 8.5h11l-.7 10h-9.6l-.7-10Z"></path><path d="M9 8.5V7a3 3 0 0 1 6 0v1.5"></path></svg>
+        <b aria-hidden="true">{{ cart.item_count }}</b>
+      </a>
     </div>
   </header>
+
+  <div class="promo-marquee" aria-label="Current offers">
+    <div class="promo-marquee-track">
+      <div class="promo-marquee-group">
+        <span>Free Delivery Across England &amp; Wales.</span>
+        <a href="/pages/contact-us">Summer Sale Is Live</a>
+        <span>Spread the Cost with Flexible Finance Options</span>
+        <span>25% Off Already Applied</span>
+        <span>Showroom open 7 days a week</span>
+      </div>
+      <div class="promo-marquee-group" aria-hidden="true">
+        <span>Free Delivery Across England &amp; Wales.</span>
+        <a href="/pages/contact-us">Summer Sale Is Live</a>
+        <span>Spread the Cost with Flexible Finance Options</span>
+        <span>25% Off Already Applied</span>
+        <span>Showroom open 7 days a week</span>
+      </div>
+    </div>
+  </div>
 
   <main id="main-content">
     <section class="hero-clone" aria-label="Sofas By Daneen summer sale">
@@ -29,7 +58,7 @@
     <section class="bespoke-heading" id="sur-mesure" aria-labelledby="bespoke-title">
       <p class="kicker">COUTURE FURNITURE HOUSE</p>
       <h2 id="bespoke-title">YOUR INTERIOR DESERVES A<br>BESPOKE PIECE</h2>
-      <p class="soft-copy"><em>Choose your model, choose your fabric.<br>We craft the rest by hand in our workshops in France.</em></p>
+      <p class="soft-copy"><em>Choose your model, choose your fabric.<br>We craft the rest by hand in Britain.</em></p>
       <i class="tiny-rule" aria-hidden="true"></i>
     </section>
 
@@ -51,77 +80,108 @@
       </article>
     </section>
 
-    <section class="appointment-clone" aria-label="Bespoke consultation">
-      <p><em>15 minutes to imagine your piece together</em></p>
-      <div><a class="pill filled" href="#showrooms">BOOK AN APPOINTMENT →</a><a class="pill" href="#showrooms">COMPLIMENTARY SAMPLE →</a></div>
-      <div class="promises"><span>• &nbsp; MADE IN FRANCE</span><span>• &nbsp; ARTISANAL BESPOKE</span><span>• &nbsp; INTERNATIONAL DELIVERY</span></div>
+    <section class="sofa-finder deferred-section" aria-labelledby="shop-sofas-title">
+      <h2 id="shop-sofas-title">Shop sofas</h2>
+      <div class="sofa-type-grid">
+        <a class="sofa-type-card" href="/collections/all"><img src="https://images.sofology.co.uk/q_auto,f_auto,fl_lossy,dpr_1.0/Bloomreach/HOMEPAGE/2025/sept/homepage-type-corner2-010925-desktop-min" alt="Corner sofas" width="900" height="600" loading="lazy"></a>
+        <a class="sofa-type-card" href="/collections/all"><img src="https://images.sofology.co.uk/q_auto,f_auto,fl_lossy,dpr_1.0/Bloomreach/HOMEPAGE/2025/sept/homepage-type-fabric-010925-desktop-min" alt="Fabric sofas" width="900" height="600" loading="lazy"></a>
+        <a class="sofa-type-card" href="/collections/all"><img src="https://images.sofology.co.uk/q_auto,f_auto,fl_lossy,dpr_1.0/Bloomreach/HOMEPAGE/2025/sept/homepage-type-leather-010925-desktop-min" alt="Leather sofas" width="900" height="600" loading="lazy"></a>
+        <a class="sofa-type-card" href="/collections/all"><img src="https://images.sofology.co.uk/q_auto,f_auto,fl_lossy,dpr_1.0/Bloomreach/HOMEPAGE/2025/sept/homepage-type-recliners-010925-desktop-min" alt="Recliner sofas" width="900" height="600" loading="lazy"></a>
+        <a class="sofa-type-card" href="/collections/all"><img src="https://images.sofology.co.uk/q_auto,f_auto,fl_lossy,dpr_1.0/Bloomreach/HOMEPAGE/2025/sept/homepage-type-sofabeds-010925-desktop-min" alt="Sofa beds" width="900" height="600" loading="lazy"></a>
+        <a class="sofa-type-card" href="/collections/all"><img src="https://images.sofology.co.uk/q_auto,f_auto,fl_lossy,dpr_1.0/Bloomreach/HOMEPAGE/2025/sept/homepage-type-cinema-010925-desktop-min" alt="Cinema sofas" width="900" height="600" loading="lazy"></a>
+      </div>
+    </section>
+
+    <section class="colour-finder deferred-section" aria-labelledby="colour-title">
+      <h2 id="colour-title">Got a colour in mind</h2>
+      <div class="colour-grid">
+        <a href="/collections/all?filter.p.m.custom.colour=white" aria-label="Shop white sofas"><img src="https://images.sofology.co.uk/q_auto,f_auto,fl_lossy,dpr_1.0/Bloomreach/HOMEPAGE/colorpicker/homepage-colour-white-010925-desktop-min" alt="" width="160" height="160" loading="lazy"></a>
+        <a href="/collections/all?filter.p.m.custom.colour=grey" aria-label="Shop grey sofas"><img src="https://images.sofology.co.uk/q_auto,f_auto,fl_lossy,dpr_1.0/Bloomreach/HOMEPAGE/colorpicker/homepage-colour-grey-010925-desktop-min" alt="" width="160" height="160" loading="lazy"></a>
+        <a href="/collections/all?filter.p.m.custom.colour=beige" aria-label="Shop beige sofas"><img src="https://images.sofology.co.uk/q_auto,f_auto,fl_lossy,dpr_1.0/Bloomreach/HOMEPAGE/colorpicker/homepage-colour-beige-010925-desktop-min" alt="" width="160" height="160" loading="lazy"></a>
+        <a href="/collections/all?filter.p.m.custom.colour=yellow" aria-label="Shop yellow sofas"><img src="https://images.sofology.co.uk/q_auto,f_auto,fl_lossy,dpr_1.0/Bloomreach/HOMEPAGE/colorpicker/homepage-colour-yellow-010925-desktop-min" alt="" width="160" height="160" loading="lazy"></a>
+        <a href="/collections/all?filter.p.m.custom.colour=teal" aria-label="Shop teal sofas"><img src="https://images.sofology.co.uk/q_auto,f_auto,fl_lossy,dpr_1.0/Bloomreach/HOMEPAGE/colorpicker/homepage-colour-teal-010925-desktop-min" alt="" width="160" height="160" loading="lazy"></a>
+        <a href="/collections/all?filter.p.m.custom.colour=rust" aria-label="Shop rust sofas"><img src="https://images.sofology.co.uk/q_auto,f_auto,fl_lossy,dpr_1.0/Bloomreach/HOMEPAGE/colorpicker/homepage-colour-rust-010925-desktop-min" alt="" width="160" height="160" loading="lazy"></a>
+        <a href="/collections/all?filter.p.m.custom.colour=green" aria-label="Shop green sofas"><img src="https://images.sofology.co.uk/q_auto,f_auto,fl_lossy,dpr_1.0/Bloomreach/HOMEPAGE/colorpicker/homepage-colour-green-010925-desktop-min" alt="" width="160" height="160" loading="lazy"></a>
+        <a href="/collections/all?filter.p.m.custom.colour=burgundy" aria-label="Shop burgundy sofas"><img src="https://images.sofology.co.uk/q_auto,f_auto,fl_lossy,dpr_1.0/Bloomreach/HOMEPAGE/colorpicker/homepage-colour-burgundy-010925-desktop-min" alt="" width="160" height="160" loading="lazy"></a>
+        <a href="/collections/all?filter.p.m.custom.colour=brown" aria-label="Shop brown sofas"><img src="https://images.sofology.co.uk/q_auto,f_auto,fl_lossy,dpr_1.0/Bloomreach/HOMEPAGE/colorpicker/homepage-colour-brown-010925-desktop-min" alt="" width="160" height="160" loading="lazy"></a>
+        <a href="/collections/all?filter.p.m.custom.colour=blue" aria-label="Shop blue sofas"><img src="https://images.sofology.co.uk/q_auto,f_auto,fl_lossy,dpr_1.0/Bloomreach/HOMEPAGE/colorpicker/homepage-colour-blue-010925-desktop-min" alt="" width="160" height="160" loading="lazy"></a>
+        <a href="/collections/all?filter.p.m.custom.colour=charcoal" aria-label="Shop charcoal sofas"><img src="https://images.sofology.co.uk/q_auto,f_auto,fl_lossy,dpr_1.0/Bloomreach/HOMEPAGE/colorpicker/homepage-colour-charcoal-010925-desktop-min" alt="" width="160" height="160" loading="lazy"></a>
+        <a href="/collections/all?filter.p.m.custom.colour=black" aria-label="Shop black sofas"><img src="https://images.sofology.co.uk/q_auto,f_auto,fl_lossy,dpr_1.0/Bloomreach/HOMEPAGE/colorpicker/homepage-colour-black-010925-desktop-min" alt="" width="160" height="160" loading="lazy"></a>
+      </div>
+    </section>
+
+    <section class="size-finder deferred-section" aria-labelledby="size-title">
+      <h2 id="size-title">Got a size in mind</h2>
+      <div class="size-grid">
+        <a href="/collections/all"><img src="https://images.sofology.co.uk/q_auto,f_auto,fl_lossy,dpr_1.0/Bloomreach/HOMEPAGE/2025/sept/homepage-size-2seater-010925-desktop-min" alt="" width="400" height="180" loading="lazy"><h3>2 seater sofas</h3></a>
+        <a href="/collections/all"><img src="https://images.sofology.co.uk/q_auto,f_auto,fl_lossy,dpr_1.0/Bloomreach/HOMEPAGE/2025/sept/homepage-size-3seater-010925-desktop-min" alt="" width="400" height="180" loading="lazy"><h3>3 seater sofas</h3></a>
+        <a href="/collections/all"><img src="https://images.sofology.co.uk/q_auto,f_auto,fl_lossy,dpr_1.0/Bloomreach/HOMEPAGE/2025/sept/homepage-size-4seater-010925-desktop-min" alt="" width="400" height="180" loading="lazy"><h3>4 seater sofas</h3></a>
+        <a href="/collections/all"><img src="https://images.sofology.co.uk/q_auto,f_auto,fl_lossy,dpr_1.0/Bloomreach/HOMEPAGE/2025/sept/homepage-size-chaise-010925-desktop-min" alt="" width="400" height="180" loading="lazy"><h3>Chaise</h3></a>
+        <a href="/collections/all"><img src="https://images.sofology.co.uk/q_auto,f_auto,fl_lossy,dpr_1.0/Bloomreach/HOMEPAGE/2025/sept/homepage-size-modular-010925-desktop-min" alt="" width="400" height="180" loading="lazy"><h3>Modular</h3></a>
+        <a href="/collections/all"><img src="https://images.sofology.co.uk/q_auto,f_auto,fl_lossy,dpr_1.0/Bloomreach/HOMEPAGE/2025/sept/homepage-size-chairs-010925-desktop-min" alt="" width="400" height="180" loading="lazy"><h3>Armchairs</h3></a>
+      </div>
     </section>
 
     <section class="collection-heading deferred-section" id="collection" aria-labelledby="collection-title">
       <i aria-hidden="true"></i><h2 id="collection-title">OUR COLLECTIONS</h2>
-      <p>Handcrafted by our French carpenters and upholsterers.<br><strong>Each piece begins with a pencil sketch.</strong><br>We unite <strong>design</strong> and <strong>couture</strong> to create collections that are<br><strong>distinctive</strong>, elegant and free—like poetry.</p>
     </section>
 
     <section class="products-clone deferred-section" aria-label="Featured furniture">
-      <article>
-        <a href="#collection" class="product-image" aria-label="View The Colette - Bespoke Armchair"><img src="https://www.clovi-paris.com/cdn/shop/files/Design_sans_titre_-_2026-06-09T223919.772.png?v=1781037584&width=750" alt="The Colette - Bespoke Armchair" width="750" height="750" loading="lazy"></a>
-        <div class="swatch-row" aria-label="1 available colour"><span style="background:#b55273" aria-hidden="true"></span></div>
-        <h3>The Colette - Bespoke Armchair</h3><p>€2.590,00</p>
-      </article>
-      <article>
-        <a href="#collection" class="product-image" aria-label="View The Claudel - Designer Ottoman"><img src="https://www.clovi-paris.com/cdn/shop/files/CLAUDEL_VELOURSMILLERAIESNUAGE_f5af7109-ad68-4f70-ad2d-4496385a0ec5.jpg?v=1769592818&width=750" alt="The Claudel - Designer Ottoman" width="750" height="750" loading="lazy"></a>
-        <div class="swatch-row" aria-label="7 available colours"><span style="background:#d9e2df" aria-hidden="true"></span><span style="background:#e9dfd1" aria-hidden="true"></span><span style="background:#a87955" aria-hidden="true"></span><span style="background:#caa179" aria-hidden="true"></span><span style="background:#7b3b34" aria-hidden="true"></span><span style="background:#9b5e3d" aria-hidden="true"></span><span style="background:#efe5cf" aria-hidden="true"></span></div>
-        <h3>The Claudel - Designer Ottoman</h3><p>€790,00</p>
-      </article>
-      <article>
-        <a href="#collection" class="product-image" aria-label="View The Gainsbourg - Nobilis Fawn"><img src="https://www.clovi-paris.com/cdn/shop/files/Design_sans_titre_45.jpg?v=1776282343&width=750" alt="The Gainsbourg - Nobilis Fawn" width="750" height="750" loading="lazy"></a>
-        <div class="swatch-row" aria-label="1 available colour"><span style="background:#a8784f" aria-hidden="true"></span></div>
-        <h3>The Gainsbourg - Nobilis Fawn</h3><p>€2.580,00</p>
-      </article>
-      <article>
-        <a href="#collection" class="product-image" aria-label="View The Pompidou - Vegan Leather"><img src="https://www.clovi-paris.com/cdn/shop/files/Cuir_graine_modele_8.png?v=1781259329&width=750" alt="The Pompidou - Vegan Leather" width="750" height="750" loading="lazy"></a>
-        <div class="swatch-row" aria-label="1 available colour"><span style="background:#2c2928" aria-hidden="true"></span></div>
-        <h3>The Pompidou - Vegan Leather</h3><p>€1.780,00</p>
-      </article>
+      {% for product in collections.all.products limit: 8 %}
+        <article>
+          <div class="product-image-frame">
+            <span class="sale-sticker" aria-label="25% off">⌑ 25% OFF</span>
+            <a href="{{ product.url }}" class="product-image" aria-label="View {{ product.title | escape }}">
+              {% if product.featured_image %}
+                <img src="{{ product.featured_image | image_url: width: 750 }}" alt="{{ product.featured_image.alt | default: product.title | escape }}" width="750" height="750" loading="lazy">
+              {% endif %}
+            </a>
+          </div>
+          <div class="swatch-row" aria-hidden="true"><span style="background:#6b1438"></span><span style="background:#d6c6a8"></span><span style="background:#5b6472"></span></div>
+          <h3><a href="{{ product.url }}">{{ product.title }}</a></h3>
+          <p>{{ product.price | money }}</p>
+        </article>
+      {% else %}
+        <article>
+          <div class="product-image-frame">
+            <span class="sale-sticker" aria-label="25% off">⌑ 25% OFF</span>
+            <a href="/collections/all" class="product-image" aria-label="Shop sofas"><img src="{{ 'sofas-by-daneen-hero.png' | asset_url }}" alt="Sofas By Daneen sofa" width="750" height="750" loading="lazy"></a>
+          </div>
+          <div class="swatch-row" aria-hidden="true"><span style="background:#6b1438"></span><span style="background:#d6c6a8"></span><span style="background:#5b6472"></span></div>
+          <h3><a href="/collections/all">Handcrafted Sofas</a></h3>
+          <p>Explore the collection</p>
+        </article>
+      {% endfor %}
     </section>
-    <div class="pagination" aria-hidden="true"><b></b><span></span></div>
+    <div class="products-clone-cta"><a class="pill filled" href="/collections">VIEW ALL COLLECTIONS →</a></div>
 
     <section class="couture-video deferred-section" aria-label="The soul of Sofas By Daneen">
-      <video muted loop playsinline preload="none" poster="https://www.clovi-paris.com/cdn/shop/files/preview_images/0eccb956855e4d8980e92c8b40dbb930.thumbnail.0000000000_1080x.jpg?v=1774014735" aria-label="Sofas By Daneen couture furniture film" data-src="https://www.clovi-paris.com/cdn/shop/videos/c/vp/25be61db40a84accb971898ec2e650de/25be61db40a84accb971898ec2e650de.HD-1080p-7.2Mbps-44808719.mp4?v=0"></video>
+      <video muted loop playsinline preload="none" aria-label="Sofas By Daneen couture furniture film" data-src="{{ 'design-meets-couture.mp4' | asset_url }}"></video>
       <a href="#collection" class="video-button">DISCOVER THE SOUL OF SOFAS BY DANEEN &nbsp; →</a>
     </section>
 
-    <section class="couture-copy deferred-section" aria-labelledby="couture-title">
-      <h2 id="couture-title">DESIGN MEETS COUTURE</h2>
-      <p>The art of upholstery lies in a delicate balance<br>between artisanal excellence and the poetry of gesture.<br><strong>Velvets, jacquards and natural linens…<br>fabrics that bring an extra soul to your interior.</strong><br>Sourced from the finest mills with artisanal expertise,<br>our fabrics celebrate material and texture.</p>
-      <p>A deep desire to bring <strong>beautiful fabrics of the past</strong> back into the light<br>and warm interiors with a soul that is both <strong>poetic and sensual.</strong></p>
-      <a class="pill" href="#showrooms">COMPLIMENTARY SAMPLES</a>
-    </section>
-
-    <section class="atelier-clone deferred-section" id="atelier" aria-labelledby="atelier-title">
-      <div class="atelier-photo"><video muted loop playsinline preload="none" aria-label="Upholsterer working in the Sofas By Daneen workshop" data-src="https://cdn.shopify.com/videos/c/o/v/3bfbf39d29994058b6e380aed8530e61.mov"></video></div>
-      <div class="atelier-content">
-        <span class="atelier-tag">LILLE WORKSHOP · CONTEMPORARY ARTISAN</span>
-        <h2 id="atelier-title">HANDMADE<br>IN LILLE</h2><i aria-hidden="true"></i>
-        <p>Every Sofas By Daneen piece is born in our northern French workshop. Our upholsterers craft each one by hand, with the same care for a unique commission as for a professional series.</p>
-        <div class="atelier-points"><div><b aria-hidden="true">✂</b><p><strong>ARTISANAL BESPOKE</strong><span>Every dimension, fabric and finish is tailored to your space and your wishes.</span></p></div><div><b aria-hidden="true">🏅</b><p><strong>QUALITY &amp; DURABILITY</strong><span>Materials selected to last. Certified fabrics, robust structures and refined finishes.</span></p></div><div><b aria-hidden="true">📍</b><p><strong>LOCAL CRAFT &amp; GUARANTEE</strong><span>Made in France and guaranteed by our artisans. One contact from design to delivery.</span></p></div></div>
-        <a class="pill" href="#atelier">DISCOVER OUR WORKSHOP →</a>
+    <section class="cushions-promo deferred-section" aria-labelledby="cushions-promo-title">
+      <div class="cushions-promo-copy">
+        <div>
+          <h2 id="cushions-promo-title">Decorative Cushions</h2>
+          <p>The perfect finishing touch for your sofa. Discover our collection of unique textures and shapes to complete your living room look.</p>
+        </div>
+        <a class="cushions-promo-button" href="/collections/all">SHOP NOW</a>
       </div>
+      <div class="cushions-promo-image"><img src="{{ 'blue-chesterfield-sofa-room.jpg' | asset_url }}" alt="Blue Chesterfield sofa in a paneled room" width="1400" height="1000" loading="lazy"></div>
     </section>
 
-    <section class="featured-product deferred-section" aria-label="Featured Pompidou bench">
-      <div class="featured-room"><img src="https://www.clovi-paris.com/cdn/shop/files/Design_sans_titre_36.jpg?v=1762263387&width=1080" alt="Bespoke Sofas By Daneen bench in a contemporary room" width="1080" height="1350" loading="lazy"></div>
-      <a class="featured-card" href="#collection">
-        <img src="https://www.clovi-paris.com/cdn/shop/files/POMPIDOU_VELOURSCHENILLECOGNAC_89f7c88a-8a16-4ab9-a378-4d7d7385c999.jpg?v=1769592861&width=750" alt="The Pompidou in cognac striped chenille" width="750" height="750" loading="lazy">
-        <small>Cognac striped chenille</small>
-        <h3>The Pompidou - Designer Bench - Cognac Striped Chenille</h3>
-        <p>€1.480,00</p>
-      </a>
-    </section>
+    <div class="cushions-trust-row" aria-label="Customer rating">
+      <span>Our customers say</span>
+      <strong>Excellent</strong>
+      <span class="trust-stars" aria-label="5 out of 5 stars">★★★★★</span>
+      <span>4.8 out of 5 based on <a href="#reviews-title">648 reviews</a></span>
+      <strong class="trustpilot">★ Trustpilot</strong>
+    </div>
 
     <section class="reviews-clone deferred-section" aria-labelledby="reviews-title">
       <h2 id="reviews-title">Let our clients speak for us</h2>
-      <div class="review-score"><span role="img" aria-label="5 out of 5 stars">★★★★★</span><small>from 12 reviews &nbsp; ✅</small></div>
+      <div class="review-score"><span role="img" aria-label="5 out of 5 stars">★★★★★</span><small>from 12 reviews</small></div>
       <div class="review-grid">
         <article><b role="img" aria-label="5 out of 5 stars">★★★★★</b><h3>I love it</h3><p>A superb, beautiful bench!<br>Excellent quality!<br>It transforms my entrance.</p><small>Anne Castel</small></article>
         <article><b role="img" aria-label="5 out of 5 stars">★★★★★</b><h3>Magnificent!</h3><p>The seat is beautiful and fits my interior perfectly. The fabric is genuinely exceptional quality 😍</p><small>Sarah</small></article>
@@ -129,15 +189,41 @@
       </div>
     </section>
 
+    <section class="instagram-reels deferred-section" aria-labelledby="instagram-reels-title">
+      <h2 id="instagram-reels-title">Watch our pieces come to life</h2>
+      <div class="reel-carousel" aria-label="Instagram reels carousel">
+        <article class="reel-card"><div class="reel-embed-frame"><iframe src="https://www.instagram.com/reel/DBG9yawIyWj/embed?utm_source=ig_embed&amp;autoplay=1&amp;mute=1" title="Crafting Custom Comfort Instagram reel" loading="lazy" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share" allowfullscreen></iframe></div><a class="reel-caption" href="https://www.instagram.com/reel/DBG9yawIyWj/" target="_blank" rel="noreferrer">Crafting Custom Comfort</a></article>
+        <article class="reel-card"><div class="reel-embed-frame"><iframe src="https://www.instagram.com/reel/DAx9FBwIp5q/embed?utm_source=ig_embed&amp;autoplay=1&amp;mute=1" title="Thank you for choosing us mate Instagram reel" loading="lazy" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share" allowfullscreen></iframe></div><a class="reel-caption" href="https://www.instagram.com/reel/DAx9FBwIp5q/" target="_blank" rel="noreferrer">Thank you for choosing us mate</a></article>
+        <article class="reel-card"><div class="reel-embed-frame"><iframe src="https://www.instagram.com/reel/C_soONsosRW/embed?utm_source=ig_embed&amp;autoplay=1&amp;mute=1" title="Thank you @chris_noddy_connor Instagram reel" loading="lazy" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share" allowfullscreen></iframe></div><a class="reel-caption" href="https://www.instagram.com/reel/C_soONsosRW/" target="_blank" rel="noreferrer">Thank you @chris_noddy_connor</a></article>
+      </div>
+    </section>
+
   </main>
+
+  <section class="home-trust-prefooter" aria-label="Why choose Sofas By Daneen">
+    <div class="home-trust-strip">
+      <div class="home-trust-grid">
+        <article class="home-trust-item"><div class="home-trust-icon" aria-hidden="true">◎</div><p>Many of our sofas<br>handmade in Britain</p></article>
+        <article class="home-trust-item"><div class="home-trust-icon" aria-hidden="true">▱</div><p>Wooden framed sofas<br>include our 15 year<br>guarantee</p></article>
+        <article class="home-trust-item"><div class="home-trust-apr" aria-hidden="true"><strong>0</strong><span>%<small>APR</small></span></div><p>4 years interest free<br>credit, subject to status</p></article>
+        <article class="home-trust-item"><div class="home-trust-icon" aria-hidden="true">✂</div><p>Sofas are made by hand<br>and quality tested</p></article>
+        <article class="home-trust-item"><div class="home-trust-icon" aria-hidden="true">◇</div><p>Awarded the British<br>Standard Kitemark</p></article>
+      </div>
+    </div>
+    <div class="home-trust-intro">
+      <h2>Welcome to Sofas By Daneen – Your Sofa &amp; Furniture Experts</h2>
+      <p>Looking back at years of making high quality, comfortable and stylish <strong>sofas</strong>, our focus remains on thoughtful design, dependable craftsmanship and furniture made for real homes. From carefully selected materials to considered finishing details, every Sofas By Daneen piece is created with comfort, quality and lasting style in mind.</p>
+      <a href="#sur-mesure">Read more</a>
+    </div>
+  </section>
 
   <div class="prefooter-mark deferred-section"><span aria-label="Sofas By Daneen monogram">SBD</span></div>
 
   <footer id="showrooms" class="deferred-section">
     <a class="footer-logo" href="#top" aria-label="Sofas By Daneen home">Sofas By Daneen</a>
     <div class="footer-news">
-      <h2>Join our newsletter and receive a €15 gift voucher</h2>
-      <p>Your weekly dose of inspiration.<br>Discover our creations first and receive a €15 voucher for your next order over €150.</p>
+      <h2>Join our newsletter and receive a £15 gift voucher</h2>
+      <p>Your weekly dose of inspiration.<br>Discover our creations first and receive a £15 voucher for your next order over £150.</p>
       {% form 'customer', class: 'newsletter-field' %}
         <label class="sr-only" for="newsletter-email">Email address</label>
         <input id="newsletter-email" name="contact[email]" type="email" autocomplete="email" inputmode="email" placeholder="Your email *">
@@ -155,8 +241,8 @@
   "@type": "FurnitureStore",
   "name": "Sofas By Daneen",
   "url": "{{ shop.url }}",
-  "description": "French house of handcrafted bespoke furniture and couture upholstery.",
-  "priceRange": "€€€"
+  "description": "British house of handcrafted bespoke furniture and couture upholstery.",
+  "priceRange": "£££"
 }
 </script>
 

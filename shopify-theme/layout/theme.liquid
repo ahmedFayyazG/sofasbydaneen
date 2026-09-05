@@ -9,6 +9,8 @@
       <meta name="description" content="{{ page_description | escape }}">
     {% endif %}
     <link rel="icon" href="{{ 'favicon.svg' | asset_url }}" type="image/svg+xml">
+    <link rel="preconnect" href="https://api.fontshare.com" crossorigin>
+    <link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=melodrama@400,500&f[]=cabinet-grotesk@400,500,700,800,900&display=swap">
     {{ 'theme.css' | asset_url | stylesheet_tag }}
     {{ content_for_header }}
   </head>

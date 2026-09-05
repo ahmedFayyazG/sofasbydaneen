@@ -1,12 +1,20 @@
 "use client";
 
 import Link from "next/link";
-import type React from "react";
 import { useState } from "react";
 
-const Icon = ({ children }: { children: React.ReactNode }) => (
-  <span className="head-icon" aria-hidden="true">{children}</span>
-);
+function HeaderIcon({ name }: { name: "search" | "heart" | "account" | "cart" }) {
+  if (name === "search") {
+    return <svg className="head-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="4.8" /><path d="m14.2 14.2 4.3 4.3" /></svg>;
+  }
+  if (name === "heart") {
+    return <svg className="head-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19.3S5.2 15.2 3.5 10.6C2.3 7.4 4.2 4.8 7.1 4.8c1.8 0 3.3 1 4.1 2.4.8-1.4 2.3-2.4 4.1-2.4 2.9 0 4.8 2.6 3.6 5.8C17.2 15.2 12 19.3 12 19.3Z" /></svg>;
+  }
+  if (name === "account") {
+    return <svg className="head-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="7.5" r="3" /><path d="M6.5 18.5c.5-3.2 2.4-5.2 5.5-5.2s5 2 5.5 5.2" /></svg>;
+  }
+  return <svg className="head-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M6.5 8.5h11l-.7 10h-9.6l-.7-10Z" /><path d="M9 8.5V7a3 3 0 0 1 6 0v1.5" /></svg>;
+}
 
 export default function SiteHeader() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -61,10 +69,10 @@ export default function SiteHeader() {
         <Link href="/#atelier" onClick={closeMenu}>Craftsmanship</Link>
       </nav>
       <div className="header-tools" aria-label="Customer tools">
-        <button type="button" aria-label="Search"><Icon>⌕</Icon></button>
-        <button type="button" aria-label="Wishlist"><Icon>♡</Icon></button>
-        <button type="button" aria-label="Account"><Icon>♙</Icon></button>
-        <button type="button" aria-label="Basket, 0 items" className="bag-icon">▢<b aria-hidden="true">0</b></button>
+        <Link className="header-icon-link" href="/shop" aria-label="Search products"><HeaderIcon name="search" /></Link>
+        <Link className="header-icon-link" href="/shop" aria-label="Wishlist"><HeaderIcon name="heart" /></Link>
+        <Link className="header-icon-link" href="/" aria-label="Account"><HeaderIcon name="account" /></Link>
+        <Link className="header-icon-link bag-icon" href="/shop" aria-label="Basket, 0 items"><HeaderIcon name="cart" /><b aria-hidden="true">0</b></Link>
       </div>
     </header>
   );
