@@ -212,6 +212,13 @@ function fabricsFromMetaobjects(product: ShopifyProduct): Fabric[] {
   const ranges = product.fabricRanges?.references?.edges.map((e) => e.node) ?? [];
   const fabrics: Fabric[] = [];
 
+  // Metaobject swatches are small texture chips for the colour picker, not
+  // full product photography — the actual gallery images always come from
+  // the product itself, since this store doesn't shoot a separate studio
+  // photo per fabric colourway.
+  const images = product.images.edges.map((e) => e.node.url);
+  const heroImage = product.featuredImage?.url ?? images[0] ?? "";
+
   for (const range of ranges) {
     const rangeName = range.name?.value?.trim();
     if (!rangeName) continue;
@@ -227,9 +234,9 @@ function fabricsFromMetaobjects(product: ShopifyProduct): Fabric[] {
         material: rangeName,
         hex: hexFromName(colour),
         swatchImage: image.url,
-        studioFront: image.url,
-        studioAngle: image.url,
-        lifestyle: [],
+        studioFront: heroImage,
+        studioAngle: images[1] ?? heroImage,
+        lifestyle: images.slice(1),
       });
     }
   }
