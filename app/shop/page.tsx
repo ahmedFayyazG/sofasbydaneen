@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { Suspense } from "react";
 import SiteHeader from "../components/SiteHeader";
-import { products } from "../lib/products";
+import { getProducts } from "../lib/products";
 import ShopFilters from "./ShopFilters";
 import "./type-cards.css";
 
@@ -18,6 +18,7 @@ export default async function ShopPage({
   searchParams: Promise<{ type?: string; color?: string; seats?: string }>;
 }) {
   const params = await searchParams;
+  const products = await getProducts();
   const initialFilters = {
     type: params.type ?? null,
     color: params.color ?? null,

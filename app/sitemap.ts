@@ -1,9 +1,10 @@
 import type { MetadataRoute } from "next";
-import { products } from "./lib/products";
+import { getProducts } from "./lib/products";
 
 const SITE_URL = "https://sofas-by-daneen-fashion-recreation.ahmedfayyaz47.chatgpt.site";
 
-export default function sitemap(): MetadataRoute.Sitemap {
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+  const products = await getProducts();
   const now = new Date();
   const staticRoutes: MetadataRoute.Sitemap = [
     { url: SITE_URL, lastModified: now, changeFrequency: "weekly", priority: 1 },
@@ -17,7 +18,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     lastModified: now,
     changeFrequency: "weekly",
     priority: 0.85,
-    images: product.heroImage ? [`${SITE_URL}${product.heroImage}`] : undefined,
+    images: product.heroImage ? [product.heroImage] : undefined,
   }));
 
   return [...staticRoutes, ...productRoutes];

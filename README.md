@@ -102,6 +102,49 @@ Use build and validation commands for targeted diagnosis after a remote failure,
 
 The timeout defaults can be overridden for a controlled canary with `SITES_INSTALL_TIMEOUT`, `SITES_INSTALL_KILL_AFTER`, `SITES_BUILD_TIMEOUT`, and `SITES_BUILD_KILL_AFTER`. A timeout fails the command; the helpers never retry an unchanged install or build.
 
+## Connecting to Shopify
+
+Every product on this site — price, images, stock, sale/compare-at price,
+description, colour variants — is read live from your Shopify store via the
+Storefront API. Nothing is hardcoded in `app/lib/products.ts` any more; that
+file only maps Shopify's data onto the shapes the page components use. From
+day to day, all catalog changes (new products, price changes, sales,
+inventory, photos, descriptions) happen in **Shopify admin**, not in this
+codebase.
+
+Set two environment variables (in `.env.local` for local dev, and in your
+hosting provider's environment settings for production):
+
+```
+SHOPIFY_STORE_DOMAIN=s0unwg-ke.myshopify.com
+SHOPIFY_STOREFRONT_ACCESS_TOKEN=<your storefront api token>
+```
+
+To get a Storefront API token:
+
+1. In Shopify admin, go to **Settings → Apps and sales channels → Develop apps**.
+2. Click **Create an app**, name it (e.g. "Website"), then **Configure Storefront API scopes**.
+3. Enable at least: `unauthenticated_read_product_listings`, `unauthenticated_read_products`.
+4. Install the app, then open the **API credentials** tab and copy the
+   **Storefront API access token**.
+
+Once both variables are set, redeploy — the homepage, `/shop`, `/collections`
+and every `/products/[slug]` page will start pulling directly from your
+Shopify catalog. Until they're set, `getProducts()` returns an empty list
+rather than crashing the build.
+
+Notes on the mapping:
+
+- A Shopify product needs a **variant option named "Colour" or "Color"** for
+  the fabric swatch picker to show multiple swatches — otherwise each product
+  shows as a single fabric using its main image.
+- Product type (corner/chaise/u-shape/etc.) and seat count are guessed from
+  the product's Shopify `productType`, tags and title — tag or type your
+  products with words like "corner", "chaise", "2 seater" etc. for the best
+  match.
+- "Extra X% off" style badges are driven by a variant's **Compare at price**
+  in Shopify — set that field to show a strikethrough price and a saving.
+
 ## Learn More
 
 - [vinext Documentation](https://github.com/cloudflare/vinext)

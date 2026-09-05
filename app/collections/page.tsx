@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import SiteHeader from "../components/SiteHeader";
-import { products } from "../lib/products";
+import { getProducts } from "../lib/products";
 
 export const metadata: Metadata = {
   title: "Our Collections | Sofas By Daneen",
@@ -9,7 +9,8 @@ export const metadata: Metadata = {
   alternates: { canonical: "/collections" },
 };
 
-export default function CollectionsPage() {
+export default async function CollectionsPage() {
+  const products = await getProducts();
   return (
     <>
       <a className="skip-link" href="#main-content">Skip to content</a>

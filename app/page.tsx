@@ -3,26 +3,10 @@ import HomeProductGrid from "./components/HomeProductGrid";
 import HomeTrustPrefooter from "./components/HomeTrustPrefooter";
 import LazyVideo from "./components/LazyVideo";
 import SiteHeader from "./components/SiteHeader";
-import { products as catalog } from "./lib/products";
+import { getProducts } from "./lib/products";
 
 const CDN = "https://www.clovi-paris.com/cdn/shop/files/";
 const SITE_URL = "https://sofas-by-daneen-fashion-recreation.ahmedfayyaz47.chatgpt.site";
-
-const products = catalog.map((product) => ({
-  slug: product.slug,
-  name: product.name,
-  category: product.category,
-  tagline: product.tagline,
-  price: product.priceFrom,
-  priceValue: product.priceFromValue.toString(),
-  image: product.heroImage,
-  fabrics: product.fabrics.slice(0, 6).map((fabric) => ({
-    code: fabric.code,
-    name: fabric.name,
-    hex: fabric.hex,
-    image: fabric.studioFront,
-  })),
-}));
 
 const SOFOLOGY_IMG = "https://images.sofology.co.uk/q_auto,f_auto,fl_lossy,dpr_1.0/Bloomreach/HOMEPAGE";
 const sofaTypes = [
@@ -83,52 +67,69 @@ const instagramReels = [
   },
 ] as const;
 
-const structuredData = {
-  "@context": "https://schema.org",
-  "@graph": [
-    {
-      "@type": "WebSite",
-      "@id": `${SITE_URL}/#website`,
-      url: SITE_URL,
-      name: "Sofas By Daneen",
-      inLanguage: "en-GB",
-    },
-    {
-      "@type": "FurnitureStore",
-      "@id": `${SITE_URL}/#business`,
-      name: "Sofas By Daneen",
-      url: SITE_URL,
-      description: "British house of handcrafted bespoke furniture and couture upholstery.",
-      logo: `${SITE_URL}/favicon.svg`,
-      image: `${SITE_URL}/sofas-by-daneen-hero.png`,
-      priceRange: "£££",
-    },
-    {
-      "@type": "ItemList",
-      name: "Sofas By Daneen furniture collection",
-      numberOfItems: products.length,
-      itemListElement: products.map((product, index) => ({
-        "@type": "ListItem",
-        position: index + 1,
-        item: {
-          "@type": "Product",
-          name: product.name,
-          image: `${SITE_URL}${product.image}`,
-          brand: { "@type": "Brand", name: "Sofas By Daneen" },
-          offers: {
-            "@type": "Offer",
-            priceCurrency: "GBP",
-            price: product.priceValue,
-            availability: "https://schema.org/InStock",
-            url: `${SITE_URL}/products/${product.slug}`,
-          },
-        },
-      })),
-    },
-  ],
-};
+export default async function Home() {
+  const catalog = await getProducts();
+  const products = catalog.map((product) => ({
+    slug: product.slug,
+    name: product.name,
+    category: product.category,
+    tagline: product.tagline,
+    price: product.priceFrom,
+    priceValue: product.priceFromValue.toString(),
+    image: product.heroImage,
+    fabrics: product.fabrics.slice(0, 6).map((fabric) => ({
+      code: fabric.code,
+      name: fabric.name,
+      hex: fabric.hex,
+      image: fabric.studioFront,
+    })),
+  }));
 
-export default function Home() {
+  const structuredData = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebSite",
+        "@id": `${SITE_URL}/#website`,
+        url: SITE_URL,
+        name: "Sofas By Daneen",
+        inLanguage: "en-GB",
+      },
+      {
+        "@type": "FurnitureStore",
+        "@id": `${SITE_URL}/#business`,
+        name: "Sofas By Daneen",
+        url: SITE_URL,
+        description: "British house of handcrafted bespoke furniture and couture upholstery.",
+        logo: `${SITE_URL}/favicon.svg`,
+        image: `${SITE_URL}/sofas-by-daneen-hero.png`,
+        priceRange: "£££",
+      },
+      {
+        "@type": "ItemList",
+        name: "Sofas By Daneen furniture collection",
+        numberOfItems: products.length,
+        itemListElement: products.map((product, index) => ({
+          "@type": "ListItem",
+          position: index + 1,
+          item: {
+            "@type": "Product",
+            name: product.name,
+            image: product.image,
+            brand: { "@type": "Brand", name: "Sofas By Daneen" },
+            offers: {
+              "@type": "Offer",
+              priceCurrency: "GBP",
+              price: product.priceValue,
+              availability: "https://schema.org/InStock",
+              url: `${SITE_URL}/products/${product.slug}`,
+            },
+          },
+        })),
+      },
+    ],
+  };
+
   return (
     <>
       <a className="skip-link" href="#main-content">Skip to content</a>

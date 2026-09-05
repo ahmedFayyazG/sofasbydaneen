@@ -17,6 +17,7 @@ const getMaterial = (name: string) => {
   return "Upholstery";
 };
 
+const materialOf = (f: { name: string; material?: string }) => f.material ?? getMaterial(f.name);
 const colourName = (name: string) => name.replace(/\b(Velvet|Linen|Bouclé|Boucle|Chenille|Leather|Woven)\b/gi, "").trim();
 const money = (value: number) => new Intl.NumberFormat("en-GB", { style: "currency", currency: "GBP", maximumFractionDigits: 0 }).format(value);
 
@@ -33,9 +34,9 @@ export default function ProductGallery({ product, initialFabricCode }: { product
 
   const fabric = useMemo(() => product.fabrics.find((f) => f.code === fabricCode) ?? product.fabrics[0], [product.fabrics, fabricCode]);
   const size = useMemo(() => product.sizes?.find((s) => s.seats === seat) ?? product.sizes?.[0] ?? null, [product.sizes, seat]);
-  const materials = useMemo(() => Array.from(new Set(product.fabrics.map((f) => getMaterial(f.name)))), [product.fabrics]);
-  const selectedMaterial = getMaterial(fabric.name);
-  const visibleFabrics = useMemo(() => product.fabrics.filter((f) => getMaterial(f.name) === selectedMaterial), [product.fabrics, selectedMaterial]);
+  const materials = useMemo(() => Array.from(new Set(product.fabrics.map((f) => materialOf(f)))), [product.fabrics]);
+  const selectedMaterial = materialOf(fabric);
+  const visibleFabrics = useMemo(() => product.fabrics.filter((f) => materialOf(f) === selectedMaterial), [product.fabrics, selectedMaterial]);
   const front = product.sizes && size ? size.studioFront : fabric.studioFront;
   const angle = product.sizes && size ? size.studioAngle : fabric.studioAngle;
   const gallery = [front, angle, ...(fabric.lifestyle ?? [])].filter(Boolean);
@@ -47,7 +48,7 @@ export default function ProductGallery({ product, initialFabricCode }: { product
   const monthly = salePrice / 48;
 
   const chooseFabric = (code: string) => { if (product.fabrics.some((f) => f.code === code)) { setFabricCode(code); setGalleryIndex(0); } };
-  const chooseMaterial = (material: string) => { const first = product.fabrics.find((f) => getMaterial(f.name) === material); if (first) chooseFabric(first.code); };
+  const chooseMaterial = (material: string) => { const first = product.fabrics.find((f) => materialOf(f) === material); if (first) chooseFabric(first.code); };
   const nextImage = (direction: number) => { if (gallery.length > 1) setGalleryIndex((current) => (current + direction + gallery.length) % gallery.length); };
   const openFeetDrawer = () => { setPendingFeetStyle(feetStyle); setFeetDrawerOpen(true); };
   const confirmFeet = () => { setFeetStyle(pendingFeetStyle); setFeetDrawerOpen(false); };
